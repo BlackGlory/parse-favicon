@@ -1,0 +1,23 @@
+{
+  "name": "parse-favicon",
+  "version": "1.0.0",
+  "description": "Parse HTML to get favicon information",
+  "main": "src/parse-favicon.js",
+  "scripts": {
+    "start": "node ./src/parse-favicon.js"
+  },
+  "repository": {
+    "url": "git@github.com:BlackGlory/parse-favicon.git",
+    "type": "git"
+  },
+  "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.15.2",
+    "cheerio": "^0.22.0",
+    "co": "^4.6.0",
+    "ico-size": "^1.0.0",
+    "image-size": "^0.5.0",
+    "mime-types": "^2.1.13"
+  }
+}
