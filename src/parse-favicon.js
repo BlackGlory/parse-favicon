@@ -6,7 +6,7 @@ const co = require('co')
 const sizeOf = require('image-size')
 const icoSizeOf = require('ico-size')
 
-const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = false, allowParseImage = false }, ignoreException = false) {
+const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = false, allowParseImage = false, timeout = 1000 * 60 }, ignoreException = false) {
   function addRefer(refer) {
     return function(obj) {
       return Object.assign({}, obj, { refer })
@@ -41,7 +41,7 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
       Object.assign(result, { size })
     } else if (result.url) {
       try {
-        let { data, headers: { 'content-type': type }} = yield axios.get(result.url, { responseType: 'arraybuffer' })
+        let { data, headers: { 'content-type': type }} = yield axios.get(result.url, { responseType: 'arraybuffer', timeout })
 
         let width, height
         try {
@@ -164,7 +164,7 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
       let faviconURI = url.resolve(baseURI, FAVICON_DEFAULT_PATH)
       if (!icons.find(x => x.absoluteURL === faviconURI)) {
         try {
-          let { headers: { 'content-type': contentType }} = yield axios.get(faviconURI)
+          let { headers: { 'content-type': contentType }} = yield axios.get(faviconURI, { timeout })
           if (mime.extension(contentType) === 'ico') {
             defaultPathFavicon.push(yield createIcon(FAVICON_DEFAULT_PATH, contentType))
           }

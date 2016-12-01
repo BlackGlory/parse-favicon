@@ -14,6 +14,7 @@ parseFavicon(
     baseURI: URI = ''
   , allowUseNetwork: boolean = false
   , allowParseImage: boolean = false
+  , timeout: number = 1000 * 60
   }
 , ignoreException: boolean = false
 ) : Promise
@@ -47,7 +48,7 @@ axios.get('https://github.com')
 ### CLI
 
 ```sh
-> node ./src/parse-favicon.js "https://github.com"
+> node ./src/parse-favicon.js https://github.com
 
 [
   [
