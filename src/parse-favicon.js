@@ -50,14 +50,17 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
             width = info.width
             height = info.height
           } else {
-            let info = sizeOf(data)
+            let info = sizeOf(new Buffer(new Uint8Array(data)))
             width = info.width
             height = info.height
             type = info.type
           }
         } catch(e) {
-          throw e
+          if (!ignoreException) {
+            throw e
+          }
         }
+
         if (width && height) {
           Object.assign(result, { size: `${ width }x${ height }` })
         }
