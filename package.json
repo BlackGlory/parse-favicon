@@ -1,6 +1,6 @@
 {
   "name": "parse-favicon",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Parse HTML to get favicon information",
   "main": "src/parse-favicon.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "url": "git@github.com:BlackGlory/parse-favicon.git",
     "type": "git"
   },
+  "typings": "src/parse-favicon.d.ts",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
   "dependencies": {
