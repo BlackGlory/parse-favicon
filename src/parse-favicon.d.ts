@@ -14,7 +14,7 @@ declare module "parse-favicon" {
     timeout?: number
   }
 
-  let parseFavicon: (html: string, options?: ParseOptions, ignoreException?: boolean) => PromiseLike<IconInfo[]>
+  let parseFavicon: (html: string, options?: ParseOptions, ignoreException?: boolean) => Promise<IconInfo[]>
 
   export default parseFavicon
 }

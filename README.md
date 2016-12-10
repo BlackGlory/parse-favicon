@@ -20,6 +20,33 @@ parseFavicon(
 ) : Promise
 ```
 
+## Defined
+
+```ts
+declare module "parse-favicon" {
+  interface IconInfo{
+    url: string
+    path: string
+    size: string
+    type: string
+    refer: string
+  }
+
+  interface ParseOptions {
+    baseURI?: string
+    allowUseNetwork?: boolean
+    allowParseImage?: boolean
+    timeout?: number
+  }
+
+  let parseFavicon: (html: string, options?: ParseOptions, ignoreException?: boolean) => Promise<IconInfo[]>
+
+  export default parseFavicon
+}
+```
+
+See also: [parse-favicon.d.ts](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/src/parse-favicon.d.ts)
+
 ### Example
 
 ```js
