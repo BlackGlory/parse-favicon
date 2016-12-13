@@ -198,5 +198,6 @@ if (require.main === module) {
   .catch(console.error)
 }
 
-module.exports = parseFavicon
+exports = parseFavicon
 exports.default = parseFavicon
+module.exports = exports
