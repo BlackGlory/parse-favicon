@@ -196,6 +196,7 @@ if (require.main === module) {
   .then(x => JSON.stringify(x, undefined, 2))
   .then(console.log)
   .catch(console.error)
-} else {
-  module.exports = parseFavicon
 }
+
+module.exports = parseFavicon
+exports.default = parseFavicon

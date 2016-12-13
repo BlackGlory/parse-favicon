@@ -10,7 +10,7 @@ Parse HTML to get favicon information.
 ### NPM
 
 ```sh
-npm install parse-favicon
+npm install parse-favicon --save
 ```
 
 ### Yarn
@@ -188,7 +188,7 @@ declare module "parse-favicon" {
 
 See also: [parse-favicon.d.ts](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/src/parse-favicon.d.ts)
 
-## Related Projects
+## Related projects
 
 [BlackGlory/ico-size: A Node module to get dimensions of ico & cur image file](https://github.com/BlackGlory/ico-size)
 
