@@ -49,7 +49,7 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
             let info = icoSizeOf(data)
             width = info.width
             height = info.height
-          } else {
+          } else if (['bmp', 'gif', 'jpeg', 'jpg', 'png', 'webp'].includes(mime.extension(type))) {
             let info = sizeOf(new Buffer(new Uint8Array(data)))
             width = info.width
             height = info.height
@@ -169,9 +169,7 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
             defaultPathFavicon.push(yield createIcon(FAVICON_DEFAULT_PATH, contentType))
           }
         } catch(e) {
-          if (!ignoreException) {
-            throw e
-          }
+          // ignore
         }
       }
     }
