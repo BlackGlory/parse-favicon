@@ -38,7 +38,7 @@ export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false
       url: null
     , path: null
     , size: null
-    , type
+    , type: type || null
     , refer: null
     }
 
@@ -56,40 +56,48 @@ export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false
       }
     })(baseURI, uri))
 
-    if (size && sizeRegexp.test(size)) {
-      result.size = size
-    } else if (result.url && allowParseImage) {
-      try {
-        let { data, headers: { 'content-type': type }} = await axios.get(result.url, {
-          responseType: 'arraybuffer', timeout
-        })
-
-        let width, height
-
+    if (allowParseImage) {
+      if (result.url) {
         try {
-          if (mime.extension(type) === 'ico'
-          || ['image/vnd.microsoft.icon', 'image/x-icon'].includes(type)) {
-            let info = icoSizeOf(data)
-            width = info.width
-            height = info.height
-          } else if (['bmp', 'gif', 'jpeg', 'jpg', 'png', 'webp'].includes(mime.extension(type))) {
-            let info = sizeOf(new Buffer(new Uint8Array(data)))
-            width = info.width
-            height = info.height
-          }
+          let { data, headers: { 'content-type': type }} = await axios.get(result.url, {
+            responseType: 'arraybuffer', timeout
+          })
 
-          if (width && height) {
-            result.size = `${ width }x${ height }`
+          let width, height
+
+          try {
+            if (mime.extension(type) === 'ico'
+            || ['image/vnd.microsoft.icon', 'image/x-icon'].includes(type)) {
+              let info = icoSizeOf(data)
+              width = info.width
+              height = info.height
+            } else if (['bmp', 'gif', 'jpeg', 'jpg', 'png', 'webp'].includes(mime.extension(type))) {
+              let info = sizeOf(new Buffer(new Uint8Array(data)))
+              width = info.width
+              height = info.height
+            }
+
+            if (width && height) {
+              result.size = `${ width }x${ height }`
+            }
+
+            if (type) {
+              result.type = type
+            }
+          } catch(e) {
+            if (!ignoreException) {
+              throw e
+            }
           }
         } catch(e) {
           if (!ignoreException) {
             throw e
           }
         }
-      } catch(e) {
-        if (!ignoreException) {
-          throw e
-        }
+      }
+    } else {
+      if (size && sizeRegexp.test(size)) {
+        result.size = size
       }
     }
 
