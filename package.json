@@ -1,10 +1,10 @@
 {
   "name": "parse-favicon",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Parse HTML to get favicon information",
   "main": "dist/parse-favicon.js",
   "bin": {
-    "parse-favicon": "bin/parse-favicon.js"
+    "parse-favicon": "dist/cli.js"
   },
   "scripts": {
     "build": "webpack",

@@ -1,9 +1,10 @@
 const path = require('path')
 
 module.exports = {
-  target: "node"
+  target: 'node'
 , entry: {
     'parse-favicon': './src/parse-favicon.js'
+  , 'cli': './src/cli.js'
   }
 , output: {
     path: path.join(__dirname, 'dist')
