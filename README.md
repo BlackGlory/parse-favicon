@@ -1,22 +1,21 @@
-# parse-favicon
-
-[![npm](https://img.shields.io/npm/v/parse-favicon.svg?maxAge=2592000)](https://www.npmjs.com/package/parse-favicon)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/LICENSE)
+# parse-favicon [![npm](https://img.shields.io/npm/v/parse-favicon.svg?maxAge=2592000)](https://www.npmjs.com/package/parse-favicon) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/LICENSE)
 
 Parse HTML to get favicon information.
 
-## Installation
+Support `icon`, `msapplication-TileImage`, `apple-touch-icon-precomposed`, `apple-touch-icon`.
 
-### NPM
+## Install
+
+### CLI
+
+```sh
+npm install -g parse-favicon
+```
+
+### Module
 
 ```sh
 npm install parse-favicon --save
-```
-
-### Yarn
-
-```sh
-yarn add parse-favicon
 ```
 
 ## Usage
@@ -37,121 +36,52 @@ parseFavicon(
 ### Example
 
 ```js
-const parseFavicon = require('parse-favicon')
-const axios = require('axios')
+import parseFavicon from 'parse-favicon'
+import axios from 'axios'
 
 axios.get('https://github.com')
 .then(({ data: html }) => parseFavicon(html, { baseURI: 'https://github.com', allowUseNetwork: true, allowParseImage: true }))
 .then(console.log)
 .catch(console.error)
-/*
-[ { url: 'https://github.com/windows-tile.png',
-  path: '/windows-tile.png',
-  size: '512x512',
-  type: 'png',
-  refer: 'msapplication-TileImage' },
-  ...
-  { url: 'https://github.com/favicon.ico',
+
+/* Output:
+[ { url: 'https://assets-cdn.github.com/favicon.ico',
     path: '/favicon.ico',
     size: '16x16',
     type: 'image/x-icon',
-    refer: '/favicon.ico' } ]
- */
+    refer: 'icon' } ]
+*/
 ```
 
 ### CLI
 
 ```sh
-> node ./src/parse-favicon.js https://github.com
-
+> parse-favicon https://twitter.com
 [
   [
     {
-      "url": "https://github.com/windows-tile.png",
-      "path": "/windows-tile.png",
-      "size": "512x512",
+      "url": "https://abs.twimg.com/favicons/win8-tile-144.png",
+      "path": "//abs.twimg.com/favicons/win8-tile-144.png",
+      "size": "144x144",
       "type": "png",
       "refer": "msapplication-TileImage"
     },
     {
-      "url": "https://github.com/apple-touch-icon.png",
-      "path": "/apple-touch-icon.png",
-      "size": "120x120",
-      "type": "png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-57x57.png",
-      "path": "/apple-touch-icon-57x57.png",
-      "size": "57x57",
+      "url": "https://abs.twimg.com/icons/apple-touch-icon-192x192.png",
+      "path": "/icons/apple-touch-icon-192x192.png",
+      "size": "192x192",
       "type": "image/png",
       "refer": "apple-touch-icon"
     },
     {
-      "url": "https://github.com/apple-touch-icon-60x60.png",
-      "path": "/apple-touch-icon-60x60.png",
-      "size": "60x60",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-72x72.png",
-      "path": "/apple-touch-icon-72x72.png",
-      "size": "72x72",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-76x76.png",
-      "path": "/apple-touch-icon-76x76.png",
-      "size": "76x76",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-114x114.png",
-      "path": "/apple-touch-icon-114x114.png",
-      "size": "114x114",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-120x120.png",
-      "path": "/apple-touch-icon-120x120.png",
-      "size": "120x120",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-144x144.png",
-      "path": "/apple-touch-icon-144x144.png",
-      "size": "144x144",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-152x152.png",
-      "path": "/apple-touch-icon-152x152.png",
-      "size": "152x152",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://github.com/apple-touch-icon-180x180.png",
-      "path": "/apple-touch-icon-180x180.png",
-      "size": "180x180",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://assets-cdn.github.com/favicon.ico",
-      "path": "/favicon.ico",
+      "url": "https://abs.twimg.com/favicons/favicon.ico",
+      "path": "//abs.twimg.com/favicons/favicon.ico",
       "size": "16x16",
-      "type": "image/x-icon",
+      "type": "image/vnd.microsoft.icon",
       "refer": "icon"
     },
     {
-      "url": "https://github.com/favicon.ico",
+      "url": "https://twitter.com/favicon.ico",
       "path": "/favicon.ico",
       "size": "16x16",
       "type": "image/x-icon",
@@ -191,6 +121,12 @@ See also: [parse-favicon.d.ts](https://raw.githubusercontent.com/BlackGlory/pars
 ## Related projects
 
 [BlackGlory/ico-size: A Node module to get dimensions of ico & cur image file](https://github.com/BlackGlory/ico-size)
+
+## Projects using parse-favicon
+
+Chrome extension:
+
+* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector)
 
 ## References
 

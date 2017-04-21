@@ -1,10 +1,14 @@
 {
   "name": "parse-favicon",
-  "version": "1.1.6",
+  "version": "1.2.3",
   "description": "Parse HTML to get favicon information",
-  "main": "src/parse-favicon.js",
+  "main": "dist/parse-favicon.js",
+  "bin": {
+    "parse-favicon": "bin/parse-favicon.js"
+  },
   "scripts": {
-    "start": "node ./src/parse-favicon.js"
+    "build": "webpack",
+    "dev": "webpack -w"
   },
   "repository": {
     "url": "git@github.com:BlackGlory/parse-favicon.git",
@@ -19,6 +23,14 @@
     "co": "^4.6.0",
     "ico-size": "^1.1.0",
     "image-size": "^0.5.0",
-    "mime-types": "^2.1.13"
+    "mime-types": "^2.1.13",
+    "object-hash": "^1.1.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "webpack": "^2.4.1"
   }
 }

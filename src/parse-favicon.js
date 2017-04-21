@@ -1,26 +1,39 @@
-const cheerio = require('cheerio')
-const axios = require('axios')
-const url = require('url')
-const mime = require('mime-types')
-const co = require('co')
-const sizeOf = require('image-size')
-const icoSizeOf = require('ico-size')
+'use strict'
 
-const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = false, allowParseImage = false, timeout = 1000 * 60 }, ignoreException = false) {
-  function addRefer(refer) {
-    return function(obj) {
-      return Object.assign({}, obj, { refer })
-    }
+import cheerio from 'cheerio'
+import axios from 'axios'
+import url from 'url'
+import mime from 'mime-types'
+import hash from 'object-hash'
+import sizeOf from 'image-size'
+import icoSizeOf from 'ico-size'
+
+const sizeRegexp = /^\d+x\d+$/ // example: 16x16
+const faviconDefaultPath = '/favicon.ico'
+
+function addRefer(refer) {
+  return function(obj) {
+    return Object.assign({}, obj, { refer })
   }
+}
 
-  function isAbsoluteURL(urlObject) {
-    if (typeof urlObject === 'string') {
-      urlObject = url.parse(urlObject)
-    }
-    return !!urlObject.host
+function isAbsoluteURL(urlObject) {
+  if (typeof urlObject === 'string') {
+    urlObject = url.parse(urlObject)
   }
+  return !!urlObject.host
+}
 
-  const createIcon = co.wrap(function *(uri, type = mime.lookup(uri), size) {
+function uniqueDeep(arr) {
+  let result = {}
+  arr.forEach(x => result[hash(x)] = x)
+  return Object.values(result)
+}
+
+export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false, allowParseImage = false, timeout = 1000 * 60 }, ignoreException = false) {
+  const $ = cheerio.load(html)
+
+  async function createIcon(uri, type = mime.lookup(uri), size) {
     let result = {}
 
     Object.assign(result, ((baseURI, uri) => {
@@ -37,15 +50,19 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
       }
     })(baseURI, uri))
 
-    if (size && /^\d+x\d+$/.test(size)) {
+    if (size && sizeRegexp.test(size)) {
       Object.assign(result, { size })
     } else if (result.url) {
       try {
-        let { data, headers: { 'content-type': type }} = yield axios.get(result.url, { responseType: 'arraybuffer', timeout })
+        let { data, headers: { 'content-type': type }} = await axios.get(result.url, {
+          responseType: 'arraybuffer', timeout
+        })
 
         let width, height
+
         try {
-          if (mime.extension(type) === 'ico') {
+          if (mime.extension(type) === 'ico'
+          || ['image/vnd.microsoft.icon', 'image/x-icon'].includes(type)) {
             let info = icoSizeOf(data)
             width = info.width
             height = info.height
@@ -61,13 +78,13 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
           }
         }
 
-        if (width && height) {
-          Object.assign(result, { size: `${ width }x${ height }` })
-        }
+        Object.assign(result, {
+          size: width && height ? `${ width }x${ height }` : null
+        })
 
-        if (type) {
-          Object.assign(result, { type })
-        }
+        Object.assign(result, {
+          type: type || null
+        })
       } catch(e) {
         if (!ignoreException) {
           throw e
@@ -80,18 +97,16 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
     }
 
     return result
-  })
+  }
 
-  const $ = cheerio.load(html)
-
-  let msapplicationTileImage = yield co(function *() {
+  async function getMsapplicationTileImage() {
     let icons = []
 
     for (let el of $('meta[name="msapplication-TileImage"][content]').toArray()) {
       let content = $(el).attr('content')
       let sizes = $(el).attr('sizes')
       try {
-        icons.push(yield createIcon(content, undefined, sizes))
+        icons.push(await createIcon(content, undefined, sizes))
       } catch(e) {
         if (!ignoreException) {
           throw e
@@ -100,16 +115,16 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
     }
 
     return icons
-  })
+  }
 
-  let appleTouchIconPrecomposed = yield co(function *() {
+  async function getAppleTouchIconPrecomposed() {
     let icons = []
 
     for (let el of $('link[rel="apple-touch-icon-precomposed"][href]').toArray()) {
       let href = $(el).attr('href')
       let sizes = $(el).attr('sizes')
       try {
-        icons.push(yield createIcon(href, undefined, sizes))
+        icons.push(await createIcon(href, undefined, sizes))
       } catch(e) {
         if (!ignoreException) {
           throw e
@@ -118,16 +133,16 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
     }
 
     return icons
-  })
+  }
 
-  let appleTouchIcons = yield co(function *() {
+  async function getAppleTouchIcons() {
     let icons = []
 
     for (let el of $('link[rel="apple-touch-icon"][href]').toArray()) {
       let href = $(el).attr('href')
       let sizes = $(el).attr('sizes')
       try {
-        icons.push(yield createIcon(href, undefined, sizes))
+        icons.push(await createIcon(href, undefined, sizes))
       } catch(e) {
         if (!ignoreException) {
           throw e
@@ -136,16 +151,16 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
     }
 
     return icons
-  })
+  }
 
-  let icons = yield co(function *() {
+  async function getIcons() {
     let icons = []
 
     for (let el of $('link[rel~="icon"][href]').toArray()) {
       let href = $(el).attr('href')
       let sizes = $(el).attr('sizes')
       try {
-        icons.push(yield createIcon(href, undefined, sizes))
+        icons.push(await createIcon(href, undefined, sizes))
       } catch(e) {
         if (!ignoreException) {
           throw e
@@ -154,48 +169,68 @@ const parseFavicon = co.wrap(function *(html, { baseURI = '', allowUseNetwork = 
     }
 
     return icons
-  })
+  }
 
-  let defaultPathFavicon = []
+  async function getDefaultPathFavicion() {
+    let icons = []
 
-  if (allowUseNetwork) {
-    if (baseURI) {
-      const FAVICON_DEFAULT_PATH = '/favicon.ico'
-      let faviconURI = url.resolve(baseURI, FAVICON_DEFAULT_PATH)
-      if (!icons.find(x => x.absoluteURL === faviconURI)) {
-        try {
-          let { headers: { 'content-type': contentType }} = yield axios.get(faviconURI, { timeout })
-          if (mime.extension(contentType) === 'ico') {
-            defaultPathFavicon.push(yield createIcon(FAVICON_DEFAULT_PATH, contentType))
+    if (allowUseNetwork) {
+      if (baseURI) {
+        let faviconURI = url.resolve(baseURI, faviconDefaultPath)
+        if (!icons.find(x => x.absoluteURL === faviconURI)) {
+          try {
+            let { headers: { 'content-type': contentType }} = await axios.get(faviconURI, { timeout })
+            if (mime.extension(contentType) === 'ico') {
+              icons.push(await createIcon(faviconDefaultPath, contentType))
+            }
+          } catch(e) {
+            void 0
           }
-        } catch(e) {
-          // ignore
         }
       }
     }
+
+    return icons
   }
 
-  return [
-    ...msapplicationTileImage.map(addRefer('msapplication-TileImage'))
-  , ...appleTouchIcons.map(addRefer('apple-touch-icon'))
-  , ...appleTouchIconPrecomposed.map(addRefer('apple-touch-icon-precomposed'))
-  , ...icons.map(addRefer('icon'))
-  , ...defaultPathFavicon.map(addRefer('/favicon.ico'))
-  ]
-})
+  let msapplicationTileImage = (await getMsapplicationTileImage()).map(addRefer('msapplication-TileImage'))
+    , appleTouchIcons = (await getAppleTouchIcons()).map(addRefer('apple-touch-icon'))
+    , appleTouchIconPrecomposed = (await getAppleTouchIconPrecomposed()).map(addRefer('apple-touch-icon-precomposed'))
+    , icons = (await getIcons()).map(addRefer('icon'))
 
-if (require.main === module) {
-  const [,, ...urls] = process.argv
-  Promise.all(urls.map(axios.get))
-  .then(results => Promise.all(
-    results
-    .map(x => parseFavicon(x.data, { baseURI: x.config.url, allowUseNetwork: true, allowParseImage: true }, true))
-  ))
-  .then(x => JSON.stringify(x, undefined, 2))
-  .then(console.log)
-  .catch(console.error)
+  let result = [
+    ...msapplicationTileImage
+  , ...appleTouchIcons
+  , ...appleTouchIconPrecomposed
+  , ...icons
+  ]
+
+  if (!result.find(x => x.path === '/favicon.ico')) {
+    result.push(...(await getDefaultPathFavicion()).map(addRefer('/favicon.ico')))
+  }
+
+  return uniqueDeep(result)
 }
 
-exports = parseFavicon
-exports.default = parseFavicon
-module.exports = exports
+export default parseFavicon
+
+if (require.main === module) {
+  (async () => {
+    try {
+      const [,, ...urls] = process.argv
+      const htmlCollection = await Promise.all(urls.map(axios.get))
+      const infoCollection = await Promise.all(
+        htmlCollection.map(x =>
+          parseFavicon(x.data, {
+            baseURI: x.config.url
+          , allowUseNetwork: true
+          , allowParseImage: true
+          }, true)
+        )
+      )
+      console.log(JSON.stringify(infoCollection, undefined, 2))
+    } catch(e) {
+      console.error(e)
+    }
+  })()
+}
