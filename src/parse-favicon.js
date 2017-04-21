@@ -34,7 +34,13 @@ export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false
   const $ = cheerio.load(html)
 
   async function createIcon(uri, type = mime.lookup(uri), size) {
-    let result = {}
+    let result = {
+      url: null
+    , path: null
+    , size: null
+    , type
+    , refer: null
+    }
 
     Object.assign(result, ((baseURI, uri) => {
       if (isAbsoluteURL(uri)) {
@@ -51,8 +57,8 @@ export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false
     })(baseURI, uri))
 
     if (size && sizeRegexp.test(size)) {
-      Object.assign(result, { size })
-    } else if (result.url) {
+      result.size = size
+    } else if (result.url && allowParseImage) {
       try {
         let { data, headers: { 'content-type': type }} = await axios.get(result.url, {
           responseType: 'arraybuffer', timeout
@@ -70,30 +76,21 @@ export async function parseFavicon(html, { baseURI = '', allowUseNetwork = false
             let info = sizeOf(new Buffer(new Uint8Array(data)))
             width = info.width
             height = info.height
-            type = info.type
+          }
+
+          if (width && height) {
+            result.size = `${ width }x${ height }`
           }
         } catch(e) {
           if (!ignoreException) {
             throw e
           }
         }
-
-        Object.assign(result, {
-          size: width && height ? `${ width }x${ height }` : null
-        })
-
-        Object.assign(result, {
-          type: type || null
-        })
       } catch(e) {
         if (!ignoreException) {
           throw e
         }
       }
-    }
-
-    if (!result.type) {
-      Object.assign(result, { type })
     }
 
     return result

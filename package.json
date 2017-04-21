@@ -1,6 +1,6 @@
 {
   "name": "parse-favicon",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Parse HTML to get favicon information",
   "main": "dist/parse-favicon.js",
   "bin": {
