@@ -1,8 +1,9 @@
 {
   "name": "parse-favicon",
-  "version": "1.2.8",
+  "version": "2.0.0",
   "description": "Parse HTML to get favicon information",
-  "main": "dist/parse-favicon.js",
+  "main": "lib/parse-favicon.js",
+  "module": "src/parse-favicon.js",
   "bin": {
     "parse-favicon": "bin/parse-favicon.js"
   },
@@ -18,19 +19,19 @@
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.18.0",
+    "babel-runtime": "^6.26.0",
     "cheerio": "^0.22.0",
-    "co": "^4.6.0",
     "ico-size": "^1.1.0",
-    "image-size": "^0.5.0",
-    "mime-types": "^2.1.13",
-    "object-hash": "^1.1.8"
+    "image-size": "0.6.2",
+    "mime-types": "2.1.18",
+    "object-hash": "^1.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^6.4.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.4.0",
-    "webpack": "^2.4.1"
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.11.0"
   }
 }
