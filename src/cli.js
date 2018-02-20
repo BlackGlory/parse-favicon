@@ -3,7 +3,7 @@
 import axios from 'axios'
 import parseFavicon from './parse-favicon'
 
-(async () => {
+;(async () => {
   try {
     const [,, ...urls] = process.argv
     const htmlCollection = await Promise.all(urls.map(axios.get))
