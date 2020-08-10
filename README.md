@@ -63,8 +63,8 @@ type Size = {
 If you need actual icon sizes and type, should provide `bufferFetcher`.
 
 References related to `textFetcher`:
-* `msapplication-config`
-* `manifest`
+* `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
+* `<link rel="manifest" href="path/to/manifest.webmanifest">`
 
 References related to `bufferFetcher`:
 * `/favicon.ico`
@@ -85,7 +85,7 @@ References related to `bufferFetcher`:
 * `/apple-touch-icon-precomposed.png`
 * `/apple-touch-icon.png`
 
-## Support Icon References
+## Support references
 
 * `<link rel="icon" href="path/to/icon.png">`
 * `<link rel="shortcut icon" href="path/to/icon.ico">`
@@ -120,4 +120,4 @@ References related to `bufferFetcher`:
 
 ## Related projects
 
-* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector)
+* [favicon-detector: A simple way to detect website icons](https://github.com/BlackGlory/favicon-detector)
