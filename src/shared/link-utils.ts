@@ -1,3 +1,5 @@
+import { query, css } from '@blackglory/query'
+import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
 import 'core-js/es/string'
 import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
 import { Icon } from '@src/types'
@@ -24,4 +26,16 @@ export function getType(element:  HTMLLinkElement): string | undefined {
 
 export function hasHref(element: HTMLLinkElement): boolean {
   return !!element.getAttribute('href')
+}
+
+export function getIcons(document: Document, selector: string, reference: string) {
+  const nodes = query.call(document, css`${selector}`) as HTMLLinkElement[]
+  return new IterableOperator(nodes)
+    .filter(hasHref)
+    .map(x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
+    .toArray()
+}
+
+function createIcon(reference: string, url: string, type?: string, size?: Icon['size']): Icon {
+  return { reference, url, type, size }
 }
