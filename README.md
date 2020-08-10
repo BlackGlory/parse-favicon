@@ -1,133 +1,123 @@
-# parse-favicon [![npm](https://img.shields.io/npm/v/parse-favicon.svg?maxAge=2592000)](https://www.npmjs.com/package/parse-favicon) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/LICENSE)
+# parse-favicon [![npm](https://img.shields.io/npm/v/parse-favicon.svg?maxAge=86400)](https://www.npmjs.com/package/parse-favicon) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/LICENSE)
 
-Parse HTML to get favicon information.
-
-Support `icon`, `msapplication-TileImage`, `apple-touch-icon-precomposed`, `apple-touch-icon`.
+Parse HTML to get icon information.
 
 ## Install
 
-### CLI
-
 ```sh
-npm install -g parse-favicon
-```
-
-### Module
-
-```sh
-npm install parse-favicon --save
+npm install --save parse-favicon
+# or
+yarn add parse-favicon
 ```
 
 ## Usage
 
 ```js
-parseFavicon(
-  html: string
-, options: Object = {
-    baseURI: URI = ''
-  , allowUseNetwork: boolean = false
-  , allowParseImage: boolean = false
-  , timeout: number = 1000 * 60
-  }
-, ignoreException: boolean = false
-) : Promise
-```
+import { parseFavicon } from 'parse-favicon'
 
-### Example
+const pageUrl = 'https://github.com'
 
-```js
-import parseFavicon from 'parse-favicon'
-import axios from 'axios'
+parseFavicion(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
 
-axios.get('https://github.com')
-.then(({ data: html }) => parseFavicon(html, { baseURI: 'https://github.com', allowUseNetwork: true, allowParseImage: true }))
-.then(console.log)
-.catch(console.error)
+async function textFetcher(url) {
+  return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
+}
 
-/* Output:
-[ { url: 'https://assets-cdn.github.com/favicon.ico',
-    path: '/favicon.ico',
-    size: '16x16',
-    type: 'image/x-icon',
-    refer: 'icon' } ]
-*/
-```
+async function bufferFetcher(url) {
+  return await fetch(resolveUrl(url, pageUrl)).then(res => res.arrayBuffer())
+}
 
-### CLI
-
-```sh
-> parse-favicon https://twitter.com
-[
-  [
-    {
-      "url": "https://abs.twimg.com/favicons/win8-tile-144.png",
-      "path": "//abs.twimg.com/favicons/win8-tile-144.png",
-      "size": "144x144",
-      "type": "png",
-      "refer": "msapplication-TileImage"
-    },
-    {
-      "url": "https://abs.twimg.com/icons/apple-touch-icon-192x192.png",
-      "path": "/icons/apple-touch-icon-192x192.png",
-      "size": "192x192",
-      "type": "image/png",
-      "refer": "apple-touch-icon"
-    },
-    {
-      "url": "https://abs.twimg.com/favicons/favicon.ico",
-      "path": "//abs.twimg.com/favicons/favicon.ico",
-      "size": "16x16",
-      "type": "image/vnd.microsoft.icon",
-      "refer": "icon"
-    },
-    {
-      "url": "https://twitter.com/favicon.ico",
-      "path": "/favicon.ico",
-      "size": "16x16",
-      "type": "image/x-icon",
-      "refer": "/favicon.ico"
-    }
-  ]
-]
-```
-
-## Declaration
-
-```ts
-declare module "parse-favicon" {
-  interface IconInfo{
-    url: string
-    path: string
-    size: string
-    type: string
-    refer: string
-  }
-
-  interface ParseOptions {
-    baseURI?: string
-    allowUseNetwork?: boolean
-    allowParseImage?: boolean
-    timeout?: number
-  }
-
-  let parseFavicon: (html: string, options?: ParseOptions, ignoreException?: boolean) => Promise<IconInfo[]>
-
-  export default parseFavicon
+function resolveUrl(url, base) {
+  return new URL(url, base).href
 }
 ```
 
-See also: [parse-favicon.d.ts](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/src/parse-favicon.d.ts)
+## API
+
+### parseFavicon
+
+```ts
+parseFavicon(
+  url: string
+, textFetcher: TextFetcher
+, bufferFetcher?: BufferFetcher
+): Observable<Icon>
+
+type TextFetcher = (url: string) => PromiseLike<string>
+type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
+
+interface Icon {
+  url: string
+  reference: string
+  type: undefined | string
+  size: undefined | 'any' | Size | Size[]
+}
+
+type Size = {
+  width: number
+  height: number
+}
+```
+
+`parseFavicon` accepts `textFetcher` and `bufferFetcher` for further fetching requests when parsing icons, bufferFetcher is optional.
+If you need actual icon sizes and type, should provide `bufferFetcher`.
+
+References related to `textFetcher`:
+* `msapplication-config`
+* `manifest`
+
+References related to `bufferFetcher`:
+* `/favicon.ico`
+* `/apple-touch-icon-57x57-precomposed.png`
+* `/apple-touch-icon-57x57.png`
+* `/apple-touch-icon-72x72-precomposed.png`
+* `/apple-touch-icon-72x72.png`
+* `/apple-touch-icon-114x114-precomposed.png`
+* `/apple-touch-icon-114x114.png`
+* `/apple-touch-icon-120x120-precomposed.png`
+* `/apple-touch-icon-120x120.png`
+* `/apple-touch-icon-144x144-precomposed.png`
+* `/apple-touch-icon-144x144.png`
+* `/apple-touch-icon-152x152-precomposed.png`
+* `/apple-touch-icon-152x152.png`
+* `/apple-touch-icon-180x180-precomposed.png`
+* `/apple-touch-icon-180x180.png`
+* `/apple-touch-icon-precomposed.png`
+* `/apple-touch-icon.png`
+
+## Support Icon References
+
+* `<link rel="icon" href="path/to/icon.png">`
+* `<link rel="shortcut icon" href="path/to/icon.ico">`
+* `<link rel="apple-touch-icon" href="path/to/icon.png">`
+* `<link rel="apple-touch-icon-precomposed" href="path/to/icon.png">`
+* `<link rel="manifest" href="path/to/manifest.webmanifest">`
+* `<link rel="fluid-icon" href="path/to/icon.png">`
+* `<link rel="mask-icon" href="path/to/icon.svg">`
+* `<meta name="msapplication-TitleImage" content="path/to/icon.png">`
+* `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
+* `<meta name="msapplication-square70x70logo" content="path/to/icon.png">`
+* `<meta name="msapplication-square150x150logo" content="path/to/icon.png">`
+* `<meta name="msapplication-square310x310logo" content="path/to/icon.png">`
+* `<meta name="msapplication-wide310x150logo" content="path/to/icon.png">`
+* `/favicon.ico`
+* `/apple-touch-icon-57x57-precomposed.png`
+* `/apple-touch-icon-57x57.png`
+* `/apple-touch-icon-72x72-precomposed.png`
+* `/apple-touch-icon-72x72.png`
+* `/apple-touch-icon-114x114-precomposed.png`
+* `/apple-touch-icon-114x114.png`
+* `/apple-touch-icon-120x120-precomposed.png`
+* `/apple-touch-icon-120x120.png`
+* `/apple-touch-icon-144x144-precomposed.png`
+* `/apple-touch-icon-144x144.png`
+* `/apple-touch-icon-152x152-precomposed.png`
+* `/apple-touch-icon-152x152.png`
+* `/apple-touch-icon-180x180-precomposed.png`
+* `/apple-touch-icon-180x180.png`
+* `/apple-touch-icon-precomposed.png`
+* `/apple-touch-icon.png`
 
 ## Related projects
 
-[BlackGlory/ico-size: A Node module to get dimensions of ico & cur image file](https://github.com/BlackGlory/ico-size)
-
-## Projects using parse-favicon
-
-Chrome extension:
-
-* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector)
-
-## References
-
-https://github.com/audreyr/favicon-cheat-sheet
+* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector):
