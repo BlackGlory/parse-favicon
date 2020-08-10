@@ -4,8 +4,8 @@ import 'jest-extended'
 describe('parseWindows8Tiles(html: string): Icon[]', () => {
   it('return Icon[] ', () => {
     const html = `
-      <meta name="msapplication-TitleImage" content>
-      <meta name="msapplication-TitleImage" content="path/to/icon.png">
+      <meta name="msapplication-TileImage" content>
+      <meta name="msapplication-TileImage" content="path/to/icon.png">
     `
 
     const result = parseWindows8Tiles(html)
@@ -13,7 +13,7 @@ describe('parseWindows8Tiles(html: string): Icon[]', () => {
     expect(result).toIncludeSameMembers([
       {
         url: 'path/to/icon.png'
-      , reference: 'msapplication-TitleImage'
+      , reference: 'msapplication-TileImage'
       , type: undefined
       , size: undefined
       }

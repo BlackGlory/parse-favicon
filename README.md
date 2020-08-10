@@ -94,7 +94,7 @@ References related to `bufferFetcher`:
 * `<link rel="manifest" href="path/to/manifest.webmanifest">`
 * `<link rel="fluid-icon" href="path/to/icon.png">`
 * `<link rel="mask-icon" href="path/to/icon.svg">`
-* `<meta name="msapplication-TitleImage" content="path/to/icon.png">`
+* `<meta name="msapplication-TileImage" content="path/to/icon.png">`
 * `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
 * `<meta name="msapplication-square70x70logo" content="path/to/icon.png">`
 * `<meta name="msapplication-square150x150logo" content="path/to/icon.png">`

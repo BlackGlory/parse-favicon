@@ -10,7 +10,7 @@ export function parseWindows8Tiles(html: string): Icon[] {
 }
 
 function getWindows8TileIcons(document: Document): Icon[] {
-  const nodes = query.call(document, css`meta[name="msapplication-TitleImage"]`)
+  const nodes = query.call(document, css`meta[name="msapplication-TileImage"]`)
   return new IterableOperator(nodes)
     .transform(transformElementToAttr('content'))
     .map(createWindows8TileIcon)
@@ -19,7 +19,7 @@ function getWindows8TileIcons(document: Document): Icon[] {
   function createWindows8TileIcon(url: string): Icon {
     return {
       url
-    , reference: 'msapplication-TitleImage'
+    , reference: 'msapplication-TileImage'
     , type: undefined
     , size: undefined
     }
