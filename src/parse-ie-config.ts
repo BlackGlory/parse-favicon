@@ -6,7 +6,7 @@ import { parseXML } from '@shared/parse-xml'
 import { isUrl } from '@shared/is-url'
 import { combineRelativeUrls } from '@shared/combine-relative-urls'
 import { transformElementToAttr } from '@shared/transform-element-to-attr'
-import { Icon, TextFetcher } from '@types'
+import { Icon, TextFetcher } from '@src/types'
 import { produce } from '@shared/immer'
 
 export async function parseIEConfig(html: string, textFetcher: TextFetcher): Promise<Icon[]> {

@@ -2,7 +2,7 @@ import { query, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
 import { parseHTML } from '@shared/parse-html'
 import { hasHref, getHref, getSize, getType } from '@shared/link-utils'
-import { Icon } from '@types'
+import { Icon } from '@src/types'
 
 export function parseAppleTouchIcons(html: string): Icon[] {
   const document = parseHTML(html)

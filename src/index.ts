@@ -10,7 +10,7 @@ import { parseMaskIcons } from '@src/parse-mask-icons'
 import { parseShortcutIcons } from '@src/parse-shortcut-icons'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
 import { parseImage } from '@src/parse-image'
-import { Icon, TextFetcher, BufferFetcher } from '@types'
+import { Icon, TextFetcher, BufferFetcher } from './types'
 import { Observable } from 'rxjs'
 
 export { Icon, TextFetcher, BufferFetcher }

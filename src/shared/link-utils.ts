@@ -1,6 +1,6 @@
 import 'core-js/es/string'
 import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
-import { Icon } from '@types'
+import { Icon } from '@src/types'
 
 export function getSize(element: HTMLLinkElement): Icon['size'] {
   const sizes = element.getAttribute('sizes')

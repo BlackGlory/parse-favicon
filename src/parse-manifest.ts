@@ -6,7 +6,7 @@ import { parseJSON } from '@shared/parse-json'
 import { isUrl } from '@shared/is-url'
 import { combineRelativeUrlsForManifest } from '@shared/combine-relative-urls'
 import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
-import { Icon, TextFetcher } from '@types'
+import { Icon, TextFetcher } from '@src/types'
 import { produce } from '@shared/immer'
 
 interface Manifest {

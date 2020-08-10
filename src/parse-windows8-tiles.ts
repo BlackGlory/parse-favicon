@@ -2,7 +2,7 @@ import { query, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
 import { parseHTML } from '@shared/parse-html'
 import { transformElementToAttr } from '@shared/transform-element-to-attr'
-import { Icon } from '@types'
+import { Icon } from '@src/types'
 
 export function parseWindows8Tiles(html: string): Icon[] {
   const document = parseHTML(html)
