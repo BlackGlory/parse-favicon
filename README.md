@@ -120,4 +120,4 @@ References related to `bufferFetcher`:
 
 ## Related projects
 
-* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector):
+* [favicon-detector: A simple way to detect website icons.](https://github.com/BlackGlory/favicon-detector)
