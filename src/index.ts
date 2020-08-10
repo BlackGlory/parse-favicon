@@ -10,80 +10,76 @@ import { parseMaskIcons } from '@src/parse-mask-icons'
 import { parseShortcutIcons } from '@src/parse-shortcut-icons'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
 import { parseImage } from '@src/parse-image'
-import { Icon, TextFetcher, BufferFetcher } from './types'
 import { Observable } from 'rxjs'
+import { produce } from '@shared/immer'
 
+import { Icon, TextFetcher, BufferFetcher } from './types'
 export { Icon, TextFetcher, BufferFetcher }
 
 export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetcher?: BufferFetcher): Observable<Icon> {
   return new Observable(observer => {
-    ;(async () => {
-      const html = await textFetcher(url)
+    parse(val => observer.next(val))
+      .then(() => observer.complete())
+      .catch(err => observer.error(err))
+  })
 
-      const pendings: Array<Promise<any>> = []
+  async function parse(publish: (val: Icon) => void) {
+    const html = await textFetcher(url)
 
-      parseAppleTouchIcons(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
+    const pendings: Array<Promise<void>> = []
 
-      parseFluidIcons(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
+    parseAppleTouchIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseFluidIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseIE11Tiles(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseMaskIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseShortcutIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    parseWindows8Tiles(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
 
-      parseIcons(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
+    if (bufferFetcher) {
+      getUrls().forEach(url => {
+        pendings.push((async () => {
+          const image = await getResultAsync(() => parseImage(url, bufferFetcher))
+          if (image) {
+            publish({
+              url
+            , reference: url
+            , type: image.type
+            , size: image.size
+            })
+          }
+        })())
+      })
+    }
 
-      parseIE11Tiles(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
-
-      parseMaskIcons(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
-
-      parseShortcutIcons(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
-
-      parseWindows8Tiles(html).forEach(icon =>
-        pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-      )
-
-      if (bufferFetcher) {
-        getUrls().forEach(url => {
-          pendings.push((async () => {
-            const image = await getResultAsync(() => parseImage(url, bufferFetcher))
-            if (image) {
-              observer.next({
-                url
-              , reference: url
-              , type: image.type
-              , size: image.size
-              })
-            }
-          })())
+    await parallel([
+      async () => {
+        ;(await parseIEConfig(html, textFetcher)).forEach(icon => {
+          pendings.push(updateIcon(icon).then(publish))
         })
       }
+    , async () => {
+        ;(await parseManifest(html, textFetcher)).forEach(icon => {
+          pendings.push(updateIcon(icon).then(publish))
+        })
+      }
+    ])
 
-      await parallel([
-        async () => {
-          ;(await parseIEConfig(html, textFetcher)).forEach(icon => {
-            pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-          })
-        }
-      , async () => {
-          ;(await parseManifest(html, textFetcher)).forEach(icon => {
-            pendings.push(tryEnhanceIcon(icon, bufferFetcher).then(x => observer.next(x)))
-          })
-        }
-      ])
+    await Promise.all(pendings)
+  }
 
-      await Promise.all(pendings)
-
-      observer.complete()
-    })()
-  })
+  async function updateIcon(icon: Icon): Promise<Icon> {
+    if (bufferFetcher) {
+      const image = await getResultAsync(() => parseImage(icon.url, bufferFetcher))
+      if (image) {
+        return produce(icon, icon => {
+          icon.type = image.type
+          icon.size = image.size
+        })
+      }
+    }
+    return icon
+  }
 }
 
 function getUrls() {
@@ -106,17 +102,4 @@ function getUrls() {
   , '/apple-touch-icon-precomposed.png'
   , '/apple-touch-icon.png'
   ]
-}
-
-async function tryEnhanceIcon(icon: Icon, bufferFetcher?: BufferFetcher): Promise<Icon> {
-  if (bufferFetcher) {
-    const image = await getResultAsync(() => parseImage(icon.url, bufferFetcher))
-    if (image) {
-      return Object.assign({}, icon, {
-        type: image.type
-      , size: image.size
-      })
-    }
-  }
-  return icon
 }
