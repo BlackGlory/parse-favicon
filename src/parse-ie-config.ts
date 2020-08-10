@@ -66,10 +66,10 @@ function getIcons(document: Document, selector: string, size: { width: number, h
 
   function createIcon(url: string, size: { width: number, height: number }): Icon {
     return {
-        reference: 'msapplication-config'
-      , url
-      , type: undefined
-      , size
+      reference: 'msapplication-config'
+    , url
+    , type: undefined
+    , size
     }
   }
 }

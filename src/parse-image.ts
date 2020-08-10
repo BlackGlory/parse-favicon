@@ -36,11 +36,19 @@ function getSize(buffer: Buffer): Image['size'] {
   const result = imageSize(buffer)
   if (result.images) {
     return new IterableOperator(result.images)
-      .map(x => ({ width: x.width!, height: x.height! }))
-      .uniqBy(x => `${x.width}x${x.height}`)
+      .map(x => createSize(x.width!, x.height!))
+      .uniqBy(sizeToString)
       .toArray()
   } else {
-    return { width: result.width!, height: result.height! }
+    return createSize(result.width!, result.height!)
+  }
+
+  function createSize(width: number, height: number) {
+    return { width, height }
+  }
+
+  function sizeToString(size: { width: number, height: number }) {
+    return `${size.width}x${size.height}`
   }
 }
 

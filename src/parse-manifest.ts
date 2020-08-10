@@ -4,7 +4,7 @@ import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/it
 import { parseHTML } from '@shared/parse-html'
 import { parseJSON } from '@shared/parse-json'
 import { isUrl } from '@shared/is-url'
-import { combineRelativeUrlsForManifest } from '@shared/combine-relative-urls'
+import { combineRelativeUrls } from '@shared/combine-relative-urls'
 import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
 import { Icon, TextFetcher } from '@src/types'
 import { produce } from '@shared/immer'
@@ -53,9 +53,9 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
     x.src
   , parseSpaceSeparatedSizes(x.sizes)
   , x.type
-  )).map(iconUrlsToRelativeUrls)
+  )).map(combineIconUrlWithManifestUrl)
 
-  function iconUrlsToRelativeUrls(icon: Icon): Icon {
+  function combineIconUrlWithManifestUrl(icon: Icon): Icon {
     return produce(icon, draft => {
       draft.url = combineRelativeUrlsForManifest(baseURI, icon.url)
     })
@@ -70,13 +70,18 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
       url
     , reference: 'manifest'
     , type
-    , size: getSize()
+    , size: createSize()
     }
 
-    function getSize(): Icon['size'] {
+    function createSize(): Icon['size'] {
       if (sizes.length === 0) return undefined
       if (sizes.length === 1) return sizes[0]
       return sizes
     }
   }
+}
+
+function combineRelativeUrlsForManifest(baseURI: string, relativeUrl: string): string {
+  if (relativeUrl.startsWith('/')) relativeUrl = '.' + relativeUrl
+  return combineRelativeUrls(baseURI, relativeUrl)
 }
