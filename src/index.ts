@@ -1,4 +1,3 @@
-import { parallel } from 'extra-promise'
 import { getResultAsync } from 'return-style'
 import { parseAppleTouchIcons } from '@src/parse-apple-touch-icons'
 import { parseFluidIcons } from '@src/parse-fluid-icons'
@@ -13,76 +12,86 @@ import { parseImage } from '@src/parse-image'
 import { Observable } from 'rxjs'
 import { produce } from '@shared/immer'
 
-import { Icon, TextFetcher, BufferFetcher } from './types'
+import { Icon, TextFetcher, BufferFetcher, Image } from './types'
 export { Icon, TextFetcher, BufferFetcher }
 
 export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetcher?: BufferFetcher): Observable<Icon> {
   return new Observable(observer => {
-    parse(val => observer.next(val))
+    parse(icon => observer.next(icon))
       .then(() => observer.complete())
       .catch(err => observer.error(err))
   })
 
-  async function parse(publish: (val: Icon) => void) {
+  async function parse(publish: (icon: Icon) => void) {
     const html = await textFetcher(url)
 
-    const pendings: Array<Promise<void>> = []
-
-    parseAppleTouchIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseFluidIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseIE11Tiles(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseMaskIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseShortcutIcons(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
-    parseWindows8Tiles(html).forEach(icon => pendings.push(updateIcon(icon).then(publish)))
+    const icons = [
+      ...parseAppleTouchIcons(html)
+    , ...parseFluidIcons(html)
+    , ...parseIcons(html)
+    , ...parseIE11Tiles(html)
+    , ...parseMaskIcons(html)
+    , ...parseShortcutIcons(html)
+    , ...parseWindows8Tiles(html)
+    ]
 
     if (bufferFetcher) {
-      getUrls().forEach(url => {
-        pendings.push((async () => {
-          const image = await getResultAsync(() => parseImage(url, bufferFetcher))
-          if (image) {
-            publish({
-              url
-            , reference: url
-            , type: image.type
-            , size: image.size
-            })
-          }
-        })())
+      const imagePromisePool = new Map<string, Promise<Image | undefined>>()
+
+      icons.forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon)))
+
+      ;(await Promise.all([
+        parseIEConfig(html, textFetcher)
+      , parseManifest(html, textFetcher)
+      ])).flatMap(x => x).forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon)))
+
+      getDefaultIconUrls().forEach(async url => {
+        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(url))
+        const image = await imagePromisePool.get(url)
+        if (image) {
+          publish({
+            url
+          , reference: url
+          , type: image.type
+          , size: image.size
+          })
+        }
       })
+
+      await Promise.all(imagePromisePool.values())
+    } else {
+      icons.forEach(publish)
+
+      ;(await Promise.all([
+        parseIEConfig(html, textFetcher)
+      , parseManifest(html, textFetcher)
+      ])).flatMap(x => x).forEach(publish)
     }
-
-    await parallel([
-      async () => {
-        ;(await parseIEConfig(html, textFetcher)).forEach(icon => {
-          pendings.push(updateIcon(icon).then(publish))
-        })
-      }
-    , async () => {
-        ;(await parseManifest(html, textFetcher)).forEach(icon => {
-          pendings.push(updateIcon(icon).then(publish))
-        })
-      }
-    ])
-
-    await Promise.all(pendings)
   }
 
-  async function updateIcon(icon: Icon): Promise<Icon> {
-    if (bufferFetcher) {
-      const image = await getResultAsync(() => parseImage(icon.url, bufferFetcher))
-      if (image) {
-        return produce(icon, icon => {
-          icon.type = image.type
-          icon.size = image.size
-        })
-      }
+  async function tryUpdateIcon(imagePromisePool: Map<string, Promise<Image | undefined>>, icon: Icon): Promise<Icon> {
+    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(icon.url))
+    const image = await imagePromisePool.get(icon.url)
+    if (image) {
+      return updateIcon(icon, image)
+    } else {
+      return icon
     }
-    return icon
+  }
+
+  async function fetchImage(url: string): Promise<Image | undefined> {
+    return await getResultAsync(() => parseImage(url, bufferFetcher!))
+  }
+
+  function updateIcon(icon: Icon, image: Image): Icon {
+    return produce(icon, icon => {
+      icon.type = image.type
+      icon.size = image.size
+    })
   }
 }
 
-function getUrls() {
+function getDefaultIconUrls() {
   return [
     '/favicon.ico'
   , '/apple-touch-icon-57x57-precomposed.png'
