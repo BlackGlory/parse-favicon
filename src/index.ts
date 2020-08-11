@@ -80,7 +80,10 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
   }
 
   async function fetchImage(url: string): Promise<Image | undefined> {
-    return await getResultAsync(() => parseImage(url, bufferFetcher!))
+    const buffer = await getResultAsync(() => bufferFetcher!(url))
+    if (buffer) {
+      return await getResultAsync(() => parseImage(Buffer.from(buffer)))
+    }
   }
 
   function updateIcon(icon: Icon, image: Image): Icon {

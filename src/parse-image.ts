@@ -1,15 +1,14 @@
 import { fromBuffer } from 'file-type'
 import { imageSize } from 'image-size'
 import isSvg from 'is-svg'
-import { Image, BufferFetcher } from '@src/types'
+import { Image } from '@src/types'
 import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
 
 export class UnknownImageFormatError extends Error {
   name = this.constructor.name
 }
 
-export async function parseImage(url: string, bufferFetcher: BufferFetcher): Promise<Image> {
-  const buffer = Buffer.from(await bufferFetcher(url))
+export async function parseImage(buffer: Buffer): Promise<Image> {
   const type = await fromBuffer(buffer)
   if (type) {
     if (isImage(type.mime)) {
