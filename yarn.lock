@@ -275,6 +275,11 @@
   resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.3.1.tgz#e1e147c6ef4f1fb4ff5a6232046fc2f73b65c653"
   integrity sha512-qubFHaUleSE9xZ8/Gmlnkgg6OKXaC25fI3XbqjksSSmzU4D/0zZ10LqlBDny4ooHrwE/3x7gZxPJgS+pyMTORA==
 
+"@blackglory/types@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-0.1.3.tgz#a2fc6e8cabe6179cd4ffd6d9e24f1bdda1c11ece"
+  integrity sha512-cjRb5Yc2ecxNTTYG25S0sqXqaVC++RhWnVE1E/g5/QUcdxBowTAzdbP9Aa7CRKB7NqXdq56IKc8HQ+6mGd7eKg==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
