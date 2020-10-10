@@ -270,6 +270,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@blackglory/jest-matchers@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@blackglory/jest-matchers/-/jest-matchers-0.1.1.tgz#8e42bd4a580dc590f12c972591d0c38ebe7d0103"
+  integrity sha512-1laikD3L0NgpF3Mkq5PwVVVqPpXGcjNTdvzMuwX8gCMOyCan8fVZ4Rg6qd26ezY3gX99SZIUGP/jK1ZLuRpj8A==
+  dependencies:
+    "@blackglory/types" "^0.1.3"
+
 "@blackglory/query@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.3.2.tgz#a009debe3fa6c9a322475a9e8d3ef2b09a8fdd9d"

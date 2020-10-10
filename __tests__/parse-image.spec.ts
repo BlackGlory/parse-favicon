@@ -2,7 +2,7 @@ import { getErrorAsync } from 'return-style'
 import { parseImage, UnknownImageFormatError } from '@src/parse-image'
 import * as path from 'path'
 import { promises as fs } from 'fs'
-import '@test/matchers'
+import '@blackglory/jest-matchers'
 
 describe('parseImage(buffer: Buffer): Promise<Image>', () => {
   describe('resource is a known image format', () => {

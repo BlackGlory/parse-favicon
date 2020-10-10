@@ -1,7 +1,7 @@
 import { getErrorAsync } from 'return-style'
 import { stripIndent } from 'common-tags'
 import { parseManifest } from '@src/parse-manifest'
-import '@test/matchers'
+import '@blackglory/jest-matchers'
 import 'jest-extended'
 
 describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () => {

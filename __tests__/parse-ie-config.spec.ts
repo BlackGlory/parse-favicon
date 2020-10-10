@@ -1,7 +1,7 @@
 import { getErrorAsync } from 'return-style'
 import { stripIndent } from 'common-tags'
 import { parseIEConfig } from '@src/parse-ie-config'
-import '@test/matchers'
+import '@blackglory/jest-matchers'
 import 'jest-extended'
 
 describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () => {
