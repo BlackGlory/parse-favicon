@@ -34,7 +34,8 @@
     "build": "yarn build:es2015 && yarn build:es2018",
     "build:es2015": "tsc --project tsconfig.build.json --module commonjs --target es2015 --outDir lib/es2015 && tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2015",
     "build:es2018": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib/es2018 && tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2018",
-    "bundle": "rollup -c rollup.config.js"
+    "bundle": "rollup -c rollup.config.js",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
@@ -66,6 +67,7 @@
     "return-style": "^0.10.0",
     "rollup": "^2.29.0",
     "rollup-plugin-terser": "^7.0.2",
+    "standard-version": "^9.0.0",
     "ts-jest": "^26.4.1",
     "tscpaths": "^0.0.9",
     "typescript": "^4.0.3"
