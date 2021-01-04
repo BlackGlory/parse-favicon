@@ -4,7 +4,6 @@
   , "module": "CommonJS"
   , "strict": true
   , "lib": ["DOM", "ES2019", "ES2020.String"]
-  , "esModuleInterop": true
   , "noUnusedLocals": true
   , "noUnusedParameters": true
   , "baseUrl": "."
