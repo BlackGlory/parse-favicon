@@ -17,7 +17,7 @@ import { parseFavicon } from 'parse-favicon'
 
 const pageUrl = 'https://github.com'
 
-parseFavicion(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
+parseFavicon(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
 
 async function textFetcher(url) {
   return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
