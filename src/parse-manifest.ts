@@ -30,17 +30,18 @@ export async function parseManifest(html: string, textFetcher: TextFetcher): Pro
   })
   return ([] as Icon[]).concat(...results)
 
-  async function fetch(url: string): Promise<string | undefined> {
+  async function fetch(url: string): Promise<string | null> {
     try {
       return await textFetcher(url)
-    } catch (e) {
-      return undefined
+    } catch {
+      return null
     }
   }
 }
 
 function getManifestUrls(document: Document): string[] {
   const nodes = query.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
+
   return new IterableOperator(nodes)
     .map(x => x.getAttribute('href'))
     .filter<string>(isUrl)
@@ -49,11 +50,10 @@ function getManifestUrls(document: Document): string[] {
 
 function getManifestIcons(json: string, baseURI: string): Icon[] {
   const manifest = parseJSON<Manifest>(json)
-  return manifest.icons.map(x => createManifestIcon(
-    x.src
-  , parseSpaceSeparatedSizes(x.sizes)
-  , x.type
-  )).map(combineIconUrlWithManifestUrl)
+
+  return manifest.icons
+    .map(x => createManifestIcon(x.src, parseSpaceSeparatedSizes(x.sizes), x.type))
+    .map(combineIconUrlWithManifestUrl)
 
   function combineIconUrlWithManifestUrl(icon: Icon): Icon {
     return produce(icon, draft => {
@@ -82,6 +82,5 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
 }
 
 function combineRelativeUrlsForManifest(baseURI: string, relativeUrl: string): string {
-  if (relativeUrl.startsWith('/')) relativeUrl = '.' + relativeUrl
   return combineRelativeUrls(baseURI, relativeUrl)
 }

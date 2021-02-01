@@ -84,5 +84,36 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         }
       ])
     })
+
+    describe('absolute path', () => {
+      it('return Icon[]', async () => {
+        const html = `
+          <link rel="manifest" href="path/to/manifest.webmanifest">
+        `
+        const manifest = stripIndent`
+          {
+            "icons": [
+              {
+                "src": "/path/to/icon",
+                "sizes": "48x48"
+              }
+            ]
+          }
+        `
+
+        const result = parseManifest(html, async () => manifest)
+        const proResult = await result
+
+        expect(result).toBePromise()
+        expect(proResult).toIncludeSameMembers([
+          {
+            url: '/path/to/icon'
+          , reference: 'manifest'
+          , type: undefined
+          , size: { width: 48, height: 48 }
+          }
+        ])
+      })
+    })
   })
 })
