@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.11](https://github.com/BlackGlory/parse-favicon/compare/v3.0.10...v3.0.11) (2021-02-01)
+
 ### [3.0.10](https://github.com/BlackGlory/parse-favicon/compare/v3.0.9...v3.0.10) (2021-02-01)
 
 
