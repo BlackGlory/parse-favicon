@@ -291,12 +291,12 @@
     fs-extra "^9.0.1"
     jest-diff "^26.6.2"
 
-"@blackglory/query@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.3.9.tgz#333fd4d8de9e1c59536177744d2a7cc0a64f9761"
-  integrity sha512-uww2hpkJOBGO2NZN6PUhOhpFyHdzRBVVlkEubLcOqoVuvWgBZUd4uMYqe+vShj3kBcIlQ+I0bFye+ZfWnQceUQ==
+"@blackglory/query@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.3.10.tgz#033f5fcd13ffcde4e10bfac87624b3608bdd4ba5"
+  integrity sha512-4UQYURwbm2kskFjPKgmJeaHhL5pDyngCSrVd1TLQr0IJT4kaCffQqFu5aiPWj5d6dC5pCx9uN7MBCMTbdTCfbQ==
   dependencies:
-    "@blackglory/types" "^0.2.10"
+    "@blackglory/types" "^0.2.11"
 
 "@blackglory/structures@^0.1.8":
   version "0.1.9"
@@ -320,6 +320,16 @@
   dependencies:
     "@types/node" "^14.14.22"
     ajv "^7.0.3"
+    jsdom "^16.4.0"
+
+"@blackglory/types@^0.2.11":
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-0.2.11.tgz#0e911a31470f163fabccd70686f2d507ee4fa841"
+  integrity sha512-FADvGYOCQZJsXTETrYHQ5NqaLfz+iCE/yPZQiE87xV+4JBAeSgyuB+j+mi3NwYWp+gTZQ3P+9KonnlezNW2kIw==
+  dependencies:
+    "@types/node" "^14.14.22"
+    ajv "^7.0.3"
+    extra-dom "^0.2.9"
     jsdom "^16.4.0"
 
 "@blackglory/types@^0.2.7", "@blackglory/types@^0.2.9":
@@ -2305,10 +2315,10 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz#21fdc8fbcd9c795cc0321f0563702095751511a8"
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
-eslint@^7.18.0:
-  version "7.18.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.18.0.tgz#7fdcd2f3715a41fe6295a16234bd69aed2c75e67"
-  integrity sha512-fbgTiE8BfUJZuBeq2Yi7J3RB3WGUQ9PNuNbmgi6jt9Iv8qrkxfy19Ds3OpL1Pm7zg3BtTVhvcUZbIRQ0wmSjAQ==
+eslint@^7.19.0:
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.19.0.tgz#6719621b196b5fad72e43387981314e5d0dc3f41"
+  integrity sha512-CGlMgJY56JZ9ZSYhJuhow61lMPPjUzWmChFya71Z/jilVos7mR/jPgaEfVGgMBY5DshbKdG8Ezb8FDCHcoMEMg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@eslint/eslintrc" "^0.3.0"
@@ -2530,6 +2540,14 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+extra-dom@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.2.9.tgz#e53e4071a56c3f204efcb731be5db432e2cc49d9"
+  integrity sha512-rUkSC+cr8L3XqQ2SWjavk3YVh6xtW8LzowW36NQuyXhw8NVxHwEU64u06i0JBi0SQMitGPWZ4lViroMN1wOFWA==
+  dependencies:
+    "@blackglory/types" "^0.2.10"
+    iterable-operator "^0.13.0"
 
 extra-promise@^0.13.15:
   version "0.13.15"

@@ -61,7 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "common-tags": "^1.8.0",
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "husky": "^4.3.8",
     "jest": "^26.6.3",
     "jest-extended": "^0.11.5",
@@ -74,8 +74,8 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "@blackglory/query": "^0.3.9",
-    "@blackglory/types": "^0.2.10",
+    "@blackglory/query": "^0.3.10",
+    "@blackglory/types": "^0.2.11",
     "core-js": "^3.8.3",
     "extra-promise": "^0.13.15",
     "file-type": "^16.2.0",
