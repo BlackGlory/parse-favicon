@@ -49,11 +49,11 @@ type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
 interface Icon {
   url: string
   reference: string
-  type: undefined | string
-  size: undefined | 'any' | Size | Size[]
+  type: null | string
+  size: null | 'any' | Size | Size[]
 }
 
-type Size = {
+interface Size {
   width: number
   height: number
 }
@@ -63,61 +63,61 @@ type Size = {
 If you need actual icon sizes and type, should provide `bufferFetcher`.
 
 References related to `textFetcher`:
-* `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
-* `<link rel="manifest" href="path/to/manifest.webmanifest">`
+- `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
+- `<link rel="manifest" href="path/to/manifest.webmanifest">`
 
 References related to `bufferFetcher`:
-* `/favicon.ico`
-* `/apple-touch-icon-57x57-precomposed.png`
-* `/apple-touch-icon-57x57.png`
-* `/apple-touch-icon-72x72-precomposed.png`
-* `/apple-touch-icon-72x72.png`
-* `/apple-touch-icon-114x114-precomposed.png`
-* `/apple-touch-icon-114x114.png`
-* `/apple-touch-icon-120x120-precomposed.png`
-* `/apple-touch-icon-120x120.png`
-* `/apple-touch-icon-144x144-precomposed.png`
-* `/apple-touch-icon-144x144.png`
-* `/apple-touch-icon-152x152-precomposed.png`
-* `/apple-touch-icon-152x152.png`
-* `/apple-touch-icon-180x180-precomposed.png`
-* `/apple-touch-icon-180x180.png`
-* `/apple-touch-icon-precomposed.png`
-* `/apple-touch-icon.png`
+- `/favicon.ico`
+- `/apple-touch-icon-57x57-precomposed.png`
+- `/apple-touch-icon-57x57.png`
+- `/apple-touch-icon-72x72-precomposed.png`
+- `/apple-touch-icon-72x72.png`
+- `/apple-touch-icon-114x114-precomposed.png`
+- `/apple-touch-icon-114x114.png`
+- `/apple-touch-icon-120x120-precomposed.png`
+- `/apple-touch-icon-120x120.png`
+- `/apple-touch-icon-144x144-precomposed.png`
+- `/apple-touch-icon-144x144.png`
+- `/apple-touch-icon-152x152-precomposed.png`
+- `/apple-touch-icon-152x152.png`
+- `/apple-touch-icon-180x180-precomposed.png`
+- `/apple-touch-icon-180x180.png`
+- `/apple-touch-icon-precomposed.png`
+- `/apple-touch-icon.png`
 
 ## Support references
 
-* `<link rel="icon" href="path/to/icon.png">`
-* `<link rel="shortcut icon" href="path/to/icon.ico">`
-* `<link rel="apple-touch-icon" href="path/to/icon.png">`
-* `<link rel="apple-touch-icon-precomposed" href="path/to/icon.png">`
-* `<link rel="manifest" href="path/to/manifest.webmanifest">`
-* `<link rel="fluid-icon" href="path/to/icon.png">`
-* `<link rel="mask-icon" href="path/to/icon.svg">`
-* `<meta name="msapplication-TileImage" content="path/to/icon.png">`
-* `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
-* `<meta name="msapplication-square70x70logo" content="path/to/icon.png">`
-* `<meta name="msapplication-square150x150logo" content="path/to/icon.png">`
-* `<meta name="msapplication-square310x310logo" content="path/to/icon.png">`
-* `<meta name="msapplication-wide310x150logo" content="path/to/icon.png">`
-* `/favicon.ico`
-* `/apple-touch-icon-57x57-precomposed.png`
-* `/apple-touch-icon-57x57.png`
-* `/apple-touch-icon-72x72-precomposed.png`
-* `/apple-touch-icon-72x72.png`
-* `/apple-touch-icon-114x114-precomposed.png`
-* `/apple-touch-icon-114x114.png`
-* `/apple-touch-icon-120x120-precomposed.png`
-* `/apple-touch-icon-120x120.png`
-* `/apple-touch-icon-144x144-precomposed.png`
-* `/apple-touch-icon-144x144.png`
-* `/apple-touch-icon-152x152-precomposed.png`
-* `/apple-touch-icon-152x152.png`
-* `/apple-touch-icon-180x180-precomposed.png`
-* `/apple-touch-icon-180x180.png`
-* `/apple-touch-icon-precomposed.png`
-* `/apple-touch-icon.png`
+- `<link rel="icon" href="path/to/icon.png">`
+- `<link rel="shortcut icon" href="path/to/icon.ico">`
+- `<link rel="apple-touch-icon" href="path/to/icon.png">`
+- `<link rel="apple-touch-icon-precomposed" href="path/to/icon.png">`
+- `<link rel="manifest" href="path/to/manifest.webmanifest">`
+- `<link rel="fluid-icon" href="path/to/icon.png">`
+- `<link rel="mask-icon" href="path/to/icon.svg">`
+- `<meta name="msapplication-TileImage" content="path/to/icon.png">`
+- `<meta name="msapplication-config" content="path/to/ieconfig.xml">`
+- `<meta name="msapplication-square70x70logo" content="path/to/icon.png">`
+- `<meta name="msapplication-square150x150logo" content="path/to/icon.png">`
+- `<meta name="msapplication-square310x310logo" content="path/to/icon.png">`
+- `<meta name="msapplication-wide310x150logo" content="path/to/icon.png">`
+- `/favicon.ico`
+- `/apple-touch-icon-57x57-precomposed.png`
+- `/apple-touch-icon-57x57.png`
+- `/apple-touch-icon-72x72-precomposed.png`
+- `/apple-touch-icon-72x72.png`
+- `/apple-touch-icon-114x114-precomposed.png`
+- `/apple-touch-icon-114x114.png`
+- `/apple-touch-icon-120x120-precomposed.png`
+- `/apple-touch-icon-120x120.png`
+- `/apple-touch-icon-144x144-precomposed.png`
+- `/apple-touch-icon-144x144.png`
+- `/apple-touch-icon-152x152-precomposed.png`
+- `/apple-touch-icon-152x152.png`
+- `/apple-touch-icon-180x180-precomposed.png`
+- `/apple-touch-icon-180x180.png`
+- `/apple-touch-icon-precomposed.png`
+- `/apple-touch-icon.png`
 
 ## Related projects
 
-* [favicon-detector: A simple way to detect website icons](https://github.com/BlackGlory/favicon-detector)
+- [favicon-detector: A simple way to detect website icons](https://github.com/BlackGlory/favicon-detector)

@@ -17,25 +17,25 @@ function getSize(element: HTMLLinkElement): Icon['size'] {
   if (sizes) {
     if (sizes === 'any') return 'any'
     const results = parseSpaceSeparatedSizes(sizes)
-    if (results.length === 0) return undefined
+    if (results.length === 0) return null
     if (results.length === 1) return results[0]
     return results
   }
-  return undefined
+  return null
 }
 
-function getHref(element: HTMLLinkElement): string | undefined {
-  return element.getAttribute('href') || undefined
+function getHref(element: HTMLLinkElement): string | null{
+  return element.getAttribute('href') || null
 }
 
-function getType(element:  HTMLLinkElement): string | undefined {
-  return element.getAttribute('type') || undefined
+function getType(element:  HTMLLinkElement): string | null {
+  return element.getAttribute('type') || null
 }
 
 function hasHref(element: HTMLLinkElement): boolean {
   return !!element.getAttribute('href')
 }
 
-function createIcon(reference: string, url: string, type?: string, size?: Icon['size']): Icon {
+function createIcon(reference: string, url: string, type: string | null, size: Icon['size'] | null): Icon {
   return { reference, url, type, size }
 }

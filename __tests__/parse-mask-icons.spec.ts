@@ -15,8 +15,8 @@ describe('parseMackIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon.svg'
         , reference: 'mask-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       ])
     })
@@ -35,14 +35,14 @@ describe('parseMackIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.svg'
         , reference: 'mask-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-2.svg'
         , reference: 'mask-icon'
         , type: 'image/svg+xml'
-        , size: undefined
+        , size: null
         }
       ])
     })
@@ -64,31 +64,31 @@ describe('parseMackIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.svg'
         , reference: 'mask-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-2.svg'
         , reference: 'mask-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-3.svg'
         , reference: 'mask-icon'
-        , type: undefined
+        , type: null
         , size: { width: 128, height: 128 }
         }
       , {
           url: 'path/to/icon-4.svg'
         , reference: 'mask-icon'
-        , type: undefined
+        , type: null
         , size: [{ width: 128, height: 128 }, { width: 256, height: 256 }]
         }
       , {
           url: 'path/to/icon-5.svg'
         , reference: 'mask-icon'
-        , type: undefined
+        , type: null
         , size: 'any'
         }
       ])

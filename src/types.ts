@@ -1,13 +1,8 @@
-export type Size = {
-  width: number
-  height: number
-}
-
 export interface Icon {
   url: string
   reference: string
-  type: undefined | string
-  size: undefined | 'any' | Size | Size[]
+  type: null | string
+  size: null | 'any' | Size | Size[]
 }
 
 export interface Image {
@@ -17,3 +12,8 @@ export interface Image {
 
 export type TextFetcher = (url: string) => PromiseLike<string>
 export type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
+
+export interface Size {
+  width: number
+  height: number
+}

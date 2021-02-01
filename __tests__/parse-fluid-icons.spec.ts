@@ -15,8 +15,8 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon.png'
         , reference: 'fluid-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       ])
     })
@@ -35,14 +35,14 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.png'
         , reference: 'fluid-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-2.png'
         , reference: 'fluid-icon'
         , type: 'image/png'
-        , size: undefined
+        , size: null
         }
       ])
     })
@@ -63,25 +63,25 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.png'
         , reference: 'fluid-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-2.png'
         , reference: 'fluid-icon'
-        , type: undefined
-        , size: undefined
+        , type: null
+        , size: null
         }
       , {
           url: 'path/to/icon-3.png'
         , reference: 'fluid-icon'
-        , type: undefined
+        , type: null
         , size: { width: 128, height: 128 }
         }
       , {
           url: 'path/to/icon-4.png'
         , reference: 'fluid-icon'
-        , type: undefined
+        , type: null
         , size: [{ width: 128, height: 128 }, { width: 256, height: 256 }]
         }
       ])

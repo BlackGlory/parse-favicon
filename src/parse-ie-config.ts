@@ -13,7 +13,7 @@ export async function parseIEConfig(html: string, textFetcher: TextFetcher): Pro
   const document = parseHTML(html)
   const configUrls = getConfigUrls(document)
   const icons = await map(configUrls, getIconsFromUrl)
-  return icons.flatMap(x => x)
+  return icons.flat()
 
   async function getIconsFromUrl(url: string): Promise<Icon[]> {
     const text = await fetch(url)
@@ -23,11 +23,11 @@ export async function parseIEConfig(html: string, textFetcher: TextFetcher): Pro
       return []
     }
 
-    async function fetch(url: string): Promise<string | undefined> {
+    async function fetch(url: string): Promise<string | null> {
       try {
         return await textFetcher(url)
       } catch {
-        return undefined
+        return null
       }
     }
   }
@@ -68,7 +68,7 @@ function getIcons(document: Document, selector: string, size: { width: number, h
     return {
       reference: 'msapplication-config'
     , url
-    , type: undefined
+    , type: null
     , size
     }
   }

@@ -69,12 +69,12 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
     return {
       url
     , reference: 'manifest'
-    , type
+    , type: type ?? null
     , size: createSize()
     }
 
     function createSize(): Icon['size'] {
-      if (sizes.length === 0) return undefined
+      if (sizes.length === 0) return null
       if (sizes.length === 1) return sizes[0]
       return sizes
     }

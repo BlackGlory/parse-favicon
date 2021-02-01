@@ -15,8 +15,8 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon.ico'
         , reference: 'shortcut-icon'
-        , size: undefined
-        , type: undefined
+        , size: null
+        , type: null
         }
       ])
     })
@@ -35,13 +35,13 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.png'
         , reference: 'shortcut-icon'
-        , size: undefined
-        , type: undefined
+        , size: null
+        , type: null
         }
       , {
           url: 'path/to/icon-2.ico'
         , reference: 'shortcut-icon'
-        , size: undefined
+        , size: null
         , type: 'image/ico'
         }
       ])
@@ -64,32 +64,32 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
         {
           url: 'path/to/icon-1.ico'
         , reference: 'shortcut-icon'
-        , size: undefined
-        , type: undefined
+        , size: null
+        , type: null
         }
       , {
           url: 'path/to/icon-2.ico'
         , reference: 'shortcut-icon'
-        , size: undefined
-        , type: undefined
+        , size: null
+        , type: null
         }
       , {
           url: 'path/to/icon-3.ico'
         , reference: 'shortcut-icon'
         , size: { width: 16, height: 16 }
-        , type: undefined
+        , type: null
         }
       , {
           url: 'path/to/icon-4.icns'
         , reference: 'shortcut-icon'
         , size: [{ width: 16, height: 16 }, { width: 32, height: 32 }]
-        , type: undefined
+        , type: null
         }
       , {
           url: 'path/to/icon-5.svg'
         , reference: 'shortcut-icon'
         , size: 'any'
-        , type: undefined
+        , type: null
         }
       ])
     })

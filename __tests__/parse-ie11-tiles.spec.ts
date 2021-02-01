@@ -16,7 +16,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square70x70logo'
         , size: { width: 70, height: 70 }
-        , type: undefined
+        , type: null
         }
       ])
     })
@@ -36,7 +36,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square150x150logo'
         , size: { width: 150, height: 150 }
-        , type: undefined
+        , type: null
         }
       ])
     })
@@ -56,7 +56,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square310x310logo'
         , size: { width: 310, height: 310 }
-        , type: undefined
+        , type: null
         }
       ])
     })
@@ -76,7 +76,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
           url: 'path/to/icon.png'
         , reference: 'msapplication-wide310x150logo'
         , size: { width: 310, height: 150 }
-        , type: undefined
+        , type: null
         }
       ])
     })

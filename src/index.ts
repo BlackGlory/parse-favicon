@@ -36,17 +36,19 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     ]
 
     if (bufferFetcher) {
-      const imagePromisePool = new Map<string, Promise<Image | undefined>>()
+      const imagePromisePool = new Map<string, Promise<Image | null>>()
 
-      icons.forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon)))
+      icons.forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon, bufferFetcher)))
 
       ;(await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
-      ])).flatMap(x => x).forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon)))
+      ]))
+      .flat()
+      .forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon, bufferFetcher)))
 
       getDefaultIconUrls().forEach(async url => {
-        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(url))
+        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(url, bufferFetcher))
         const image = await imagePromisePool.get(url)
         if (image) {
           publish({
@@ -65,12 +67,14 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
       ;(await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
-      ])).flatMap(x => x).forEach(publish)
+      ]))
+        .flat()
+        .forEach(publish)
     }
   }
 
-  async function tryUpdateIcon(imagePromisePool: Map<string, Promise<Image | undefined>>, icon: Icon): Promise<Icon> {
-    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(icon.url))
+  async function tryUpdateIcon(imagePromisePool: Map<string, Promise<Image | null>>, icon: Icon, bufferFetcher: BufferFetcher): Promise<Icon> {
+    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(icon.url, bufferFetcher))
     const image = await imagePromisePool.get(icon.url)
     if (image) {
       return updateIcon(icon, image)
@@ -79,10 +83,13 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     }
   }
 
-  async function fetchImage(url: string): Promise<Image | undefined> {
-    const buffer = await getResultAsync(() => bufferFetcher!(url))
-    if (buffer) {
-      return await getResultAsync(() => parseImage(Buffer.from(buffer)))
+  async function fetchImage(url: string, bufferFetcher: BufferFetcher): Promise<Image | null> {
+    const buffer = await getResultAsync(() => bufferFetcher(url))
+    if (!buffer) return null
+    try {
+      return await parseImage(Buffer.from(buffer))
+    } catch {
+      return null
     }
   }
 

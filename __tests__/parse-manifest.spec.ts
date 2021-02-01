@@ -64,13 +64,13 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         {
           url: 'path/to/path/to/icon'
         , reference: 'manifest'
-        , type: undefined
+        , type: null
         , size: { width: 48, height: 48 }
         }
       , {
           url: 'path/to/path/to/icon.ico'
         , reference: 'manifest'
-        , type: undefined
+        , type: null
         , size: [
             { width: 72, height: 72 }
           , { width: 128, height: 128 }
@@ -109,7 +109,7 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           {
             url: '/path/to/icon'
           , reference: 'manifest'
-          , type: undefined
+          , type: null
           , size: { width: 48, height: 48 }
           }
         ])

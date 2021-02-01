@@ -20,8 +20,8 @@ function getWindows8TileIcons(document: Document): Icon[] {
     return {
       url
     , reference: 'msapplication-TileImage'
-    , type: undefined
-    , size: undefined
+    , type: null
+    , size: null
     }
   }
 }

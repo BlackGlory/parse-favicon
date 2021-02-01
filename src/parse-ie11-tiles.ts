@@ -25,7 +25,7 @@ function getIcons(document: Document, selector: string, reference: string, size:
     return {
       reference
     , url
-    , type: undefined
+    , type: null
     , size
     }
   }

@@ -14,8 +14,8 @@ describe('parseWindows8Tiles(html: string): Icon[]', () => {
       {
         url: 'path/to/icon.png'
       , reference: 'msapplication-TileImage'
-      , type: undefined
-      , size: undefined
+      , type: null
+      , size: null
       }
     ])
   })

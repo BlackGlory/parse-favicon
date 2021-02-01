@@ -58,6 +58,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
+          , type: null
           , size: { width: 70, height: 70 }
           }
         ])
@@ -89,6 +90,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
+          , type: null
           , size: { width: 150, height: 150 }
           }
         ])
@@ -120,6 +122,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
+          , type: null
           , size: { width: 310, height: 150 }
           }
         ])
@@ -151,6 +154,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
+          , type: null
           , size: { width: 310, height: 310 }
           }
         ])

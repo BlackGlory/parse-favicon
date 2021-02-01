@@ -16,8 +16,8 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon.png'
           , reference: 'apple-touch-icon'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         ])
       })
@@ -36,13 +36,13 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon'
-          , type: undefined
-          , size: undefined
+          , type: null
+          , size: null
           }
         , {
             url: 'path/to/icon-2.png'
           , reference: 'apple-touch-icon'
-          , size: undefined
+          , size: null
           , type: 'image/png'
           }
         ])
@@ -65,32 +65,32 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         , {
             url: 'path/to/icon-2.png'
           , reference: 'apple-touch-icon'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         , {
             url: 'path/to/icon-3.png'
           , reference: 'apple-touch-icon'
           , size: { width: 72, height: 72 }
-          , type: undefined
+          , type: null
           }
         , {
             url: 'path/to/icon-4.png'
           , reference: 'apple-touch-icon'
           , size: [{ width: 72, height: 72 }, { width: 144, height: 144 }]
-          , type: undefined
+          , type: null
           }
         , {
             url: 'path/to/icon-5.svg'
           , reference: 'apple-touch-icon'
           , size: 'any'
-          , type: undefined
+          , type: null
           }
         ])
       })
@@ -110,8 +110,8 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon.png'
           , reference: 'apple-touch-icon-precomposed'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         ])
       })
@@ -129,13 +129,13 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon-precomposed'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         , {
             url: 'path/to/icon-2.png'
           , reference: 'apple-touch-icon-precomposed'
-          , size: undefined
+          , size: null
           , type: 'image/png'
           }
         ])
@@ -158,32 +158,32 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon-precomposed'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         , {
             url: 'path/to/icon-2.png'
           , reference: 'apple-touch-icon-precomposed'
-          , size: undefined
-          , type: undefined
+          , size: null
+          , type: null
           }
         , {
             url: 'path/to/icon-3.png'
           , reference: 'apple-touch-icon-precomposed'
           , size: { width: 72, height: 72 }
-          , type: undefined
+          , type: null
           }
         , {
             url: 'path/to/icon-4.png'
           , reference: 'apple-touch-icon-precomposed'
           , size: [{ width: 72, height: 72 }, { width: 144, height: 144 }]
-          , type: undefined
+          , type: null
           }
         , {
             url: 'path/to/icon-5.svg'
           , reference: 'apple-touch-icon-precomposed'
           , size: 'any'
-          , type: undefined
+          , type: null
           }
         ])
       })
