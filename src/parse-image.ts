@@ -1,4 +1,4 @@
-import { fromBuffer } from 'file-type'
+import { parseFileTypeFromBuffer } from '@shared/parse-file-type-from-buffer'
 import imageSize from 'image-size'
 import isSvg from 'is-svg'
 import { Image } from '@src/types'
@@ -9,7 +9,7 @@ export class UnknownImageFormatError extends Error {
 }
 
 export async function parseImage(buffer: Buffer): Promise<Image> {
-  const type = await fromBuffer(buffer)
+  const type = await parseFileTypeFromBuffer(buffer)
   if (type) {
     if (isImage(type.mime)) {
       return {
