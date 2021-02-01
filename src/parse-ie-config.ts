@@ -1,6 +1,6 @@
 import { query, xpath, css } from '@blackglory/query'
 import { map } from 'extra-promise'
-import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
+import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@shared/parse-html'
 import { parseXML } from '@shared/parse-xml'
 import { isUrl } from '@shared/is-url'

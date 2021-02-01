@@ -1,4 +1,4 @@
-import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
+import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 
 export function parseSpaceSeparatedSizes(sizes: string): Array<{ width: number, height: number }> {
   if (/^\d+[x|X]\d+(?:\s+\d+[x|X]\d+)*$/.test(sizes)) {

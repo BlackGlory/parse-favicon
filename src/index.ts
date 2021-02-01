@@ -38,17 +38,17 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     if (bufferFetcher) {
       const imagePromisePool = new Map<string, Promise<Image | null>>()
 
-      icons.forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon, bufferFetcher)))
+      icons.forEach(async icon => publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)))
 
       ;(await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
       ]))
-      .flat()
-      .forEach(async icon => publish(await tryUpdateIcon(imagePromisePool, icon, bufferFetcher)))
+        .flat()
+        .forEach(async icon => publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)))
 
       getDefaultIconUrls().forEach(async url => {
-        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(url, bufferFetcher))
+        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(bufferFetcher, url))
         const image = await imagePromisePool.get(url)
         if (image) {
           publish({
@@ -73,8 +73,8 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     }
   }
 
-  async function tryUpdateIcon(imagePromisePool: Map<string, Promise<Image | null>>, icon: Icon, bufferFetcher: BufferFetcher): Promise<Icon> {
-    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(icon.url, bufferFetcher))
+  async function tryUpdateIcon(bufferFetcher: BufferFetcher, imagePromisePool: Map<string, Promise<Image | null>>, icon: Icon): Promise<Icon> {
+    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
     const image = await imagePromisePool.get(icon.url)
     if (image) {
       return updateIcon(icon, image)
@@ -83,11 +83,13 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     }
   }
 
-  async function fetchImage(url: string, bufferFetcher: BufferFetcher): Promise<Image | null> {
-    const buffer = await getResultAsync(() => bufferFetcher(url))
-    if (!buffer) return null
+  async function fetchImage(bufferFetcher: BufferFetcher, url: string): Promise<Image | null> {
+    const arrayBuffer = await getResultAsync(() => bufferFetcher(url))
+    if (!arrayBuffer) return null
+    const buffer = Buffer.from(arrayBuffer)
+
     try {
-      return await parseImage(Buffer.from(buffer))
+      return await parseImage(buffer)
     } catch {
       return null
     }

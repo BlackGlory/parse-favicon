@@ -1,5 +1,5 @@
 import { query, css } from '@blackglory/query'
-import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
+import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@shared/parse-html'
 import { transformElementToAttr } from '@shared/transform-element-to-attr'
 import { Icon } from '@src/types'

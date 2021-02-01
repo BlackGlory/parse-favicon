@@ -2,7 +2,7 @@ import { parseFileTypeFromBuffer } from '@shared/parse-file-type-from-buffer'
 import imageSize from 'image-size'
 import isSvg from 'is-svg'
 import { Image } from '@src/types'
-import { IterableOperator } from 'iterable-operator/lib/es2018/style/chaining/iterable-operator'
+import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { CustomError } from '@blackglory/errors'
 
 export class UnknownImageFormatError extends CustomError {}
