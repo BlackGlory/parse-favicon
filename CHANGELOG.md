@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.10](https://github.com/BlackGlory/parse-favicon/compare/v3.0.9...v3.0.10) (2021-02-01)
+
+
+### Bug Fixes
+
+* double file path for absolute path ([#8](https://github.com/BlackGlory/parse-favicon/issues/8)) ([f002702](https://github.com/BlackGlory/parse-favicon/commit/f002702ba09aa25c3cb17f627015f068133d084a))
+
 ### [3.0.9](https://github.com/BlackGlory/parse-favicon/compare/v3.0.8...v3.0.9) (2021-01-31)
 
 
