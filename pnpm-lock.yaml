@@ -1,9 +1,9 @@
 dependencies:
-  '@blackglory/errors': 0.1.5
+  '@blackglory/errors': 1.1.1
   '@blackglory/query': 0.3.10
   '@blackglory/types': 0.2.11
   core-js: 3.8.3
-  extra-promise: 0.13.15
+  extra-promise: 0.14.2
   file-type: 16.2.0
   image-size: 0.9.3
   immer: 8.0.1
@@ -325,6 +325,12 @@ packages:
       node: '>=12'
     resolution:
       integrity: sha512-n0pCQ8JKx5Tw9QuNBWsokvOwX0oJn/qnEYWspSNaPzo/QrmZAiHhpIiPWHEhtmt8gLVsHw3dizw7iQbiOwR/ZA==
+  /@blackglory/errors/1.1.1:
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-MagcPqs3hmHnG8JrtonDz8A3HF6rl2s8iau+GXKksD9Y1t+CB/OnfvsIISyreOow3LBiQkbY27/M7/FwimXnIg==
   /@blackglory/jest-matchers/0.1.8:
     dependencies:
       '@blackglory/types': 0.1.12
@@ -2535,19 +2541,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bqSjWP3b3qPGuV7vt5N1OeJ/jaKfzQJj4lCpiTNZEp6cmZDL9/gi8+vCu8PbEXFzci576egs9LiZy5awxifHfg==
-  /extra-promise/0.13.15:
+  /extra-promise/0.14.2:
     dependencies:
       '@blackglory/errors': 0.1.5
       '@blackglory/structures': 0.1.9
       '@blackglory/types': 0.2.11
       abort-controller: 3.0.0
       eventemitter3: 4.0.7
-      iterable-operator: 0.12.11
+      iterable-operator: 0.13.2
       reflect-metadata: 0.1.13
       return-style: 0.11.5
     dev: false
     resolution:
-      integrity: sha512-Bnpv2W1FDT5KtafVVW9Ljvuz8snsNt27dScaTe7VUfXHhH8qpJQv2XOPSZCV2+Yp4rj2EGxiOAFCPHxNK1ycqg==
+      integrity: sha512-QvCZzC4jMZ3TuJJcY91hWrdCXFjbXNFfO2JEjzqOV2rYap4wIHz12AR9scucNIOEBTj7v7KearnkqcRkEy3PBA==
   /extsprintf/1.3.0:
     engines:
       '0': node >=0.6.0
@@ -3583,12 +3589,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-9tZvz7AiR3PEDNGiV9vIouQ/EAcqMXFmkcA1CDFTwOB98OZVDL0PH9glHotf5Ugp6GCOTypfzGWI/OqjWNCRUw==
-  /iterable-operator/0.12.11:
-    dependencies:
-      '@blackglory/types': 0.2.11
-    dev: false
-    resolution:
-      integrity: sha512-f6g7Ftzxk4JyJNL19/tB1Lt7CnXQC2kcRQ2+SZX0RaSr8+3SuAPLAMzU515dRl5/yfK9YI0JdDvW+hL02+tShQ==
   /iterable-operator/0.13.2:
     dependencies:
       '@blackglory/types': 0.2.11
@@ -6619,7 +6619,7 @@ packages:
     resolution:
       integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 specifiers:
-  '@blackglory/errors': ^0.1.4
+  '@blackglory/errors': ^1.1.1
   '@blackglory/jest-matchers': ^0.1.7
   '@blackglory/query': ^0.3.10
   '@blackglory/types': ^0.2.11
@@ -6635,7 +6635,7 @@ specifiers:
   common-tags: ^1.8.0
   core-js: ^3.8.3
   eslint: ^7.19.0
-  extra-promise: ^0.13.15
+  extra-promise: ^0.14.2
   file-type: ^16.2.0
   husky: ^4.3.8
   image-size: ^0.9.3
@@ -6648,7 +6648,7 @@ specifiers:
   npm-run-all: ^4.1.5
   return-style: ^0.11.4
   rimraf: ^3.0.2
-  rxjs: ^7.0.0-beta.9
+  rxjs: ^7.0.0-beta.10
   standard-version: ^9.1.0
   ts-jest: ^26.5.0
   tscpaths: ^0.0.9
