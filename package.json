@@ -1,6 +1,6 @@
 {
   "name": "parse-favicon",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Parse HTML to get icon information",
   "keywords": [
     "favicon",
