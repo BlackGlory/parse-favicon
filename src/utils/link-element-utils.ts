@@ -1,7 +1,7 @@
 import 'core-js/es/string'
 import { query, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
+import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
 import { Icon } from '@src/types'
 
 export function getIcons(document: Document, linkElementSelector: string, reference: string) {

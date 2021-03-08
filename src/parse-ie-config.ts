@@ -1,13 +1,13 @@
 import { query, xpath, css } from '@blackglory/query'
 import { map } from 'extra-promise'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseHTML } from '@shared/parse-html'
-import { parseXML } from '@shared/parse-xml'
-import { isUrl } from '@shared/is-url'
-import { combineRelativeUrls } from '@shared/combine-relative-urls'
-import { transformElementToAttr } from '@shared/transform-element-to-attr'
+import { parseHTML } from '@utils/parse-html'
+import { parseXML } from '@utils/parse-xml'
+import { isUrl } from '@utils/is-url'
+import { combineRelativeUrls } from '@utils/combine-relative-urls'
+import { elementsToAttributes } from '@utils/elements-to-attributes'
 import { Icon, TextFetcher } from '@src/types'
-import { produce } from '@shared/immer'
+import { produce } from '@utils/immer'
 
 export async function parseIEConfig(html: string, textFetcher: TextFetcher): Promise<Icon[]> {
   const document = parseHTML(html)
@@ -60,7 +60,7 @@ function getIEConfigIcons(xml: string, configUrl: string): Icon[] {
 function getIcons(document: Document, selector: string, size: { width: number, height: number }): Icon[] {
   const elements = query.call(document, xpath`${selector}`)
   return new IterableOperator(elements)
-    .transform(transformElementToAttr('src'))
+    .transform(elementsToAttributes('src'))
     .map(url => createIcon(url, size))
     .toArray()
 

@@ -10,7 +10,7 @@ import { parseShortcutIcons } from '@src/parse-shortcut-icons'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
 import { parseImage } from '@src/parse-image'
 import { Observable } from 'rxjs'
-import { produce } from '@shared/immer'
+import { produce } from '@utils/immer'
 
 import { Icon, TextFetcher, BufferFetcher, Image } from './types'
 export { Icon, TextFetcher, BufferFetcher }

@@ -1,12 +1,12 @@
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 
-export function transformElementToAttr(attr: string) {
+export function elementsToAttributes(attr: string) {
   return (iterable: Iterable<Element>) =>
     new IterableOperator(iterable)
       .map(x => x.getAttribute(attr))
-      .filter<string>(isExist)
+      .filter<string>(isTruthy)
 }
 
-function isExist(x: unknown): boolean {
-  return !!x
+function isTruthy(val: unknown): boolean {
+  return !!val
 }

@@ -1,13 +1,13 @@
 import { query, css } from '@blackglory/query'
 import { map } from 'extra-promise'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseHTML } from '@shared/parse-html'
-import { parseJSON } from '@shared/parse-json'
-import { isUrl } from '@shared/is-url'
-import { combineRelativeUrls } from '@shared/combine-relative-urls'
-import { parseSpaceSeparatedSizes } from '@shared/parse-space-separated-sizes'
+import { parseHTML } from '@utils/parse-html'
+import { parseJSON } from '@utils/parse-json'
+import { isUrl } from '@utils/is-url'
+import { combineRelativeUrls } from '@utils/combine-relative-urls'
+import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
 import { Icon, TextFetcher } from '@src/types'
-import { produce } from '@shared/immer'
+import { produce } from '@utils/immer'
 
 interface Manifest {
   icons: Array<{

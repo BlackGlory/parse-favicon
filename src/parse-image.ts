@@ -1,4 +1,4 @@
-import { parseFileTypeFromBuffer } from '@shared/parse-file-type-from-buffer'
+import { parseFileTypeFromBuffer } from '@utils/parse-file-type-from-buffer'
 import imageSize from 'image-size'
 import isSvg from 'is-svg'
 import { Image } from '@src/types'

@@ -1,7 +1,7 @@
 import { query, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseHTML } from '@shared/parse-html'
-import { transformElementToAttr } from '@shared/transform-element-to-attr'
+import { parseHTML } from '@utils/parse-html'
+import { elementsToAttributes } from '@utils/elements-to-attributes'
 import { Icon } from '@src/types'
 
 export function parseIE11Tiles(html: string): Icon[] {
@@ -17,7 +17,7 @@ export function parseIE11Tiles(html: string): Icon[] {
 function getIcons(document: Document, selector: string, reference: string, size: { width: number, height: number }): Icon[] {
   const nodes = query.call(document, css`${selector}`)
   return new IterableOperator(nodes)
-    .transform(transformElementToAttr('content'))
+    .transform(elementsToAttributes('content'))
     .map(url => createIcon(reference, url, size))
     .toArray()
 

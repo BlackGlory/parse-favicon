@@ -11,7 +11,7 @@
   , "paths": {
       "@src/*": ["src/*"]
     , "@test/*": ["__tests__/*"]
-    , "@shared/*": ["src/shared/*"]
+    , "@utils/*": ["src/utils/*"]
     }
   }
 }

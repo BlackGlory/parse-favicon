@@ -1,4 +1,4 @@
-import { getDOMParser } from '@shared/get-dom-parser'
+import { getDOMParser } from '@utils/get-dom-parser'
 
 export function parseXML(xml: string): Document {
   const parser = getDOMParser()
