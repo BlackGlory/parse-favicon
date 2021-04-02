@@ -1,4 +1,4 @@
-import { query, xpath, css } from '@blackglory/query'
+import { queryAll, xpath, css } from '@blackglory/query'
 import { map } from 'extra-promise'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@utils/parse-html'
@@ -8,6 +8,7 @@ import { combineRelativeUrls } from '@utils/combine-relative-urls'
 import { elementsToAttributes } from '@utils/elements-to-attributes'
 import { Icon, TextFetcher } from '@src/types'
 import { produce } from '@utils/immer'
+import { isElement } from 'extra-dom'
 
 export async function parseIEConfig(html: string, textFetcher: TextFetcher): Promise<Icon[]> {
   const document = parseHTML(html)
@@ -34,7 +35,8 @@ export async function parseIEConfig(html: string, textFetcher: TextFetcher): Pro
 }
 
 function getConfigUrls(document: Document): string[] {
-  const nodes = query.call(document, css`meta[name="msapplication-config"]`)
+  const nodes = queryAll.call(document, css`meta[name="msapplication-config"]`) as Element[]
+
   return new IterableOperator(nodes)
     .map(x => x.getAttribute('content'))
     .filter<string>(isUrl)
@@ -58,8 +60,10 @@ function getIEConfigIcons(xml: string, configUrl: string): Icon[] {
 }
 
 function getIcons(document: Document, selector: string, size: { width: number, height: number }): Icon[] {
-  const elements = query.call(document, xpath`${selector}`)
-  return new IterableOperator(elements)
+  const nodes = queryAll.call(document, xpath`.${selector}`) as Node[]
+
+  return new IterableOperator(nodes)
+    .filter<Element>(isElement)
     .transform(elementsToAttributes('src'))
     .map(url => createIcon(url, size))
     .toArray()

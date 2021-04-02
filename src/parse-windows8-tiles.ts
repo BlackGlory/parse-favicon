@@ -1,4 +1,4 @@
-import { query, css } from '@blackglory/query'
+import { queryAll, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@utils/parse-html'
 import { elementsToAttributes } from '@utils/elements-to-attributes'
@@ -10,7 +10,8 @@ export function parseWindows8Tiles(html: string): Icon[] {
 }
 
 function getWindows8TileIcons(document: Document): Icon[] {
-  const nodes = query.call(document, css`meta[name="msapplication-TileImage"]`)
+  const nodes = queryAll.call(document, css`meta[name="msapplication-TileImage"]`) as Element[]
+
   return new IterableOperator(nodes)
     .transform(elementsToAttributes('content'))
     .map(createWindows8TileIcon)

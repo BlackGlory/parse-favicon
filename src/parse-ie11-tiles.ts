@@ -1,4 +1,4 @@
-import { query, css } from '@blackglory/query'
+import { queryAll, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@utils/parse-html'
 import { elementsToAttributes } from '@utils/elements-to-attributes'
@@ -15,7 +15,7 @@ export function parseIE11Tiles(html: string): Icon[] {
 }
 
 function getIcons(document: Document, selector: string, reference: string, size: { width: number, height: number }): Icon[] {
-  const nodes = query.call(document, css`${selector}`)
+  const nodes = queryAll.call(document, css`${selector}`) as Element[]
   return new IterableOperator(nodes)
     .transform(elementsToAttributes('content'))
     .map(url => createIcon(reference, url, size))

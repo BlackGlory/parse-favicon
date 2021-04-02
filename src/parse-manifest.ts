@@ -1,4 +1,4 @@
-import { query, css } from '@blackglory/query'
+import { queryAll, css } from '@blackglory/query'
 import { map } from 'extra-promise'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseHTML } from '@utils/parse-html'
@@ -40,7 +40,7 @@ export async function parseManifest(html: string, textFetcher: TextFetcher): Pro
 }
 
 function getManifestUrls(document: Document): string[] {
-  const nodes = query.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
+  const nodes = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
 
   return new IterableOperator(nodes)
     .map(x => x.getAttribute('href'))

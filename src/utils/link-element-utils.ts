@@ -1,11 +1,12 @@
 import 'core-js/es/string'
-import { query, css } from '@blackglory/query'
+import { queryAll, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
 import { Icon } from '@src/types'
 
 export function getIcons(document: Document, linkElementSelector: string, reference: string) {
-  const nodes = query.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
+  const nodes = queryAll.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
+
   return new IterableOperator(nodes)
     .filter(hasHref)
     .map(x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
