@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.8](https://github.com/BlackGlory/parse-favicon/compare/v4.0.7...v4.0.8) (2021-05-16)
+
 ### [4.0.7](https://github.com/BlackGlory/parse-favicon/compare/v4.0.6...v4.0.7) (2021-05-07)
 
 ### [4.0.6](https://github.com/BlackGlory/parse-favicon/compare/v4.0.5...v4.0.6) (2021-04-02)
