@@ -300,14 +300,14 @@
     extra-stream "^0.1.1"
     jest-diff "^26.6.2"
 
-"@blackglory/query@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.4.4.tgz#8fc8213178a41ac9bcf74720f69990f03bc4f87e"
-  integrity sha512-9i/wt14R8RiDQtYgOB1TbQFwN1kBarnOC3xpCWncABlscmdPBN9PbmFOcnGeeRpFs0/JffJqG38C08hBiKr/wA==
+"@blackglory/query@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@blackglory/query/-/query-0.5.0.tgz#34dbf38fae14f7b8c74b2002ff699130437e86c9"
+  integrity sha512-l0qFRzH3vEGdLDh21JjkG4BaTdi5bXdPYWYll1DaMn+2shKubtxAPnKk3VkT//eAxGMx2fy68nF/I7Cl1Ff5FA==
   dependencies:
     "@blackglory/errors" "^1.1.2"
     "@blackglory/types" "^0.4.2"
-    extra-dom "^0.3.0"
+    extra-dom "^0.4.0"
 
 "@blackglory/structures@^0.1.14":
   version "0.1.14"
@@ -2446,19 +2446,10 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-extra-dom@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.3.0.tgz#a6a6543144b56178d66bed3d88174a6424469d75"
-  integrity sha512-6Sm2Kk5NNG1w/Gpgm4avrL9rgoq5z2gFKxqs5Cbua4cvQyT5vA2FHl4Unf9jaKRBjHlwnjxzImD7kQj8y8OUsg==
-  dependencies:
-    "@blackglory/errors" "^1.1.2"
-    "@blackglory/types" "^0.4.2"
-    iterable-operator "^0.13.6"
-
-extra-dom@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.3.1.tgz#ac05ab1e98fd11881c9d6ad23f2671c38125ac69"
-  integrity sha512-BuSH5z1XxgyaY7vd8DdSsvO/j5CbL/rpWzGZscdLdI3nfq6YkxqCiza4pYaucFA8MZFfqgVhKGyGWT623YFnTQ==
+extra-dom@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.4.0.tgz#1bf2640bccee4623ed77f0daed93641cf4850d0b"
+  integrity sha512-DZxuEaVi9vm6OpSydvS0jetT/HAqmzrqyLLcPyeGWfdJq83Q9lJwu0PhMhYDkdDoMnI0U0qbrbTd4QHL6JjCmQ==
   dependencies:
     "@blackglory/errors" "^1.1.2"
     "@blackglory/types" "^0.4.2"

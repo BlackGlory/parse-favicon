@@ -77,10 +77,10 @@
   },
   "dependencies": {
     "@blackglory/errors": "^1.1.1",
-    "@blackglory/query": "^0.4.4",
+    "@blackglory/query": "^0.5.0",
     "@blackglory/types": "^0.4.2",
     "core-js": "^3.12.1",
-    "extra-dom": "^0.3.1",
+    "extra-dom": "^0.4.0",
     "extra-promise": "^0.16.6",
     "file-type": "^16.4.0",
     "image-size": "^1.0.0",
