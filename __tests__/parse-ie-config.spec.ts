@@ -1,5 +1,5 @@
 import { getErrorAsync } from 'return-style'
-import { stripIndent } from 'common-tags'
+import { dedent } from 'extra-tags'
 import { parseIEConfig } from '@src/parse-ie-config'
 import '@blackglory/jest-matchers'
 import 'jest-extended'
@@ -38,7 +38,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         const html = `
           <meta name="msapplication-config" content="path/to/ieconfig.xml">
         `
-        const config = stripIndent`
+        const config = dedent`
           <?xml version="1.0" encoding="utf-8"?>
           <browserconfig>
             <msapplication>
@@ -70,7 +70,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         const html = `
           <meta name="msapplication-config" content="path/to/ieconfig.xml">
         `
-        const config = stripIndent`
+        const config = dedent`
           <?xml version="1.0" encoding="utf-8"?>
           <browserconfig>
             <msapplication>
@@ -102,7 +102,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         const html = `
           <meta name="msapplication-config" content="path/to/ieconfig.xml">
         `
-        const config = stripIndent`
+        const config = dedent`
           <?xml version="1.0" encoding="utf-8"?>
           <browserconfig>
             <msapplication>
@@ -134,7 +134,7 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         const html = `
           <meta name="msapplication-config" content="path/to/ieconfig.xml">
         `
-        const config = stripIndent`
+        const config = dedent`
           <?xml version="1.0" encoding="utf-8"?>
           <browserconfig>
             <msapplication>

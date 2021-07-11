@@ -1,5 +1,5 @@
 import { getErrorAsync } from 'return-style'
-import { stripIndent } from 'common-tags'
+import { dedent } from 'extra-tags'
 import { parseManifest } from '@src/parse-manifest'
 import '@blackglory/jest-matchers'
 import 'jest-extended'
@@ -36,7 +36,7 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
       const html = `
         <link rel="manifest" href="path/to/manifest.webmanifest">
       `
-      const manifest = stripIndent`
+      const manifest = dedent`
         {
           "icons": [
             {
@@ -90,7 +90,7 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         const html = `
           <link rel="manifest" href="path/to/manifest.webmanifest">
         `
-        const manifest = stripIndent`
+        const manifest = dedent`
           {
             "icons": [
               {
