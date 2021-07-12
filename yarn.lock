@@ -1058,11 +1058,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/common-tags@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.1.tgz#a5a49ca5ebbb58e0f8947f3ec98950c8970a68a9"
-  integrity sha512-20R/mDpKSPWdJs5TOpz3e7zqbeCNuMCPhV7Yndk9KU2Rbij2r5W4RzwDPkzC+2lzUqXYu9rFzTktCBnDjHuNQg==
-
 "@types/core-js@^2.5.4":
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.4.tgz#fc42ebde7d9cfa7c5f2668f117449b02348e41fd"
@@ -1875,11 +1870,6 @@ commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
-
-common-tags@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.0.tgz#8e3153e542d4a39e9b10554434afaaf98956a937"
-  integrity sha512-6P6g0uetGpW/sdyUy/iQQCbFF0kWVMSIVSyYz7Zgjcgh8mgw8PQzDNZeyZ5DQ2gM7LBoZPHmnjz8rUthkBG5tw==
 
 compare-func@^2.0.0:
   version "2.0.0"
@@ -2772,13 +2762,11 @@ extra-stream@^0.1.2:
   dependencies:
     "@blackglory/types" "^0.4.6"
 
-extra-tags@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/extra-tags/-/extra-tags-0.2.0.tgz#4693acddc7fe54a2bd34c95ba8eea572e8837188"
-  integrity sha512-B4YABYY2IXbtyRjMdv+LhrvgRkzHk7OAPquFRrkuDVtRg47bO5k3lHh7rPOiKueeyzKfnwUEqCFJSY2uV7kgag==
+extra-tags@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/extra-tags/-/extra-tags-0.2.2.tgz#bbb6f546520a6e31ee5389ffdec27fa0de10a55b"
+  integrity sha512-aWsBrb9hH/vqvbvlR+w9FfJTowDT3+2m/1mzlKasSmLhHbUdEShsSpl9rILneeG0FemfgNohZkyfEtc/02y9eg==
   dependencies:
-    "@types/common-tags" "^1.8.1"
-    common-tags "^1.8.0"
     justypes "^0.1.5"
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
