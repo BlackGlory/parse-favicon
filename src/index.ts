@@ -40,15 +40,20 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
 
       icons.forEach(async icon => publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)))
 
-      ;(await Promise.all([
+      const results = await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
-      ]))
+      ])
+      results
         .flat()
-        .forEach(async icon => publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)))
+        .forEach(async icon => {
+          publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon))
+        })
 
       getDefaultIconUrls().forEach(async url => {
-        if (!imagePromisePool.has(url)) imagePromisePool.set(url, fetchImage(bufferFetcher, url))
+        if (!imagePromisePool.has(url)) {
+          imagePromisePool.set(url, fetchImage(bufferFetcher, url))
+        }
         const image = await imagePromisePool.get(url)
         if (image) {
           publish({
@@ -64,17 +69,20 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     } else {
       icons.forEach(publish)
 
-      ;(await Promise.all([
+      const results = await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
-      ]))
+      ])
+      results
         .flat()
         .forEach(publish)
     }
   }
 
   async function tryUpdateIcon(bufferFetcher: BufferFetcher, imagePromisePool: Map<string, Promise<Image | null>>, icon: Icon): Promise<Icon> {
-    if (!imagePromisePool.has(icon.url)) imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
+    if (!imagePromisePool.has(icon.url)) {
+      imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
+    }
     const image = await imagePromisePool.get(icon.url)
     if (image) {
       return updateIcon(icon, image)
