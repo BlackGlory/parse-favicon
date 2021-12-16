@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/BlackGlory/parse-favicon/compare/v4.0.16...v5.0.0) (2021-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* - The minimum version is Node.js v16
+
+* upgrade dependencies ([af866ff](https://github.com/BlackGlory/parse-favicon/commit/af866ff553e5f9f647835b88ff51d3128c8117da))
+
 ### [4.0.16](https://github.com/BlackGlory/parse-favicon/compare/v4.0.15...v4.0.16) (2021-12-12)
 
 ### [4.0.15](https://github.com/BlackGlory/parse-favicon/compare/v4.0.14...v4.0.15) (2021-10-14)
