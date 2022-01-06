@@ -24,6 +24,7 @@
     "./lib/es2015/shared/parse-file-type-from-buffer.js": "./lib/es2015/shared/parse-file-type-from-buffer.browser.js",
     "./lib/es2018/shared/parse-file-type-from-buffer.js": "./lib/es2018/shared/parse-file-type-from-buffer.browser.js"
   },
+  "sideEffects": false,
   "repository": "git@github.com:BlackGlory/parse-favicon.git",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
