@@ -1,4 +1,3 @@
-import 'core-js/es/string'
 import { queryAll, css } from '@blackglory/query'
 import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
