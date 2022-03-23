@@ -9,7 +9,7 @@ import { elementsToAttributes } from '@utils/elements-to-attributes'
 import { Icon, TextFetcher } from '@src/types'
 import { produce } from '@utils/immer'
 import { isElement } from 'extra-dom'
-import flatten from 'lodash.flatten'
+import flatten from 'lodash/flatten'
 
 export async function parseIEConfig(html: string, textFetcher: TextFetcher): Promise<Icon[]> {
   const document = parseHTML(html)

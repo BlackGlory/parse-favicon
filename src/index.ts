@@ -11,7 +11,7 @@ import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
 import { parseImage } from '@src/parse-image'
 import { Observable } from 'rxjs'
 import { produce } from '@utils/immer'
-import flatten from 'lodash.flatten'
+import flatten from 'lodash/flatten'
 
 import { Icon, TextFetcher, BufferFetcher, Image } from './types'
 export { Icon, TextFetcher, BufferFetcher }
