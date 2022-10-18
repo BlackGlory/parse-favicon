@@ -16,15 +16,15 @@ const pageUrl = 'https://github.com'
 
 parseFavicon(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
 
-async function textFetcher(url) {
+async function textFetcher(url: string): Promise<string> {
   return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
 }
 
-async function bufferFetcher(url) {
+async function bufferFetcher(url: string): Promise<ArrayBuffer> {
   return await fetch(resolveUrl(url, pageUrl)).then(res => res.arrayBuffer())
 }
 
-function resolveUrl(url, base) {
+function resolveUrl(url: string, base: string): URL {
   return new URL(url, base).href
 }
 ```
