@@ -11,12 +11,16 @@ import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
 import { parseImage } from '@src/parse-image'
 import { Observable } from 'rxjs'
 import { produce } from '@utils/immer'
-import flatten from 'lodash/flatten'
+import { flatten, each } from 'iterable-operator'
 
 import { Icon, TextFetcher, BufferFetcher, Image } from './types'
 export { Icon, TextFetcher, BufferFetcher }
 
-export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetcher?: BufferFetcher): Observable<Icon> {
+export function parseFavicon(
+  url: string
+, textFetcher: TextFetcher
+, bufferFetcher?: BufferFetcher
+): Observable<Icon> {
   return new Observable(observer => {
     parse(icon => observer.next(icon))
       .then(() => observer.complete())
@@ -39,16 +43,17 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
     if (bufferFetcher) {
       const imagePromisePool = new Map<string, Promise<Image | null>>()
 
-      icons.forEach(async icon => publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)))
+      icons.forEach(async icon => publish(
+        await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)
+      ))
 
       const results = await Promise.all([
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
       ])
-      flatten(results)
-        .forEach(async icon => {
-          publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon))
-        })
+      each(flatten<Icon>(results), async icon => {
+        publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon))
+      })
 
       getDefaultIconUrls().forEach(async url => {
         if (!imagePromisePool.has(url)) {
@@ -73,12 +78,15 @@ export function parseFavicon(url: string, textFetcher: TextFetcher, bufferFetche
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
       ])
-      flatten(results)
-        .forEach(publish)
+      each(flatten<Icon>(results), publish)
     }
   }
 
-  async function tryUpdateIcon(bufferFetcher: BufferFetcher, imagePromisePool: Map<string, Promise<Image | null>>, icon: Icon): Promise<Icon> {
+  async function tryUpdateIcon(
+    bufferFetcher: BufferFetcher
+  , imagePromisePool: Map<string, Promise<Image | null>>
+  , icon: Icon
+  ): Promise<Icon> {
     if (!imagePromisePool.has(icon.url)) {
       imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
     }
