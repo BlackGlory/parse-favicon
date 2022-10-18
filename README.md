@@ -1,9 +1,7 @@
-# parse-favicon [![npm](https://img.shields.io/npm/v/parse-favicon.svg?maxAge=86400)](https://www.npmjs.com/package/parse-favicon) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/BlackGlory/parse-favicon/master/LICENSE)
-
+# parse-favicon
 Parse HTML to get icon information.
 
 ## Install
-
 ```sh
 npm install --save parse-favicon
 # or
@@ -11,7 +9,6 @@ yarn add parse-favicon
 ```
 
 ## Usage
-
 ```js
 import { parseFavicon } from 'parse-favicon'
 
@@ -33,16 +30,8 @@ function resolveUrl(url, base) {
 ```
 
 ## API
-
 ### parseFavicon
-
 ```ts
-parseFavicon(
-  url: string
-, textFetcher: TextFetcher
-, bufferFetcher?: BufferFetcher
-): Observable<Icon>
-
 type TextFetcher = (url: string) => PromiseLike<string>
 type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
 
@@ -57,6 +46,12 @@ interface Size {
   width: number
   height: number
 }
+
+function parseFavicon(
+  url: string
+, textFetcher: TextFetcher
+, bufferFetcher?: BufferFetcher
+): Observable<Icon>
 ```
 
 `parseFavicon` accepts `textFetcher` and `bufferFetcher` for further fetching requests when parsing icons, bufferFetcher is optional.
@@ -86,7 +81,6 @@ References related to `bufferFetcher`:
 - `/apple-touch-icon.png`
 
 ## Support references
-
 - `<link rel="icon" href="path/to/icon.png">`
 - `<link rel="shortcut icon" href="path/to/icon.ico">`
 - `<link rel="apple-touch-icon" href="path/to/icon.png">`
@@ -119,5 +113,4 @@ References related to `bufferFetcher`:
 - `/apple-touch-icon.png`
 
 ## Related projects
-
-- [favicon-detector: A simple way to detect website icons](https://github.com/BlackGlory/favicon-detector)
+- [favicon-detector](https://github.com/BlackGlory/favicon-detector)
