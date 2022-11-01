@@ -1,6 +1,6 @@
-import { getDOMParser } from '@utils/get-dom-parser'
+import { createDOMParser } from 'extra-dom'
 
 export function parseHTML(html: string): Document {
-  const parser = getDOMParser()
+  const parser = createDOMParser()
   return parser.parseFromString(html, 'text/html')
 }

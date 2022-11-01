@@ -685,6 +685,14 @@
     "@blackglory/pass" "^1.0.0"
     iterable-operator "^1.1.0"
 
+"@blackglory/errors@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@blackglory/errors/-/errors-2.2.3.tgz#9df9b97ec4c652b3eda275ccbef4c54867345988"
+  integrity sha512-7o4ArQkuTpED+vifViRgdqLj9RlL99pniNqy6tQiC7hcwCDnqo/IJLybmGTKzyHv2b1jW5e3omUV94ZdsE9jVg==
+  dependencies:
+    "@blackglory/pass" "^1.1.0"
+    iterable-operator "^2.1.0"
+
 "@blackglory/go@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@blackglory/go/-/go-0.1.0.tgz#a145a98d17593549a91ed79766230f5c7719e1de"
@@ -800,14 +808,6 @@
     justypes "^0.1.6"
     lodash.isplainobject "^4.0.6"
 
-"@blackglory/types@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-0.6.4.tgz#ba511c58d4a8cf321bfc34c4b3c94e8a9b3341bd"
-  integrity sha512-QtiPJllbKOXHbX9S/h2NsUbP+vgm6J5w2oQI4N4IuoTdzBbQJZNkcHTf2FeD/1yi/xhzEVdR0L4ZKfLlcmAJbw==
-  dependencies:
-    justypes "^0.1.6"
-    lodash.isplainobject "^4.0.6"
-
 "@blackglory/types@^1.0.0", "@blackglory/types@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-1.0.1.tgz#2beb5cd0539cf3d481479d84b5f4f5861501fb28"
@@ -822,6 +822,14 @@
   integrity sha512-qW9nWqmQT3ShT2NYP3p2ohpPvs+wS+YfOXbKbf37HTdWJOGuCafMSa7laMJF0BnBJwwTr+uyJSZru+QMMmgvUg==
   dependencies:
     justypes "^2.0.0"
+    lodash "^4.17.21"
+
+"@blackglory/types@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-1.4.0.tgz#412c1fc0de7c5f3ecbdd6984c15eb80c8cee393a"
+  integrity sha512-pOVWHkbM6wGGBmAgc6zKGRyds4amAV9GOYOiWQp7McaTp8QREDQZlcIrgTwQKtA9StBrKm/GC874RpDg/AIf7g==
+  dependencies:
+    justypes "^3.0.0"
     lodash "^4.17.21"
 
 "@commitlint/cli@^17.1.2":
@@ -1665,10 +1673,10 @@ acorn@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-acorn@^8.1.0, acorn@^8.8.0:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
-  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
+acorn@^8.1.0:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
+  integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
 acorn@^8.2.4:
   version "8.4.1"
@@ -1679,6 +1687,11 @@ acorn@^8.4.1:
   version "8.7.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
   integrity sha512-V/LGr1APy+PXIwKebEWrkZPwoeoF+w1jiOBUmuxuiUIaOHtob8Qc9BTrYo7VuI5fR8tqsy+buA2WFooR5olqvQ==
+
+acorn@^8.8.0:
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
+  integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
 add-stream@^1.0.0:
   version "1.0.0"
@@ -3043,14 +3056,15 @@ extra-dom@^0.4.4:
     "@blackglory/types" "^0.5.2"
     iterable-operator "^0.14.4"
 
-extra-dom@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.5.1.tgz#9bf66099c63656d0d6439f65babe7f56489a1503"
-  integrity sha512-aftRnvtpIN72R5zvxnoRykrj2CpBtUNFib9pYDIXF9+b2qu60mJsUfutzTpeAxJQPEYuTzVtFPdWlFOE/Oh3Og==
+extra-dom@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/extra-dom/-/extra-dom-0.5.3.tgz#256fc47f625340efff757509ea05f57fd59e4507"
+  integrity sha512-HBAh/OAIJMeU+lowL2q6fr24JFu49Kf6scXQP+1UkJ20s+rm/hNnBEDu+2qvHEUN3Oq5+gTtfnGU6Crk14/qhA==
   dependencies:
-    "@blackglory/errors" "^1.1.2"
-    "@blackglory/types" "^0.6.4"
-    iterable-operator "^0.14.4"
+    "@blackglory/errors" "^2.2.3"
+    "@blackglory/types" "^1.4.0"
+    iterable-operator "^2.1.0"
+    jsdom "^20.0.2"
 
 extra-filesystem@^0.4.2:
   version "0.4.2"
@@ -4257,6 +4271,16 @@ iterable-operator@^1.1.0, iterable-operator@^1.2.1:
     "@blackglory/types" "^1.2.1"
     justypes "^2.2.0"
 
+iterable-operator@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-2.1.0.tgz#11c490d9da7f6f44999422b032de91419b545c5c"
+  integrity sha512-1Gs+zCwYo9E5sfRWepLgdQBhU6ZSgx6CJRjWbJi/YpQ4rj34Axk1rhpl1YXVYgQQBCNDm0kIuCK7bmQ3lKUUww==
+  dependencies:
+    "@blackglory/errors" "^2.2.2"
+    "@blackglory/go" "^1.1.2"
+    "@blackglory/types" "^1.3.0"
+    justypes "^3.0.0"
+
 jest-changed-files@^27.5.1:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-27.5.1.tgz#a348aed00ec9bf671cc58a66fcbe7c3dfd6a68f5"
@@ -4755,10 +4779,10 @@ jsdom@^16.6.0:
     ws "^7.4.5"
     xml-name-validator "^3.0.0"
 
-jsdom@^20.0.1:
-  version "20.0.1"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-20.0.1.tgz#d95b4a3b6e1eec6520aa01d9d908eade8c6ba153"
-  integrity sha512-pksjj7Rqoa+wdpkKcLzQRHhJCEE42qQhl/xLMUKHgoSejaKOdaXEAnqs6uDNwMl/fciHTzKeR8Wm8cw7N+g98A==
+jsdom@^20.0.2:
+  version "20.0.2"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-20.0.2.tgz#65ccbed81d5e877c433f353c58bb91ff374127db"
+  integrity sha512-AHWa+QO/cgRg4N+DsmHg1Y7xnz+8KU3EflM0LVDTdmrYOc1WWTSkOjtpUveQH+1Bqd5rtcVnb/DuxV/UjDO4rA==
   dependencies:
     abab "^2.0.6"
     acorn "^8.8.0"
@@ -7093,9 +7117,9 @@ ws@^7.4.5:
   integrity sha512-2c6faOUH/nhoQN6abwMloF7Iyl0ZS2E9HGtsiLrWn0zOOMWlhtDmdf/uihDt6jnuCxgtwGBNy6Onsoy2s2O2Ow==
 
 ws@^8.9.0:
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.9.0.tgz#2a994bb67144be1b53fe2d23c53c028adeb7f45e"
-  integrity sha512-Ja7nszREasGaYUYCI2k4lCKIRTt+y7XuqVoHR44YpI49TtryyqbqvDMn5eqfW7e6HzTukDRIsXqzVHScqRcafg==
+  version "8.10.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.10.0.tgz#00a28c09dfb76eae4eb45c3b565f771d6951aa51"
+  integrity sha512-+s49uSmZpvtAsd2h37vIPy1RBusaLawVe8of+GyEPsaJTCMpj/2v8NpeK1SHXjBlQ95lQTmQofOJnFiLoaN3yw==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"

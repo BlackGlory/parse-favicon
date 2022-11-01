@@ -19,10 +19,8 @@
   "main": "lib/es2018/index.js",
   "types": "lib/es2018/index.d.ts",
   "browser": {
-    "./lib/es2015/shared/get-dom-parser.js": "./lib/es2015/shared/get-dom-parser.browser.js",
-    "./lib/es2018/shared/get-dom-parser.js": "./lib/es2018/shared/get-dom-parser.browser.js",
-    "./lib/es2015/shared/parse-file-type-from-buffer.js": "./lib/es2015/shared/parse-file-type-from-buffer.browser.js",
-    "./lib/es2018/shared/parse-file-type-from-buffer.js": "./lib/es2018/shared/parse-file-type-from-buffer.browser.js"
+    "./lib/es2015/utils/parse-file-type-from-buffer.js": "./lib/es2015/utils/parse-file-type-from-buffer.browser.js",
+    "./lib/es2018/utils/parse-file-type-from-buffer.js": "./lib/es2018/utils/parse-file-type-from-buffer.browser.js"
   },
   "sideEffects": false,
   "repository": "git@github.com:BlackGlory/parse-favicon.git",
@@ -80,14 +78,13 @@
     "@blackglory/errors": "^2.2.2",
     "@blackglory/query": "^0.5.5",
     "@blackglory/types": "^1.3.0",
-    "extra-dom": "^0.5.1",
+    "extra-dom": "^0.5.3",
     "extra-promise": "^3.2.2",
     "file-type": "^16.5.3",
     "image-size": "^1.0.2",
     "immer": "^9.0.15",
     "is-svg": "^4.3.2",
     "iterable-operator": "^1.2.1",
-    "jsdom": "^20.0.1",
     "rxjs": "^7.5.7",
     "string.prototype.matchall": "^4.0.7",
     "urijs": "^1.19.11"
