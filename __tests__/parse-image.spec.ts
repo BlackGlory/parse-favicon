@@ -2,7 +2,6 @@ import { getErrorAsync } from 'return-style'
 import { parseImage, UnknownImageFormatError } from '@src/parse-image'
 import * as path from 'path'
 import { promises as fs } from 'fs'
-import '@blackglory/jest-matchers'
 
 describe('parseImage(buffer: Buffer): Promise<Image>', () => {
   describe('resource is a known image format', () => {
@@ -10,11 +9,9 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
       it('return Promise<Image>', async () => {
         const buffer = await fetchBuffer('favicon.xml.svg')
 
-        const result = parseImage(buffer)
-        const proResult = await result
+        const result = await parseImage(buffer)
 
-        expect(result).toBePromise()
-        expect(proResult).toStrictEqual({
+        expect(result).toStrictEqual({
           type: 'image/svg+xml'
         , size: { width: 36 , height: 36 }
         })
@@ -25,11 +22,9 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
       it('return Promise<Image>', async () => {
         const buffer = await fetchBuffer('favicon.svg')
 
-        const result = parseImage(buffer)
-        const proResult = await result
+        const result = await parseImage(buffer)
 
-        expect(result).toBePromise()
-        expect(proResult).toStrictEqual({
+        expect(result).toStrictEqual({
           type: 'image/svg+xml'
         , size: { width: 32 , height: 32 }
         })
@@ -40,11 +35,9 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
       it('return Promise<Image>', async () => {
         const buffer = await fetchBuffer('favicon.ico')
 
-        const result = parseImage(buffer)
-        const proResult = await result
+        const result = await parseImage(buffer)
 
-        expect(result).toBePromise()
-        expect(proResult).toStrictEqual({
+        expect(result).toStrictEqual({
           type: 'image/x-icon'
         , size: [
             { width: 16 , height: 16 }
@@ -58,11 +51,9 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
       it('return Promise<Image>', async () => {
         const buffer = await fetchBuffer('duplicated-sizes.ico')
 
-        const result = parseImage(buffer)
-        const proResult = await result
+        const result = await parseImage(buffer)
 
-        expect(result).toBePromise()
-        expect(proResult).toStrictEqual({
+        expect(result).toStrictEqual({
           type: 'image/x-icon'
         , size: [
             { width: 16 , height: 16 }
@@ -79,11 +70,9 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
       it('return Promise<Image>', async () => {
         const buffer = await fetchBuffer('favicon.png')
 
-        const result = parseImage(buffer)
-        const proResult = await result
+        const result = await parseImage(buffer)
 
-        expect(result).toBePromise()
-        expect(proResult).toStrictEqual({
+        expect(result).toStrictEqual({
           type: 'image/png'
         , size: { width: 32 , height: 32 }
         })
@@ -95,10 +84,8 @@ describe('parseImage(buffer: Buffer): Promise<Image>', () => {
     it('throw UnknownImageFormatError', async () => {
       const buffer = await fetchBuffer('favicon.txt')
 
-      const result = getErrorAsync(() => parseImage(buffer))
-      const err = await result
+      const err = await getErrorAsync(() => parseImage(buffer))
 
-      expect(result).toBePromise()
       expect(err).toBeInstanceOf(UnknownImageFormatError)
     })
   })

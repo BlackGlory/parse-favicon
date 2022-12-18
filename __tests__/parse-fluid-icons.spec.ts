@@ -1,5 +1,4 @@
 import { parseFluidIcons } from '@src/parse-fluid-icons'
-import 'jest-extended'
 
 describe('parseFluidIcons(html: string): Icon[]', () => {
   describe('basic', () => {
@@ -11,7 +10,7 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
 
       const result = parseFluidIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'fluid-icon'
@@ -31,7 +30,7 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
 
       const result = parseFluidIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.png'
         , reference: 'fluid-icon'
@@ -59,7 +58,7 @@ describe('parseFluidIcons(html: string): Icon[]', () => {
 
       const result = parseFluidIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.png'
         , reference: 'fluid-icon'

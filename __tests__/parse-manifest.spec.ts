@@ -1,8 +1,6 @@
 import { getErrorAsync } from 'return-style'
 import { dedent } from 'extra-tags'
 import { parseManifest } from '@src/parse-manifest'
-import '@blackglory/jest-matchers'
-import 'jest-extended'
 
 describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () => {
   it('call fetcher to get resource', async () => {
@@ -23,11 +21,9 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         <link rel="manifest" href="path/to/manifest.webmanifest">
       `
 
-      const result = parseManifest(html, fetcher)
-      const proResult = await result
+      const result = await parseManifest(html, fetcher)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -56,11 +52,9 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         }
       `
 
-      const result = parseManifest(html, async () => manifest)
-      const proResult = await result
+      const result = await parseManifest(html, async () => manifest)
 
-      expect(result).toBePromise()
-      expect(proResult).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/path/to/icon'
         , reference: 'manifest'
@@ -101,11 +95,9 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           }
         `
 
-        const result = parseManifest(html, async () => manifest)
-        const proResult = await result
+        const result = await parseManifest(html, async () => manifest)
 
-        expect(result).toBePromise()
-        expect(proResult).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: '/path/to/icon'
           , reference: 'manifest'

@@ -1,5 +1,4 @@
 import { parseAppleTouchIcons } from '@src/parse-apple-touch-icons'
-import 'jest-extended'
 
 describe('parseAppleTouchIcons(html: string): Icon[]', () => {
   describe('apple-touch-icon', () => {
@@ -12,7 +11,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
 
         const result = parseAppleTouchIcons(html)
 
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon.png'
           , reference: 'apple-touch-icon'
@@ -32,7 +31,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
 
         const result = parseAppleTouchIcons(html)
 
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon'
@@ -61,7 +60,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
 
         const result = parseAppleTouchIcons(html)
 
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon'
@@ -106,7 +105,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
         `
 
         const result = parseAppleTouchIcons(html)
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon.png'
           , reference: 'apple-touch-icon-precomposed'
@@ -125,7 +124,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
         `
 
         const result = parseAppleTouchIcons(html)
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon-precomposed'
@@ -154,7 +153,7 @@ describe('parseAppleTouchIcons(html: string): Icon[]', () => {
 
         const result = parseAppleTouchIcons(html)
 
-        expect(result).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/icon-1.png'
           , reference: 'apple-touch-icon-precomposed'

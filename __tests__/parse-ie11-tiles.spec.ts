@@ -1,5 +1,4 @@
 import { parseIE11Tiles } from '@src/parse-ie11-tiles'
-import 'jest-extended'
 
 describe('parseIE11Tiles(html: string): Icon[]', () => {
   describe('square70x70logo', () => {
@@ -11,7 +10,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
 
       const result = parseIE11Tiles(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square70x70logo'
@@ -31,7 +30,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
 
       const result = parseIE11Tiles(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square150x150logo'
@@ -51,7 +50,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
 
       const result = parseIE11Tiles(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'msapplication-square310x310logo'
@@ -71,7 +70,7 @@ describe('parseIE11Tiles(html: string): Icon[]', () => {
 
       const result = parseIE11Tiles(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'msapplication-wide310x150logo'

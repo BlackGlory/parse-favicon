@@ -1,5 +1,4 @@
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles'
-import 'jest-extended'
 
 describe('parseWindows8Tiles(html: string): Icon[]', () => {
   it('return Icon[] ', () => {
@@ -10,7 +9,7 @@ describe('parseWindows8Tiles(html: string): Icon[]', () => {
 
     const result = parseWindows8Tiles(html)
 
-    expect(result).toIncludeSameMembers([
+    expect(result).toMatchObject([
       {
         url: 'path/to/icon.png'
       , reference: 'msapplication-TileImage'

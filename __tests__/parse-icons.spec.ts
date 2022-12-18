@@ -1,5 +1,4 @@
 import { parseIcons } from '@src/parse-icons'
-import 'jest-extended'
 
 describe('parseIcons(html: string): Icon[]', () => {
   describe('basic', () => {
@@ -11,7 +10,7 @@ describe('parseIcons(html: string): Icon[]', () => {
 
       const result = parseIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.png'
         , reference: 'icon'
@@ -31,7 +30,7 @@ describe('parseIcons(html: string): Icon[]', () => {
 
       const result = parseIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.png'
         , reference: 'icon'
@@ -60,7 +59,7 @@ describe('parseIcons(html: string): Icon[]', () => {
 
       const result = parseIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.png'
         , reference: 'icon'

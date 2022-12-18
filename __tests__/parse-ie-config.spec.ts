@@ -1,8 +1,6 @@
 import { getErrorAsync } from 'return-style'
 import { dedent } from 'extra-tags'
 import { parseIEConfig } from '@src/parse-ie-config'
-import '@blackglory/jest-matchers'
-import 'jest-extended'
 
 describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () => {
   it('call fetcher to get resource', async () => {
@@ -24,11 +22,9 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
         <meta name="msapplication-config" content="path/to/ieconfig.xml">
       `
 
-      const result = parseIEConfig(html, fetcher)
-      const proResult = await result
+      const result = await parseIEConfig(html, fetcher)
 
-      expect(result).toBePromise()
-      expect(proResult).toEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -50,11 +46,9 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           </browserconfig>
         `
 
-        const result = parseIEConfig(html, async () => config)
-        const proResult = await result
+        const result = await parseIEConfig(html, async () => config)
 
-        expect(result).toBePromise()
-        expect(proResult).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
@@ -82,11 +76,9 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           </browserconfig>
         `
 
-        const result = parseIEConfig(html, async () => config)
-        const proResult = await result
+        const result = await parseIEConfig(html, async () => config)
 
-        expect(result).toBePromise()
-        expect(proResult).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
@@ -114,11 +106,9 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           </browserconfig>
         `
 
-        const result = parseIEConfig(html, async () => config)
-        const proResult = await result
+        const result = await parseIEConfig(html, async () => config)
 
-        expect(result).toBePromise()
-        expect(proResult).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'
@@ -146,11 +136,9 @@ describe('parseIEConfig(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
           </browserconfig>
         `
 
-        const result = parseIEConfig(html, async () => config)
-        const proResult = await result
+        const result = await parseIEConfig(html, async () => config)
 
-        expect(result).toBePromise()
-        expect(proResult).toIncludeSameMembers([
+        expect(result).toMatchObject([
           {
             url: 'path/to/path/to/icon.png'
           , reference: 'msapplication-config'

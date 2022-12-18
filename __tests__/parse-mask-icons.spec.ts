@@ -1,5 +1,4 @@
 import { parseMaskIcons } from '@src/parse-mask-icons'
-import 'jest-extended'
 
 describe('parseMackIcons(html: string): Icon[]', () => {
   describe('basic', () => {
@@ -11,7 +10,7 @@ describe('parseMackIcons(html: string): Icon[]', () => {
 
       const result = parseMaskIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.svg'
         , reference: 'mask-icon'
@@ -31,7 +30,7 @@ describe('parseMackIcons(html: string): Icon[]', () => {
 
       const result = parseMaskIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.svg'
         , reference: 'mask-icon'
@@ -60,7 +59,7 @@ describe('parseMackIcons(html: string): Icon[]', () => {
 
       const result = parseMaskIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.svg'
         , reference: 'mask-icon'

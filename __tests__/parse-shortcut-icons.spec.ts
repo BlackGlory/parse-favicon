@@ -1,5 +1,4 @@
 import { parseShortcutIcons } from '@src/parse-shortcut-icons'
-import 'jest-extended'
 
 describe('parseShortcutIcons(html: string): Icon[]', () => {
   describe('basic', () => {
@@ -11,7 +10,7 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
 
       const result = parseShortcutIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon.ico'
         , reference: 'shortcut-icon'
@@ -31,7 +30,7 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
 
       const result = parseShortcutIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.png'
         , reference: 'shortcut-icon'
@@ -60,7 +59,7 @@ describe('parseShortcutIcons(html: string): Icon[]', () => {
 
       const result = parseShortcutIcons(html)
 
-      expect(result).toIncludeSameMembers([
+      expect(result).toMatchObject([
         {
           url: 'path/to/icon-1.ico'
         , reference: 'shortcut-icon'
