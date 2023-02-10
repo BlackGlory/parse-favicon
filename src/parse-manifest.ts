@@ -7,7 +7,6 @@ import { isURLString } from '@utils/is-url-string.js'
 import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
-import { produce } from '@utils/immer.js'
 
 interface IManifest {
   icons: Array<{
@@ -58,9 +57,10 @@ function getManifestIcons(json: string, baseURI: string): IIcon[] {
     .map(combineIconUrlWithManifestUrl)
 
   function combineIconUrlWithManifestUrl(icon: IIcon): IIcon {
-    return produce(icon, draft => {
-      draft.url = combineRelativeUrlsForManifest(baseURI, icon.url)
-    })
+    return {
+      ...icon
+    , url: combineRelativeUrlsForManifest(baseURI, icon.url)
+    }
   }
 
   function createManifestIcon(

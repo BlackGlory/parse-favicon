@@ -10,7 +10,6 @@ import { parseShortcutIcons } from '@src/parse-shortcut-icons.js'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles.js'
 import { parseImage } from '@src/parse-image.js'
 import { Observable } from 'rxjs'
-import { produce } from '@utils/immer.js'
 import { flatten, each } from 'iterable-operator'
 
 import { IIcon, TextFetcher, BufferFetcher, IImage } from './types.js'
@@ -111,10 +110,11 @@ export function parseFavicon(
   }
 
   function updateIcon(icon: IIcon, image: IImage): IIcon {
-    return produce(icon, icon => {
-      icon.type = image.type
-      icon.size = image.size
-    })
+    return {
+      ...icon
+    , type: image.type
+    , size: image.size
+    }
   }
 }
 

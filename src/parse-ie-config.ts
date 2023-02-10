@@ -8,7 +8,6 @@ import { isURLString } from '@utils/is-url-string.js'
 import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
 import { elementsToAttributes } from '@utils/elements-to-attributes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
-import { produce } from '@utils/immer.js'
 import { isElement } from 'extra-dom'
 import { flatten, toArray } from 'iterable-operator'
 
@@ -79,9 +78,10 @@ function getIEConfigIcons(xml: string, configUrl: string): IIcon[] {
   ].map(combineIconUrlWithConfigUrl)
 
   function combineIconUrlWithConfigUrl(icon: IIcon): IIcon {
-    return produce(icon, icon => {
-      icon.url = combineRelativeUrls(configUrl, icon.url)
-    })
+    return {
+      ...icon
+    , url: combineRelativeUrls(configUrl, icon.url)
+    }
   }
 }
 
