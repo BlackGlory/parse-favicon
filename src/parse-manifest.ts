@@ -4,7 +4,7 @@ import * as Iter from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { isURLString } from '@utils/is-url-string.js'
-import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
+import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 
@@ -84,5 +84,5 @@ function getManifestIcons(json: string, baseURI: string): IIcon[] {
 }
 
 function combineRelativeUrlsForManifest(baseURI: string, relativeUrl: string): string {
-  return combineRelativeUrls(baseURI, relativeUrl)
+  return mergeRelativeURLs(baseURI, relativeUrl)
 }

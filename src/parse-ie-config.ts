@@ -5,7 +5,7 @@ import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { parseXML } from '@utils/parse-xml.js'
 import { isURLString } from '@utils/is-url-string.js'
-import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
+import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { elementsToAttributes } from '@utils/elements-to-attributes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { isElement } from 'extra-dom'
@@ -80,7 +80,7 @@ function getIEConfigIcons(xml: string, configUrl: string): IIcon[] {
   function combineIconUrlWithConfigUrl(icon: IIcon): IIcon {
     return {
       ...icon
-    , url: combineRelativeUrls(configUrl, icon.url)
+    , url: mergeRelativeURLs(configUrl, icon.url)
     }
   }
 }
