@@ -104,5 +104,16 @@ describe('parseManifest', () => {
         }
       ])
     })
+
+    test('invalid manifest', async () => {
+      const html = `
+        <link rel="manifest" href="path/to/manifest.webmanifest">
+      `
+      const manifest = dedent`{}`
+
+      const result = await parseManifest(html, async () => manifest)
+
+      expect(result).toMatchObject([])
+    })
   })
 })

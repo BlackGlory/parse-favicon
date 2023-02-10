@@ -8,6 +8,7 @@ import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
+import { isObject, isArray, isString } from '@blackglory/prelude'
 
 interface IManifest {
   icons: Array<{
@@ -42,6 +43,21 @@ export async function parseManifest(
   }
 }
 
+function isManifest(val: unknown): val is IManifest {
+  return isObject(val)
+      && 'icons' in val
+      && isArray(val.icons)
+      && val.icons.every(icon => {
+           return isObject(icon)
+               && ('src' in icon && isString(icon.src))
+               && ('sizes' in icon && isString(icon.sizes))
+               && (
+                    !('type' in icon) ||
+                    ('type' in icon && isString(icon.type))
+                  )
+         })
+}
+
 function extractManifestURLs(document: Document): string[] {
   const links = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
 
@@ -54,11 +70,15 @@ function extractManifestURLs(document: Document): string[] {
 }
 
 function extractManifestIcons(json: string, baseURI: string): IIcon[] {
-  const manifest = JSON.parse(json) as IManifest
+  const manifest = JSON.parse(json)
 
-  return manifest.icons
-    .map(x => createManifestIcon(x.src, parseSpaceSeparatedSizes(x.sizes), x.type))
-    .map(combineIconUrlWithManifestUrl)
+  if (isManifest(manifest)) {
+    return manifest.icons
+      .map(icon => createManifestIcon(icon.src, parseSpaceSeparatedSizes(icon.sizes), icon.type))
+      .map(combineIconUrlWithManifestUrl)
+  } else {
+    return []
+  }
 
   function combineIconUrlWithManifestUrl(icon: IIcon): IIcon {
     return {

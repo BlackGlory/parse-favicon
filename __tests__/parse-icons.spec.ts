@@ -5,6 +5,7 @@ describe('parseIcons', () => {
     const html = `
       <link rel="icon" href>
       <link rel="icon" href="path/to/icon.png">
+      <link rel="alternate icon" href="path/to/alternate-icon.png">
     `
 
     const result = parseIcons(html)
@@ -12,6 +13,12 @@ describe('parseIcons', () => {
     expect(result).toMatchObject([
       {
         url: 'path/to/icon.png'
+      , reference: 'icon'
+      , size: null
+      , type: null
+      }
+    , {
+        url: 'path/to/alternate-icon.png'
       , reference: 'icon'
       , size: null
       , type: null

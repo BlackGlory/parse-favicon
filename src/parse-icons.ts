@@ -7,7 +7,7 @@ export function parseIcons(html: string): IIcon[] {
 
   return extractIconsFromLinkElements(
     document
-  , 'link[rel="icon"]'
+  , 'link[rel~="icon"]'
   , 'icon'
   )
 }
