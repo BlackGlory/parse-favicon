@@ -13,21 +13,21 @@ import { Observable } from 'rxjs'
 import { produce } from '@utils/immer.js'
 import { flatten, each } from 'iterable-operator'
 
-import { Icon, TextFetcher, BufferFetcher, Image } from './types.js'
-export { Icon, TextFetcher, BufferFetcher }
+import { IIcon, TextFetcher, BufferFetcher, IImage } from './types.js'
+export { IIcon as Icon, TextFetcher, BufferFetcher }
 
 export function parseFavicon(
   url: string
 , textFetcher: TextFetcher
 , bufferFetcher?: BufferFetcher
-): Observable<Icon> {
+): Observable<IIcon> {
   return new Observable(observer => {
     parse(icon => observer.next(icon))
       .then(() => observer.complete())
       .catch(err => observer.error(err))
   })
 
-  async function parse(publish: (icon: Icon) => void) {
+  async function parse(publish: (icon: IIcon) => void) {
     const html = await textFetcher(url)
 
     const icons = [
@@ -41,7 +41,7 @@ export function parseFavicon(
     ]
 
     if (bufferFetcher) {
-      const imagePromisePool = new Map<string, Promise<Image | null>>()
+      const imagePromisePool = new Map<string, Promise<IImage | null>>()
 
       icons.forEach(async icon => publish(
         await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)
@@ -51,7 +51,7 @@ export function parseFavicon(
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
       ])
-      each(flatten<Icon>(results), async icon => {
+      each(flatten<IIcon>(results), async icon => {
         publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon))
       })
 
@@ -78,15 +78,15 @@ export function parseFavicon(
         parseIEConfig(html, textFetcher)
       , parseManifest(html, textFetcher)
       ])
-      each(flatten<Icon>(results), publish)
+      each(flatten<IIcon>(results), publish)
     }
   }
 
   async function tryUpdateIcon(
     bufferFetcher: BufferFetcher
-  , imagePromisePool: Map<string, Promise<Image | null>>
-  , icon: Icon
-  ): Promise<Icon> {
+  , imagePromisePool: Map<string, Promise<IImage | null>>
+  , icon: IIcon
+  ): Promise<IIcon> {
     if (!imagePromisePool.has(icon.url)) {
       imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
     }
@@ -98,7 +98,7 @@ export function parseFavicon(
     }
   }
 
-  async function fetchImage(bufferFetcher: BufferFetcher, url: string): Promise<Image | null> {
+  async function fetchImage(bufferFetcher: BufferFetcher, url: string): Promise<IImage | null> {
     const arrayBuffer = await getResultAsync(() => bufferFetcher(url))
     if (!arrayBuffer) return null
     const buffer = Buffer.from(arrayBuffer)
@@ -110,7 +110,7 @@ export function parseFavicon(
     }
   }
 
-  function updateIcon(icon: Icon, image: Image): Icon {
+  function updateIcon(icon: IIcon, image: IImage): IIcon {
     return produce(icon, icon => {
       icon.type = image.type
       icon.size = image.size

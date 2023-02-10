@@ -7,7 +7,7 @@ import { parseXML } from '@utils/parse-xml.js'
 import { isURLString } from '@utils/is-url-string.js'
 import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
 import { elementsToAttributes } from '@utils/elements-to-attributes.js'
-import { Icon, TextFetcher } from '@src/types.js'
+import { IIcon, TextFetcher } from '@src/types.js'
 import { produce } from '@utils/immer.js'
 import { isElement } from 'extra-dom'
 import { flatten, toArray } from 'iterable-operator'
@@ -15,13 +15,13 @@ import { flatten, toArray } from 'iterable-operator'
 export async function parseIEConfig(
   html: string
 , textFetcher: TextFetcher
-): Promise<Icon[]> {
+): Promise<IIcon[]> {
   const document = parseHTML(html)
   const configUrls = getConfigUrls(document)
   const icons = await map(configUrls, getIconsFromUrl)
   return toArray(flatten(icons))
 
-  async function getIconsFromUrl(url: string): Promise<Icon[]> {
+  async function getIconsFromUrl(url: string): Promise<IIcon[]> {
     const text = await fetch(url)
     if (text) {
       return getIEConfigIcons(text, url)
@@ -53,7 +53,7 @@ function getConfigUrls(document: Document): string[] {
   )
 }
 
-function getIEConfigIcons(xml: string, configUrl: string): Icon[] {
+function getIEConfigIcons(xml: string, configUrl: string): IIcon[] {
   const document = parseXML(xml)
   return [
     ...getIcons(
@@ -78,7 +78,7 @@ function getIEConfigIcons(xml: string, configUrl: string): Icon[] {
     )
   ].map(combineIconUrlWithConfigUrl)
 
-  function combineIconUrlWithConfigUrl(icon: Icon): Icon {
+  function combineIconUrlWithConfigUrl(icon: IIcon): IIcon {
     return produce(icon, icon => {
       icon.url = combineRelativeUrls(configUrl, icon.url)
     })
@@ -89,7 +89,7 @@ function getIcons(
   document: Document
 , selector: string
 , size: { width: number, height: number }
-): Icon[] {
+): IIcon[] {
   const nodes = queryAll.call(document, xpath`.${selector}`) as Node[]
 
   return pipe(
@@ -100,7 +100,7 @@ function getIcons(
   , toArray
   )
 
-  function createIcon(url: string, size: { width: number, height: number }): Icon {
+  function createIcon(url: string, size: { width: number, height: number }): IIcon {
     return {
       reference: 'msapplication-config'
     , url

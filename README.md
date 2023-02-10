@@ -35,14 +35,14 @@ function resolveUrl(url: string, base: string): URL {
 type TextFetcher = (url: string) => PromiseLike<string>
 type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
 
-interface Icon {
+interface IIcon {
   url: string
   reference: string
   type: null | string
-  size: null | 'any' | Size | Size[]
+  size: null | 'any' | ISize | ISize[]
 }
 
-interface Size {
+interface ISize {
   width: number
   height: number
 }
@@ -51,7 +51,7 @@ function parseFavicon(
   url: string
 , textFetcher: TextFetcher
 , bufferFetcher?: BufferFetcher
-): Observable<Icon>
+): Observable<IIcon>
 ```
 
 `parseFavicon` accepts `textFetcher` and `bufferFetcher` for further fetching requests when parsing icons, bufferFetcher is optional.

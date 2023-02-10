@@ -3,14 +3,14 @@ import { transform, map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { elementsToAttributes } from '@utils/elements-to-attributes.js'
-import { Icon } from '@src/types.js'
+import { IIcon } from '@src/types.js'
 
-export function parseWindows8Tiles(html: string): Icon[] {
+export function parseWindows8Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
   return getWindows8TileIcons(document)
 }
 
-function getWindows8TileIcons(document: Document): Icon[] {
+function getWindows8TileIcons(document: Document): IIcon[] {
   const nodes = queryAll.call(
     document
   , css`meta[name="msapplication-TileImage"]`
@@ -23,7 +23,7 @@ function getWindows8TileIcons(document: Document): Icon[] {
   , toArray
   )
 
-  function createWindows8TileIcon(url: string): Icon {
+  function createWindows8TileIcon(url: string): IIcon {
     return {
       url
     , reference: 'msapplication-TileImage'

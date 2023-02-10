@@ -1,14 +1,14 @@
 import { parseFileTypeFromBuffer } from '@utils/parse-file-type-from-buffer.js'
 import { imageSize as getImageSize } from 'image-size'
 import isSvg from 'is-svg'
-import { Image } from '@src/types.js'
+import { IImage } from '@src/types.js'
 import { map, uniqBy, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { CustomError } from '@blackglory/errors'
 
 export class UnknownImageFormatError extends CustomError {}
 
-export async function parseImage(buffer: Buffer): Promise<Image> {
+export async function parseImage(buffer: Buffer): Promise<IImage> {
   const type = await parseFileTypeFromBuffer(buffer)
   if (type) {
     if (isImage(type.mime)) {
@@ -24,14 +24,14 @@ export async function parseImage(buffer: Buffer): Promise<Image> {
   throw new UnknownImageFormatError()
 }
 
-function parseAsSvg(buffer: Buffer): Image {
+function parseAsSvg(buffer: Buffer): IImage {
   return {
     type: 'image/svg+xml'
   , size: getSize(buffer)
   }
 }
 
-function getSize(buffer: Buffer): Image['size'] {
+function getSize(buffer: Buffer): IImage['size'] {
   const result = getImageSize(buffer)
   if (result.images) {
     return pipe(

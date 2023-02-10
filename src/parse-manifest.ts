@@ -7,7 +7,7 @@ import { parseJSON } from '@utils/parse-json.js'
 import { isURLString } from '@utils/is-url-string.js'
 import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
-import { Icon, TextFetcher } from '@src/types.js'
+import { IIcon, TextFetcher } from '@src/types.js'
 import { produce } from '@utils/immer.js'
 
 interface Manifest {
@@ -18,7 +18,7 @@ interface Manifest {
   }>
 }
 
-export async function parseManifest(html: string, textFetcher: TextFetcher): Promise<Icon[]> {
+export async function parseManifest(html: string, textFetcher: TextFetcher): Promise<IIcon[]> {
   const document = parseHTML(html)
   const manifestUrls = getManifestUrls(document)
   const results = await map(manifestUrls, async url => {
@@ -29,7 +29,7 @@ export async function parseManifest(html: string, textFetcher: TextFetcher): Pro
       return []
     }
   })
-  return ([] as Icon[]).concat(...results)
+  return ([] as IIcon[]).concat(...results)
 
   async function fetch(url: string): Promise<string | null> {
     try {
@@ -51,14 +51,14 @@ function getManifestUrls(document: Document): string[] {
   )
 }
 
-function getManifestIcons(json: string, baseURI: string): Icon[] {
+function getManifestIcons(json: string, baseURI: string): IIcon[] {
   const manifest = parseJSON<Manifest>(json)
 
   return manifest.icons
     .map(x => createManifestIcon(x.src, parseSpaceSeparatedSizes(x.sizes), x.type))
     .map(combineIconUrlWithManifestUrl)
 
-  function combineIconUrlWithManifestUrl(icon: Icon): Icon {
+  function combineIconUrlWithManifestUrl(icon: IIcon): IIcon {
     return produce(icon, draft => {
       draft.url = combineRelativeUrlsForManifest(baseURI, icon.url)
     })
@@ -68,7 +68,7 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
     url: string
   , sizes: Array<{ width: number, height: number }>
   , type?: string
-  ): Icon {
+  ): IIcon {
     return {
       url
     , reference: 'manifest'
@@ -76,7 +76,7 @@ function getManifestIcons(json: string, baseURI: string): Icon[] {
     , size: createSize()
     }
 
-    function createSize(): Icon['size'] {
+    function createSize(): IIcon['size'] {
       if (sizes.length === 0) return null
       if (sizes.length === 1) return sizes[0]
       return sizes

@@ -3,9 +3,9 @@ import { map, toArray, transform } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { elementsToAttributes } from '@utils/elements-to-attributes.js'
-import { Icon } from '@src/types.js'
+import { IIcon } from '@src/types.js'
 
-export function parseIE11Tiles(html: string): Icon[] {
+export function parseIE11Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
 
   return [
@@ -41,7 +41,7 @@ function getIcons(
 , selector: string
 , reference: string
 , size: { width: number; height: number }
-): Icon[] {
+): IIcon[] {
   const nodes = queryAll.call(document, css`${selector}`) as Element[]
 
   return pipe(
@@ -55,7 +55,7 @@ function getIcons(
     reference: string
   , url: string
   , size: { width: number; height: number }
-  ): Icon {
+  ): IIcon {
     return {
       reference
     , url

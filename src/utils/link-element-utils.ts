@@ -2,13 +2,13 @@ import { queryAll, css } from '@blackglory/query'
 import { filter, map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
-import { Icon } from '@src/types.js'
+import { IIcon } from '@src/types.js'
 
 export function getIcons(
   document: Document
 , linkElementSelector: string
 , reference: string
-): Icon[] {
+): IIcon[] {
   const nodes = queryAll.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
 
   return pipe(
@@ -19,7 +19,7 @@ export function getIcons(
   )
 }
 
-function getSize(element: HTMLLinkElement): Icon['size'] {
+function getSize(element: HTMLLinkElement): IIcon['size'] {
   const sizes = element.getAttribute('sizes')
   if (sizes) {
     if (sizes === 'any') return 'any'
@@ -47,7 +47,7 @@ function createIcon(
   reference: string
 , url: string
 , type: string | null
-, size: Icon['size'] | null
-): Icon {
+, size: IIcon['size'] | null
+): IIcon {
   return { reference, url, type, size }
 }
