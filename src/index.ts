@@ -6,7 +6,6 @@ import { parseIEConfig } from '@src/parse-ie-config.js'
 import { parseIE11Tiles } from '@src/parse-ie11-tiles.js'
 import { parseManifest } from '@src/parse-manifest.js'
 import { parseMaskIcons } from '@src/parse-mask-icons.js'
-import { parseShortcutIcons } from '@src/parse-shortcut-icons.js'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles.js'
 import { parseImage, IImage } from '@utils/parse-image.js'
 import { Observable } from 'rxjs'
@@ -34,7 +33,6 @@ export function parseFavicon(
     , ...parseIcons(html)
     , ...parseIE11Tiles(html)
     , ...parseMaskIcons(html)
-    , ...parseShortcutIcons(html)
     , ...parseWindows8Tiles(html)
     ]
 
