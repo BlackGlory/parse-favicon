@@ -7,6 +7,7 @@ import { isURLString } from '@utils/is-url-string.js'
 import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
+import { extractAttributes } from '@utils/extract-attributes.js'
 
 interface IManifest {
   icons: Array<{
@@ -16,7 +17,10 @@ interface IManifest {
   }>
 }
 
-export async function parseManifest(html: string, textFetcher: TextFetcher): Promise<IIcon[]> {
+export async function parseManifest(
+  html: string
+, textFetcher: TextFetcher
+): Promise<IIcon[]> {
   const document = parseHTML(html)
   const manifestUrls = getManifestUrls(document)
   const results = await map(manifestUrls, async url => {
@@ -39,12 +43,12 @@ export async function parseManifest(html: string, textFetcher: TextFetcher): Pro
 }
 
 function getManifestUrls(document: Document): string[] {
-  const nodes = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
+  const links = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
 
   return pipe(
-    nodes
-  , nodes => Iter.map(nodes, x => x.getAttribute('href'))
-  , iter => Iter.filter<string | null, string>(iter, isURLString)
+    links
+  , links => extractAttributes(links, 'href')
+  , urls => Iter.filter(urls, isURLString)
   , Iter.toArray
   )
 }

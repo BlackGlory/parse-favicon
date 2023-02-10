@@ -1,9 +1,10 @@
 import { queryAll, css } from '@blackglory/query'
-import { map, toArray } from 'iterable-operator'
+import { filter, map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon } from '@src/types.js'
+import { isURLString } from '@utils/is-url-string.js'
 
 export function parseIE11Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
@@ -42,11 +43,12 @@ function getIcons(
 , reference: string
 , size: { width: number; height: number }
 ): IIcon[] {
-  const nodes = queryAll.call(document, css`${selector}`) as Element[]
+  const elements = queryAll.call(document, css`${selector}`) as Element[]
 
   return pipe(
-    nodes
-  , nodes => extractAttributes(nodes, 'content')
+    elements
+  , elements => extractAttributes(elements, 'content')
+  , contents => filter(contents, isURLString)
   , urls => map(urls, url => createIcon(reference, url, size))
   , toArray
   )

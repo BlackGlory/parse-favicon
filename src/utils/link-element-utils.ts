@@ -9,12 +9,12 @@ export function getIcons(
 , linkElementSelector: string
 , reference: string
 ): IIcon[] {
-  const nodes = queryAll.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
+  const links = queryAll.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
 
   return pipe(
-    nodes
-  , iter => filter(iter, hasHref)
-  , iter => map(iter, x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
+    links
+  , links => filter(links, hasHref)
+  , links => map(links, x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
   , toArray
   )
 }

@@ -1,9 +1,9 @@
 import { fileTypeFromBuffer } from 'file-type'
-import { imageSize as getImageSize } from 'image-size'
+import { imageSize } from 'image-size'
 import isSvg from 'is-svg'
 import { IImage } from '@src/types.js'
-import { map, uniqBy, toArray } from 'iterable-operator'
-import { pipe } from 'extra-utils'
+import { map, uniqBy, toArray, filter } from 'iterable-operator'
+import { isntUndefined, pipe } from 'extra-utils'
 import { CustomError } from '@blackglory/errors'
 
 export class UnknownImageFormatError extends CustomError {}
@@ -14,7 +14,7 @@ export async function parseImage(buffer: Buffer): Promise<IImage> {
     if (isImage(type.mime)) {
       return {
         type: type.mime
-      , size: getSize(buffer)
+      , size: getImageSize(buffer)
       }
     }
     if (isXML(type.mime) && isSvg(buffer)) return parseAsSvg(buffer)
@@ -27,28 +27,33 @@ export async function parseImage(buffer: Buffer): Promise<IImage> {
 function parseAsSvg(buffer: Buffer): IImage {
   return {
     type: 'image/svg+xml'
-  , size: getSize(buffer)
+  , size: getImageSize(buffer)
   }
 }
 
-function getSize(buffer: Buffer): IImage['size'] {
-  const result = getImageSize(buffer)
+function getImageSize(buffer: Buffer): IImage['size'] {
+  const result = imageSize(buffer)
   if (result.images) {
     return pipe(
       result.images
-    , xs => map(xs, x => createSize(x.width!, x.height!))
+    , imageSizes => filter(imageSizes, x => {
+        return isntUndefined(x.width)
+            && isntUndefined(x.height)
+      })
+    , imageSizes => map(imageSizes, x => {
+        return {
+          width: x.width!
+        , height: x.height!
+        }
+      })
     , xs => uniqBy(xs, sizeToString)
     , toArray
     )
   } else {
-    return createSize(result.width!, result.height!)
-  }
-
-  function createSize(width: number, height: number): {
-    width: number
-    height: number
-  } {
-    return { width, height }
+    return {
+      width: result.width!
+    , height: result.height!
+    }
   }
 
   function sizeToString(size: { width: number; height: number }): string {

@@ -7,8 +7,8 @@ export function extractAttributes(
 ): IterableIterator<string> {
   return pipe(
     elements
-  , iter => map(iter, x => x.getAttribute(attributeName))
-  , iter => filter(iter, isTruthy)
+  , elements => map(elements, element => element.getAttribute(attributeName))
+  , attributeValue => filter(attributeValue, isTruthy)
   )
 }
 

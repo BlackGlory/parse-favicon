@@ -39,15 +39,15 @@ export async function parseIEConfig(
 }
 
 function getConfigUrls(document: Document): string[] {
-  const nodes = queryAll.call(
+  const elements = queryAll.call(
     document
   , css`meta[name="msapplication-config"]`
   ) as Element[]
 
   return pipe(
-    nodes
-  , nodes => Iter.map(nodes, x => x.getAttribute('content'))
-  , contents => Iter.filter<string | null, string>(contents, isURLString)
+    elements
+  , elements => extractAttributes(elements, 'content')
+  , contents => Iter.filter(contents, isURLString)
   , toArray
   )
 }
@@ -96,7 +96,7 @@ function getIcons(
     nodes
   , nodes => Iter.filter<Node, Element>(nodes, isElement)
   , elements => extractAttributes(elements, 'src')
-  , urls => Iter.map(urls, url => createIcon(url, size))
+  , srcURLs => Iter.map(srcURLs, url => createIcon(url, size))
   , toArray
   )
 
