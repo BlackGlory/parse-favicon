@@ -14,17 +14,20 @@ import { parseFavicon } from 'parse-favicon'
 
 const pageUrl = 'https://github.com'
 
-parseFavicon(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
+parseFavicon(pageUrl, textFetcher, bufferFetcher)
+  .subscribe(icon => console.log(icon))
 
-async function textFetcher(url: string): Promise<string> {
-  return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
+function textFetcher(url: string): Promise<string> {
+  return fetch(resolveURL(url, pageUrl))
+    .then(res => res.text())
 }
 
-async function bufferFetcher(url: string): Promise<ArrayBuffer> {
-  return await fetch(resolveUrl(url, pageUrl)).then(res => res.arrayBuffer())
+function bufferFetcher(url: string): Promise<ArrayBuffer> {
+  return fetch(resolveURL(url, pageUrl))
+    .then(res => res.arrayBuffer())
 }
 
-function resolveUrl(url: string, base: string): URL {
+function resolveURL(url: string, base: string): string {
   return new URL(url, base).href
 }
 ```
