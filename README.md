@@ -35,8 +35,8 @@ function resolveURL(url: string, base: string): string {
 ## API
 ### parseFavicon
 ```ts
-type TextFetcher = (url: string) => PromiseLike<string>
-type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
+type TextFetcher = (url: string) => Awaitable<string> // string | PromiseLike<string>
+type BufferFetcher = (url: string) => Awaitable<ArrayBuffer> // ArrayBuffer | PromiseLike<ArrayBuffer>
 
 interface IIcon {
   url: string

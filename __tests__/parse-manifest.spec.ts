@@ -51,7 +51,7 @@ describe('parseManifest', () => {
         }
       `
 
-      const result = await parseManifest(html, async () => manifest)
+      const result = await parseManifest(html, () => manifest)
 
       expect(result).toMatchObject([
         {
@@ -93,7 +93,7 @@ describe('parseManifest', () => {
         }
       `
 
-      const result = await parseManifest(html, async () => manifest)
+      const result = await parseManifest(html, () => manifest)
 
       expect(result).toMatchObject([
         {
@@ -111,7 +111,7 @@ describe('parseManifest', () => {
       `
       const manifest = dedent`{}`
 
-      const result = await parseManifest(html, async () => manifest)
+      const result = await parseManifest(html, () => manifest)
 
       expect(result).toMatchObject([])
     })

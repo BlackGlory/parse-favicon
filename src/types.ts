@@ -1,3 +1,5 @@
+import { Awaitable } from '@blackglory/prelude'
+
 export interface IIcon {
   url: string
   reference: string
@@ -10,5 +12,5 @@ export interface ISize {
   height: number
 }
 
-export type TextFetcher = (url: string) => PromiseLike<string>
-export type BufferFetcher = (url: string) => PromiseLike<ArrayBuffer>
+export type TextFetcher = (url: string) => Awaitable<string>
+export type BufferFetcher = (url: string) => Awaitable<ArrayBuffer>

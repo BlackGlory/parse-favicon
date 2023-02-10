@@ -44,7 +44,7 @@ describe('parseIEConfig', () => {
         </browserconfig>
       `
 
-      const result = await parseIEConfig(html, async () => config)
+      const result = await parseIEConfig(html, () => config)
 
       expect(result).toMatchObject([
         {
@@ -72,7 +72,7 @@ describe('parseIEConfig', () => {
         </browserconfig>
       `
 
-      const result = await parseIEConfig(html, async () => config)
+      const result = await parseIEConfig(html, () => config)
 
       expect(result).toMatchObject([
         {
@@ -100,7 +100,7 @@ describe('parseIEConfig', () => {
         </browserconfig>
       `
 
-      const result = await parseIEConfig(html, async () => config)
+      const result = await parseIEConfig(html, () => config)
 
       expect(result).toMatchObject([
         {
@@ -128,7 +128,7 @@ describe('parseIEConfig', () => {
         </browserconfig>
       `
 
-      const result = await parseIEConfig(html, async () => config)
+      const result = await parseIEConfig(html, () => config)
 
       expect(result).toMatchObject([
         {
