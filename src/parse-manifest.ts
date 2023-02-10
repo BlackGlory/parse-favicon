@@ -3,14 +3,13 @@ import { map } from 'extra-promise'
 import * as Iter from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
-import { parseJSON } from '@utils/parse-json.js'
 import { isURLString } from '@utils/is-url-string.js'
 import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { produce } from '@utils/immer.js'
 
-interface Manifest {
+interface IManifest {
   icons: Array<{
     src: string
     sizes: string
@@ -52,7 +51,7 @@ function getManifestUrls(document: Document): string[] {
 }
 
 function getManifestIcons(json: string, baseURI: string): IIcon[] {
-  const manifest = parseJSON<Manifest>(json)
+  const manifest = JSON.parse(json) as IManifest
 
   return manifest.icons
     .map(x => createManifestIcon(x.src, parseSpaceSeparatedSizes(x.sizes), x.type))
