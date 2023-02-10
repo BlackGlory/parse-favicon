@@ -16,11 +16,10 @@
     "lib",
     "dist"
   ],
-  "main": "lib/es2018/index.js",
-  "types": "lib/es2018/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "browser": {
-    "./lib/es2015/utils/parse-file-type-from-buffer.js": "./lib/es2015/utils/parse-file-type-from-buffer.browser.js",
-    "./lib/es2018/utils/parse-file-type-from-buffer.js": "./lib/es2018/utils/parse-file-type-from-buffer.browser.js"
+    "./lib/utils/parse-file-type-from-buffer.js": "./lib/utils/parse-file-type-from-buffer.browser.js"
   },
   "sideEffects": false,
   "repository": "git@github.com:BlackGlory/parse-favicon.git",
@@ -35,18 +34,14 @@
     "clean": "run-p clean:*",
     "clean:build": "rimraf lib",
     "clean:bundle": "rimraf dist",
-    "build": "run-p build:*",
-    "build:es2015": "run-s build:es2015:*",
-    "build:es2015:compile": "tsc --project tsconfig.build.json --module commonjs --target es2015 --outDir lib/es2015",
-    "build:es2015:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2015",
-    "build:es2018": "run-s build:es2018:*",
-    "build:es2018:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib/es2018",
-    "build:es2018:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2018",
+    "build": "run-s build:*",
+    "build:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib",
+    "build:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib",
     "release": "standard-version"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-s lint build test",
+      "pre-commit": "run-s clean lint build test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
