@@ -1,4 +1,4 @@
-import { parseFileTypeFromBuffer } from '@utils/parse-file-type-from-buffer.js'
+import { fileTypeFromBuffer } from 'file-type'
 import { imageSize as getImageSize } from 'image-size'
 import isSvg from 'is-svg'
 import { IImage } from '@src/types.js'
@@ -9,7 +9,7 @@ import { CustomError } from '@blackglory/errors'
 export class UnknownImageFormatError extends CustomError {}
 
 export async function parseImage(buffer: Buffer): Promise<IImage> {
-  const type = await parseFileTypeFromBuffer(buffer)
+  const type = await fileTypeFromBuffer(buffer)
   if (type) {
     if (isImage(type.mime)) {
       return {
