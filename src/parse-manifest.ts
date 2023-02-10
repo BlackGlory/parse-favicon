@@ -22,11 +22,11 @@ export async function parseManifest(
 , textFetcher: TextFetcher
 ): Promise<IIcon[]> {
   const document = parseHTML(html)
-  const manifestUrls = getManifestUrls(document)
+  const manifestUrls = extractManifestURLs(document)
   const results = await map(manifestUrls, async url => {
     const text = await fetch(url)
     if (text) {
-      return getManifestIcons(text, url)
+      return extractManifestIcons(text, url)
     } else {
       return []
     }
@@ -42,7 +42,7 @@ export async function parseManifest(
   }
 }
 
-function getManifestUrls(document: Document): string[] {
+function extractManifestURLs(document: Document): string[] {
   const links = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
 
   return pipe(
@@ -53,7 +53,7 @@ function getManifestUrls(document: Document): string[] {
   )
 }
 
-function getManifestIcons(json: string, baseURI: string): IIcon[] {
+function extractManifestIcons(json: string, baseURI: string): IIcon[] {
   const manifest = JSON.parse(json) as IManifest
 
   return manifest.icons

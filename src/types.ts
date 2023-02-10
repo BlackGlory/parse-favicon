@@ -5,11 +5,6 @@ export interface IIcon {
   size: null | 'any' | ISize | ISize[]
 }
 
-export interface IImage {
-  type: string
-  size: 'any' | ISize | ISize[]
-}
-
 export interface ISize {
   width: number
   height: number

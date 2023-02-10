@@ -4,7 +4,10 @@ import { pipe } from 'extra-utils'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon } from '@src/types.js'
 
-export function getIcons(
+/**
+ * @param reference 表示该图标的来源, 例如`apple-touch-icon`, 没有太大实际意义.
+ */
+export function extractIconsFromLinkElements(
   document: Document
 , linkElementSelector: string
 , reference: string

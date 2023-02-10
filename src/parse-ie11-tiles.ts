@@ -10,25 +10,25 @@ export function parseIE11Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
 
   return [
-    ...getIcons(
+    ...extractIE11TileIcons(
       document
     , 'meta[name="msapplication-square70x70logo"]'
     , 'msapplication-square70x70logo'
     , { width: 70, height: 70 }
     )
-  , ...getIcons(
+  , ...extractIE11TileIcons(
       document
     , 'meta[name="msapplication-square150x150logo"]'
     , 'msapplication-square150x150logo'
     , { width: 150, height: 150 }
     )
-  , ...getIcons(
+  , ...extractIE11TileIcons(
       document
     , 'meta[name="msapplication-wide310x150logo"]'
     , 'msapplication-wide310x150logo'
     , { width: 310, height: 150 }
     )
-  , ...getIcons(
+  , ...extractIE11TileIcons(
       document
     , 'meta[name="msapplication-square310x310logo"]'
     , 'msapplication-square310x310logo'
@@ -37,7 +37,7 @@ export function parseIE11Tiles(html: string): IIcon[] {
   ]
 }
 
-function getIcons(
+function extractIE11TileIcons(
   document: Document
 , selector: string
 , reference: string

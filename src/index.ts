@@ -8,12 +8,11 @@ import { parseManifest } from '@src/parse-manifest.js'
 import { parseMaskIcons } from '@src/parse-mask-icons.js'
 import { parseShortcutIcons } from '@src/parse-shortcut-icons.js'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles.js'
-import { parseImage } from '@src/parse-image.js'
+import { parseImage, IImage } from '@utils/parse-image.js'
 import { Observable } from 'rxjs'
 import { flatten, each } from 'iterable-operator'
-
-import { IIcon, TextFetcher, BufferFetcher, IImage } from './types.js'
-export { IIcon as Icon, TextFetcher, BufferFetcher }
+import { IIcon, TextFetcher, BufferFetcher } from './types.js'
+export { IIcon, TextFetcher, BufferFetcher } from './types.js'
 
 export function parseFavicon(
   url: string
@@ -97,7 +96,10 @@ export function parseFavicon(
     }
   }
 
-  async function fetchImage(bufferFetcher: BufferFetcher, url: string): Promise<IImage | null> {
+  async function fetchImage(
+    bufferFetcher: BufferFetcher
+  , url: string
+  ): Promise<IImage | null> {
     const arrayBuffer = await getResultAsync(() => bufferFetcher(url))
     if (!arrayBuffer) return null
     const buffer = Buffer.from(arrayBuffer)

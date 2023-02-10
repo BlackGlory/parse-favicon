@@ -8,10 +8,10 @@ import { IIcon } from '@src/types.js'
 
 export function parseWindows8Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
-  return getWindows8TileIcons(document)
+  return extractWindows8TileIcons(document)
 }
 
-function getWindows8TileIcons(document: Document): IIcon[] {
+function extractWindows8TileIcons(document: Document): IIcon[] {
   const elements = queryAll.call(
     document
   , css`meta[name="msapplication-TileImage"]`

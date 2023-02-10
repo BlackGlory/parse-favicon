@@ -1,5 +1,5 @@
 import { getErrorAsync } from 'return-style'
-import { parseImage, UnknownImageFormatError } from '@src/parse-image.js'
+import { parseImage, UnknownImageFormatError } from '@utils/parse-image.js'
 import * as path from 'path'
 import { promises as fs } from 'fs'
 import { fileURLToPath } from 'url'
@@ -82,7 +82,7 @@ describe('parseImage', () => {
 
 function getFixturePath(filename: string) {
   const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  return path.join(__dirname, `fixtures/${filename}`)
+  return path.join(__dirname, `../fixtures/${filename}`)
 }
 
 function fetchBuffer(path: string): Promise<Buffer> {

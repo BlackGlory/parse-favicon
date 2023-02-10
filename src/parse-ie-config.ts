@@ -16,14 +16,14 @@ export async function parseIEConfig(
 , textFetcher: TextFetcher
 ): Promise<IIcon[]> {
   const document = parseHTML(html)
-  const configUrls = getConfigUrls(document)
-  const icons = await map(configUrls, getIconsFromUrl)
+  const configUrls = extractConfigURLs(document)
+  const icons = await map(configUrls, extractIconsFromURL)
   return toArray(flatten(icons))
 
-  async function getIconsFromUrl(url: string): Promise<IIcon[]> {
+  async function extractIconsFromURL(url: string): Promise<IIcon[]> {
     const text = await fetch(url)
     if (text) {
-      return getIEConfigIcons(text, url)
+      return parseIEConfigIcons(text, url)
     } else {
       return []
     }
@@ -38,7 +38,7 @@ export async function parseIEConfig(
   }
 }
 
-function getConfigUrls(document: Document): string[] {
+function extractConfigURLs(document: Document): string[] {
   const elements = queryAll.call(
     document
   , css`meta[name="msapplication-config"]`
@@ -52,25 +52,25 @@ function getConfigUrls(document: Document): string[] {
   )
 }
 
-function getIEConfigIcons(xml: string, configUrl: string): IIcon[] {
+function parseIEConfigIcons(xml: string, configUrl: string): IIcon[] {
   const document = parseXML(xml)
   return [
-    ...getIcons(
+    ...extractIEConfigIcons(
       document
     , '/browserconfig/msapplication/tile/square70x70logo'
     , { width: 70, height: 70 }
     )
-  , ...getIcons(
+  , ...extractIEConfigIcons(
       document
     , '/browserconfig/msapplication/tile/square150x150logo'
     , { width: 150, height: 150 }
     )
-  , ...getIcons(
+  , ...extractIEConfigIcons(
       document
     , '/browserconfig/msapplication/tile/wide310x150logo'
     , { width: 310, height: 150 }
     )
-  , ...getIcons(
+  , ...extractIEConfigIcons(
       document
     , '/browserconfig/msapplication/tile/square310x310logo'
     , { width: 310, height: 310 }
@@ -85,7 +85,7 @@ function getIEConfigIcons(xml: string, configUrl: string): IIcon[] {
   }
 }
 
-function getIcons(
+function extractIEConfigIcons(
   document: Document
 , selector: string
 , size: { width: number, height: number }
