@@ -1,34 +1,33 @@
 import { getErrorAsync } from 'return-style'
 import { dedent } from 'extra-tags'
-import { parseManifest } from '@src/parse-manifest'
+import { parseManifest } from '@src/parse-manifest.js'
+import { jest } from '@jest/globals'
 
-describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () => {
-  it('call fetcher to get resource', async () => {
+describe('parseManifest', () => {
+  test('call fetcher to get resource', async () => {
     const fetcher = jest.fn(() => { throw new Error() })
     const html = `
       <link rel="manifest" href="path/to/manifest.webmanifest">
     `
 
-    getErrorAsync(() => parseManifest(html, fetcher))
+    await getErrorAsync(() => parseManifest(html, fetcher))
 
     expect(fetcher).toBeCalledWith('path/to/manifest.webmanifest')
   })
 
-  describe('manifest cannot fetch', () => {
-    it('return []', async () => {
-      const fetcher = () => { throw new Error() }
-      const html = `
-        <link rel="manifest" href="path/to/manifest.webmanifest">
-      `
+  test('manifest cannot fetch', async () => {
+    const fetcher = () => { throw new Error() }
+    const html = `
+      <link rel="manifest" href="path/to/manifest.webmanifest">
+    `
 
-      const result = await parseManifest(html, fetcher)
+    const result = await parseManifest(html, fetcher)
 
-      expect(result).toEqual([])
-    })
+    expect(result).toEqual([])
   })
 
   describe('manifest can fetch', () => {
-    it('return Icon[]', async () => {
+    test('relative paths', async () => {
       const html = `
         <link rel="manifest" href="path/to/manifest.webmanifest">
       `
@@ -79,33 +78,31 @@ describe('parseManifest(html: string, fetcher: Fetcher): Promise<Icon[]>', () =>
       ])
     })
 
-    describe('absolute path', () => {
-      it('return Icon[]', async () => {
-        const html = `
-          <link rel="manifest" href="path/to/manifest.webmanifest">
-        `
-        const manifest = dedent`
-          {
-            "icons": [
-              {
-                "src": "/path/to/icon",
-                "sizes": "48x48"
-              }
-            ]
-          }
-        `
+    test('absolute path', async () => {
+      const html = `
+        <link rel="manifest" href="path/to/manifest.webmanifest">
+      `
+      const manifest = dedent`
+        {
+          "icons": [
+            {
+              "src": "/path/to/icon",
+              "sizes": "48x48"
+            }
+          ]
+        }
+      `
 
-        const result = await parseManifest(html, async () => manifest)
+      const result = await parseManifest(html, async () => manifest)
 
-        expect(result).toMatchObject([
-          {
-            url: '/path/to/icon'
-          , reference: 'manifest'
-          , type: null
-          , size: { width: 48, height: 48 }
-          }
-        ])
-      })
+      expect(result).toMatchObject([
+        {
+          url: '/path/to/icon'
+        , reference: 'manifest'
+        , type: null
+        , size: { width: 48, height: 48 }
+        }
+      ])
     })
   })
 })

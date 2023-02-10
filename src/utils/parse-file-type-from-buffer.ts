@@ -1,1 +1,1 @@
-export { fromBuffer as parseFileTypeFromBuffer } from 'file-type'
+export { fileTypeFromBuffer as parseFileTypeFromBuffer } from 'file-type'

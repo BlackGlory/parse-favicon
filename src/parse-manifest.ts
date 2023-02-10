@@ -1,13 +1,14 @@
 import { queryAll, css } from '@blackglory/query'
 import { map } from 'extra-promise'
-import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseHTML } from '@utils/parse-html'
-import { parseJSON } from '@utils/parse-json'
-import { isUrl } from '@utils/is-url'
-import { combineRelativeUrls } from '@utils/combine-relative-urls'
-import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
-import { Icon, TextFetcher } from '@src/types'
-import { produce } from '@utils/immer'
+import * as Iter from 'iterable-operator'
+import { pipe } from 'extra-utils'
+import { parseHTML } from '@utils/parse-html.js'
+import { parseJSON } from '@utils/parse-json.js'
+import { isURLString } from '@utils/is-url-string.js'
+import { combineRelativeUrls } from '@utils/combine-relative-urls.js'
+import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
+import { Icon, TextFetcher } from '@src/types.js'
+import { produce } from '@utils/immer.js'
 
 interface Manifest {
   icons: Array<{
@@ -42,10 +43,12 @@ export async function parseManifest(html: string, textFetcher: TextFetcher): Pro
 function getManifestUrls(document: Document): string[] {
   const nodes = queryAll.call(document, css`link[rel="manifest"]`) as HTMLLinkElement[]
 
-  return new IterableOperator(nodes)
-    .map(x => x.getAttribute('href'))
-    .filter<string>(isUrl)
-    .toArray()
+  return pipe(
+    nodes
+  , nodes => Iter.map(nodes, x => x.getAttribute('href'))
+  , iter => Iter.filter<string | null, string>(iter, isURLString)
+  , Iter.toArray
+  )
 }
 
 function getManifestIcons(json: string, baseURI: string): Icon[] {

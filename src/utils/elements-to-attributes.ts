@@ -1,10 +1,14 @@
-import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
+import { pipe } from 'extra-utils'
+import { map, filter } from 'iterable-operator'
 
-export function elementsToAttributes(attr: string) {
-  return (iterable: Iterable<Element>) =>
-    new IterableOperator(iterable)
-      .map(x => x.getAttribute(attr))
-      .filter<string>(isTruthy)
+export function elementsToAttributes(
+  attrs: string
+): (elements: Iterable<Element>) => Iterable<string> {
+  return (elements: Iterable<Element>) => pipe(
+    elements
+  , iter => map(iter, x => x.getAttribute(attrs))
+  , iter => filter(iter, isTruthy)
+  )
 }
 
 function isTruthy(val: unknown): boolean {

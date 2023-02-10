@@ -1,6 +1,6 @@
-import { parseHTML } from '@utils/parse-html'
-import { getIcons } from '@utils/link-element-utils'
-import { Icon } from '@src/types'
+import { parseHTML } from '@utils/parse-html.js'
+import { getIcons } from '@utils/link-element-utils.js'
+import { Icon } from '@src/types.js'
 
 export function parseMaskIcons(html: string): Icon[] {
   const document = parseHTML(html)

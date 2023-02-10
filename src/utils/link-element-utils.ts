@@ -1,15 +1,22 @@
 import { queryAll, css } from '@blackglory/query'
-import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
-import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes'
-import { Icon } from '@src/types'
+import { filter, map, toArray } from 'iterable-operator'
+import { pipe } from 'extra-utils'
+import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
+import { Icon } from '@src/types.js'
 
-export function getIcons(document: Document, linkElementSelector: string, reference: string) {
+export function getIcons(
+  document: Document
+, linkElementSelector: string
+, reference: string
+): Icon[] {
   const nodes = queryAll.call(document, css`${linkElementSelector}`) as HTMLLinkElement[]
 
-  return new IterableOperator(nodes)
-    .filter(hasHref)
-    .map(x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
-    .toArray()
+  return pipe(
+    nodes
+  , iter => filter(iter, hasHref)
+  , iter => map(iter, x => createIcon(reference, getHref(x)!, getType(x), getSize(x)))
+  , toArray
+  )
 }
 
 function getSize(element: HTMLLinkElement): Icon['size'] {
@@ -36,6 +43,11 @@ function hasHref(element: HTMLLinkElement): boolean {
   return !!element.getAttribute('href')
 }
 
-function createIcon(reference: string, url: string, type: string | null, size: Icon['size'] | null): Icon {
+function createIcon(
+  reference: string
+, url: string
+, type: string | null
+, size: Icon['size'] | null
+): Icon {
   return { reference, url, type, size }
 }

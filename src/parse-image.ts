@@ -1,8 +1,9 @@
-import { parseFileTypeFromBuffer } from '@utils/parse-file-type-from-buffer'
-import imageSize from 'image-size'
+import { parseFileTypeFromBuffer } from '@utils/parse-file-type-from-buffer.js'
+import { imageSize as getImageSize } from 'image-size'
 import isSvg from 'is-svg'
-import { Image } from '@src/types'
-import { IterableOperator } from 'iterable-operator/lib/es2015/style/chaining/iterable-operator'
+import { Image } from '@src/types.js'
+import { map, uniqBy, toArray } from 'iterable-operator'
+import { pipe } from 'extra-utils'
 import { CustomError } from '@blackglory/errors'
 
 export class UnknownImageFormatError extends CustomError {}
@@ -31,21 +32,26 @@ function parseAsSvg(buffer: Buffer): Image {
 }
 
 function getSize(buffer: Buffer): Image['size'] {
-  const result = imageSize(buffer)
+  const result = getImageSize(buffer)
   if (result.images) {
-    return new IterableOperator(result.images)
-      .map(x => createSize(x.width!, x.height!))
-      .uniqBy(sizeToString)
-      .toArray()
+    return pipe(
+      result.images
+    , xs => map(xs, x => createSize(x.width!, x.height!))
+    , xs => uniqBy(xs, sizeToString)
+    , toArray
+    )
   } else {
     return createSize(result.width!, result.height!)
   }
 
-  function createSize(width: number, height: number) {
+  function createSize(width: number, height: number): {
+    width: number
+    height: number
+  } {
     return { width, height }
   }
 
-  function sizeToString(size: { width: number, height: number }) {
+  function sizeToString(size: { width: number; height: number }): string {
     return `${size.width}x${size.height}`
   }
 }
