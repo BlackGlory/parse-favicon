@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/BlackGlory/parse-favicon/compare/v5.0.4...v6.0.0) (2023-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* - Renamed `Icon` to `IIcon`
+- Renamed `Size` to `ISize`
+* - CommonJS => ESM
+- The minimal version of Node.js is 16
+
+### Bug Fixes
+
+* [#24](https://github.com/BlackGlory/parse-favicon/issues/24) ([9c0271e](https://github.com/BlackGlory/parse-favicon/commit/9c0271e4f8fcc01a9e97e47ee03cab3317f15094))
+
+
+* rename ([1db870f](https://github.com/BlackGlory/parse-favicon/commit/1db870f73ad32d37e35640d3ea6c022bd7f4d491))
+* upgrade dependencies ([6c7abfe](https://github.com/BlackGlory/parse-favicon/commit/6c7abfeb8a7c080381bbd93f1bebf9161525f543))
+
 ### [5.0.4](https://github.com/BlackGlory/parse-favicon/compare/v5.0.3...v5.0.4) (2022-10-18)
 
 ### [5.0.3](https://github.com/BlackGlory/parse-favicon/compare/v5.0.2...v5.0.3) (2022-03-23)
