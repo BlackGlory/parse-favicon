@@ -1,8 +1,8 @@
 import { queryAll, css } from '@blackglory/query'
-import { transform, map, toArray } from 'iterable-operator'
+import { map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
-import { elementsToAttributes } from '@utils/elements-to-attributes.js'
+import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon } from '@src/types.js'
 
 export function parseWindows8Tiles(html: string): IIcon[] {
@@ -18,7 +18,7 @@ function getWindows8TileIcons(document: Document): IIcon[] {
 
   return pipe(
     nodes
-  , iter => transform(iter, elementsToAttributes('content'))
+  , iter => extractAttributes(iter, 'content')
   , iter => map(iter, createWindows8TileIcon)
   , toArray
   )

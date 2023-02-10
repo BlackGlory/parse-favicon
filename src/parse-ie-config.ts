@@ -6,7 +6,7 @@ import { parseHTML } from '@utils/parse-html.js'
 import { parseXML } from '@utils/parse-xml.js'
 import { isURLString } from '@utils/is-url-string.js'
 import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
-import { elementsToAttributes } from '@utils/elements-to-attributes.js'
+import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { isElement } from 'extra-dom'
 import { flatten, toArray } from 'iterable-operator'
@@ -95,7 +95,7 @@ function getIcons(
   return pipe(
     nodes
   , nodes => Iter.filter<Node, Element>(nodes, isElement)
-  , elements => Iter.transform(elements, elementsToAttributes('src'))
+  , elements => extractAttributes(elements, 'src')
   , urls => Iter.map(urls, url => createIcon(url, size))
   , toArray
   )
