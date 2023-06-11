@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.2](https://github.com/BlackGlory/parse-favicon/compare/v6.0.1...v6.0.2) (2023-06-11)
+
+
+### Bug Fixes
+
+* export src ([5346c1d](https://github.com/BlackGlory/parse-favicon/commit/5346c1d912ab364a89bc4db2b2024b2268d02ed8))
+
 ### [6.0.1](https://github.com/BlackGlory/parse-favicon/compare/v6.0.0...v6.0.1) (2023-02-10)
 
 ## [6.0.0](https://github.com/BlackGlory/parse-favicon/compare/v5.0.4...v6.0.0) (2023-02-10)
