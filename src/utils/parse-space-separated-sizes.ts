@@ -1,6 +1,5 @@
 import { map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
-import matchAll from 'string.prototype.matchall'
 import { ISize } from '@src/types.js'
 
 /**
@@ -9,7 +8,7 @@ import { ISize } from '@src/types.js'
 export function parseSpaceSeparatedSizes(sizes: string): ISize[] {
   if (/^\d+[x|X]\d+(?:\s+\d+[x|X]\d+)*$/.test(sizes)) {
     const re = /(?<width>\d+)[x|X](?<height>\d+)/g
-    const matches = matchAll(sizes, re)
+    const matches = sizes.matchAll(re)
 
     return pipe(
       matches

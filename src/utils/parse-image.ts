@@ -22,11 +22,11 @@ export async function parseImage(buffer: Buffer): Promise<IImage> {
       , size: parseImageSize(buffer)
       }
     }
-    if (isXML(type.mime) && isSvg(buffer)) {
+    if (isXML(type.mime) && isSvg(buffer.toString('utf-8'))) {
       return parseAsSvg(buffer)
     }
   } else {
-    if (isSvg(buffer)) {
+    if (isSvg(buffer.toString('utf-8'))) {
       return parseAsSvg(buffer)
     }
   }
