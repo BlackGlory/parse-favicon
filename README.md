@@ -83,7 +83,7 @@ References related to `bufferFetcher`:
 - `/apple-touch-icon-precomposed.png`
 - `/apple-touch-icon.png`
 
-## Support references
+## Supported references
 - `<link rel="icon" href="path/to/icon.png">`
 - `<link rel="shortcut icon" href="path/to/icon.ico">`
 - `<link rel="apple-touch-icon" href="path/to/icon.png">`
