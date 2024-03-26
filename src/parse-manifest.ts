@@ -9,6 +9,7 @@ import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
 import { isObject, isArray, isString } from '@blackglory/prelude'
+import { getResultAsync } from 'return-style'
 
 interface IManifest {
   icons: Array<{
@@ -20,12 +21,12 @@ interface IManifest {
 
 export async function parseManifest(
   html: string
-, textFetcher: TextFetcher
+, fetchText: TextFetcher
 ): Promise<IIcon[]> {
   const document = parseHTML(html)
   const manifestUrls = extractManifestURLs(document)
   const results = await map(manifestUrls, async url => {
-    const text = await fetch(url)
+    const text = await getResultAsync(() => fetchText(url))
     if (text) {
       return extractManifestIcons(text, url)
     } else {
@@ -33,14 +34,6 @@ export async function parseManifest(
     }
   })
   return ([] as IIcon[]).concat(...results)
-
-  async function fetch(url: string): Promise<string | null> {
-    try {
-      return await textFetcher(url)
-    } catch {
-      return null
-    }
-  }
 }
 
 function isManifest(val: unknown): val is IManifest {

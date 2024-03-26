@@ -10,10 +10,11 @@ import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
 import { isElement } from 'extra-dom'
 import { flatten, toArray } from 'iterable-operator'
+import { getResultAsync } from 'return-style'
 
 export async function parseIEConfig(
   html: string
-, textFetcher: TextFetcher
+, fetchText: TextFetcher
 ): Promise<IIcon[]> {
   const document = parseHTML(html)
   const configUrls = extractConfigURLs(document)
@@ -21,19 +22,11 @@ export async function parseIEConfig(
   return toArray(flatten(icons))
 
   async function extractIconsFromURL(url: string): Promise<IIcon[]> {
-    const text = await fetch(url)
+    const text = await getResultAsync(() => fetchText(url))
     if (text) {
       return parseIEConfigIcons(text, url)
     } else {
       return []
-    }
-
-    async function fetch(url: string): Promise<string | null> {
-      try {
-        return await textFetcher(url)
-      } catch {
-        return null
-      }
     }
   }
 }

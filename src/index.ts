@@ -11,13 +11,26 @@ import { parseImage, IImage } from '@utils/parse-image.js'
 import { Observable } from 'rxjs'
 import { flatten, each } from 'iterable-operator'
 import { IIcon, TextFetcher, BufferFetcher } from './types.js'
+import { Awaitable } from '@blackglory/prelude'
 export { IIcon, TextFetcher, BufferFetcher } from './types.js'
 
 export function parseFavicon(
-  url: string
-, textFetcher: TextFetcher
-, bufferFetcher?: BufferFetcher
+  pageURL: string
+, _fetchText: TextFetcher
+, _fetchBuffer?: BufferFetcher
 ): Observable<IIcon> {
+  const fetchText: TextFetcher = (url: string): Awaitable<string> => {
+    const absoluteURL = new URL(url, pageURL).href
+    return _fetchText(absoluteURL)
+  }
+  const fetchBuffer: BufferFetcher | undefined =
+    _fetchBuffer
+    ? (url: string): Awaitable<ArrayBuffer> => {
+        const absoluteURL = new URL(url, pageURL).href
+        return _fetchBuffer(absoluteURL)
+      }
+    : undefined
+
   return new Observable(observer => {
     parse(icon => observer.next(icon))
       .then(() => observer.complete())
@@ -25,7 +38,7 @@ export function parseFavicon(
   })
 
   async function parse(publish: (icon: IIcon) => void) {
-    const html = await textFetcher(url)
+    const html = await fetchText(pageURL)
 
     const icons = [
       ...parseAppleTouchIcons(html)
@@ -36,24 +49,24 @@ export function parseFavicon(
     , ...parseWindows8Tiles(html)
     ]
 
-    if (bufferFetcher) {
+    if (fetchBuffer) {
       const imagePromisePool = new Map<string, Promise<IImage | null>>()
 
       icons.forEach(async icon => publish(
-        await tryUpdateIcon(bufferFetcher, imagePromisePool, icon)
+        await tryUpdateIcon(fetchBuffer, imagePromisePool, icon)
       ))
 
       const results = await Promise.all([
-        parseIEConfig(html, textFetcher)
-      , parseManifest(html, textFetcher)
+        parseIEConfig(html, fetchText)
+      , parseManifest(html, fetchText)
       ])
       each(flatten<IIcon>(results), async icon => {
-        publish(await tryUpdateIcon(bufferFetcher, imagePromisePool, icon))
+        publish(await tryUpdateIcon(fetchBuffer, imagePromisePool, icon))
       })
 
       getDefaultIconUrls().forEach(async url => {
         if (!imagePromisePool.has(url)) {
-          imagePromisePool.set(url, fetchImage(bufferFetcher, url))
+          imagePromisePool.set(url, fetchImage(fetchBuffer, url))
         }
         const image = await imagePromisePool.get(url)
         if (image) {
@@ -71,20 +84,23 @@ export function parseFavicon(
       icons.forEach(publish)
 
       const results = await Promise.all([
-        parseIEConfig(html, textFetcher)
-      , parseManifest(html, textFetcher)
+        parseIEConfig(html, fetchText)
+      , parseManifest(html, fetchText)
       ])
       each(flatten<IIcon>(results), publish)
     }
   }
 
   async function tryUpdateIcon(
-    bufferFetcher: BufferFetcher
+    fetchBuffer: BufferFetcher
   , imagePromisePool: Map<string, Promise<IImage | null>>
   , icon: IIcon
   ): Promise<IIcon> {
     if (!imagePromisePool.has(icon.url)) {
-      imagePromisePool.set(icon.url, fetchImage(bufferFetcher, icon.url))
+      imagePromisePool.set(
+        icon.url
+      , fetchImage(fetchBuffer, new URL(icon.url, pageURL).href)
+      )
     }
     const image = await imagePromisePool.get(icon.url)
     if (image) {
@@ -95,10 +111,10 @@ export function parseFavicon(
   }
 
   async function fetchImage(
-    bufferFetcher: BufferFetcher
+    fetchBuffer: BufferFetcher
   , url: string
   ): Promise<IImage | null> {
-    const arrayBuffer = await getResultAsync(() => bufferFetcher(url))
+    const arrayBuffer = await getResultAsync(() => fetchBuffer(url))
     if (!arrayBuffer) return null
     const buffer = Buffer.from(arrayBuffer)
 

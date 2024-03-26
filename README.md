@@ -12,23 +12,19 @@ yarn add parse-favicon
 ```js
 import { parseFavicon } from 'parse-favicon'
 
-const pageUrl = 'https://github.com'
+const pageURL = 'https://github.com'
 
-parseFavicon(pageUrl, textFetcher, bufferFetcher)
+parseFavicon(pageURL, textFetcher, bufferFetcher)
   .subscribe(icon => console.log(icon))
 
 function textFetcher(url: string): Promise<string> {
-  return fetch(resolveURL(url, pageUrl))
+  return fetch(url)
     .then(res => res.text())
 }
 
 function bufferFetcher(url: string): Promise<ArrayBuffer> {
-  return fetch(resolveURL(url, pageUrl))
+  return fetch(url)
     .then(res => res.arrayBuffer())
-}
-
-function resolveURL(url: string, base: string): string {
-  return new URL(url, base).href
 }
 ```
 
@@ -51,7 +47,7 @@ interface ISize {
 }
 
 function parseFavicon(
-  url: string
+  pageURL: string
 , textFetcher: TextFetcher
 , bufferFetcher?: BufferFetcher
 ): Observable<IIcon>
