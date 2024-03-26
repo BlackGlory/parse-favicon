@@ -53,7 +53,7 @@ function parseFavicon(
 ): Observable<IIcon>
 ```
 
-`parseFavicon` accepts `textFetcher` and `bufferFetcher` for further fetching requests when parsing icons, bufferFetcher is optional.
+`parseFavicon` accepts `textFetcher` and `bufferFetcher` for further fetching requests when parsing icons, `bufferFetcher` is optional.
 If you need actual icon sizes and type, should provide `bufferFetcher`.
 
 References related to `textFetcher`:
