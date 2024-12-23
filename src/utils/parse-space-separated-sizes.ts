@@ -6,7 +6,7 @@ import { ISize } from '@src/types.js'
  * @param sizes 例子`32x32`, `32x32 64x64`
  */
 export function parseSpaceSeparatedSizes(sizes: string): ISize[] {
-  if (/^\d+[x|X]\d+(?:\s+\d+[x|X]\d+)*$/.test(sizes)) {
+  if (/^\d+[xX]\d+(?:\s+\d+[xX]\d+)*$/.test(sizes)) {
     const re = /(?<width>\d+)[x|X](?<height>\d+)/g
     const matches = sizes.matchAll(re)
 
