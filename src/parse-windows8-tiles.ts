@@ -3,7 +3,7 @@ import { filter, map, toArray } from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
-import { isURLString } from '@utils/is-url-string.js'
+import { isAbsoluteOrRelativeURLString } from '@utils/is-absolute-or-relative-url-string.js'
 import { IIcon } from '@src/types.js'
 
 export function parseWindows8Tiles(html: string): IIcon[] {
@@ -20,7 +20,7 @@ function extractWindows8TileIcons(document: Document): IIcon[] {
   return pipe(
     elements
   , elements => extractAttributes(elements, 'content')
-  , contents => filter(contents, isURLString)
+  , contents => filter(contents, isAbsoluteOrRelativeURLString)
   , urls => map(urls, createWindows8TileIcon)
   , toArray
   )

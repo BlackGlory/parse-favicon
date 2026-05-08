@@ -4,7 +4,7 @@ import * as Iter from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { parseXML } from '@utils/parse-xml.js'
-import { isURLString } from '@utils/is-url-string.js'
+import { isAbsoluteOrRelativeURLString } from '@utils/is-absolute-or-relative-url-string.js'
 import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
@@ -40,7 +40,7 @@ function extractConfigURLs(document: Document): string[] {
   return pipe(
     elements
   , elements => extractAttributes(elements, 'content')
-  , contents => Iter.filter(contents, isURLString)
+  , contents => Iter.filter(contents, isAbsoluteOrRelativeURLString)
   , toArray
   )
 }

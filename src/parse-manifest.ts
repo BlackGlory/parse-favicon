@@ -3,7 +3,7 @@ import { map } from 'extra-promise'
 import * as Iter from 'iterable-operator'
 import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
-import { isURLString } from '@utils/is-url-string.js'
+import { isAbsoluteOrRelativeURLString } from '@utils/is-absolute-or-relative-url-string.js'
 import { mergeRelativeURLs } from '@utils/merge-relative-urls.js'
 import { parseSpaceSeparatedSizes } from '@utils/parse-space-separated-sizes.js'
 import { IIcon, TextFetcher } from '@src/types.js'
@@ -57,7 +57,7 @@ function extractManifestURLs(document: Document): string[] {
   return pipe(
     links
   , links => extractAttributes(links, 'href')
-  , urls => Iter.filter(urls, isURLString)
+  , urls => Iter.filter(urls, isAbsoluteOrRelativeURLString)
   , Iter.toArray
   )
 }

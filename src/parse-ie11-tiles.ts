@@ -4,7 +4,7 @@ import { pipe } from 'extra-utils'
 import { parseHTML } from '@utils/parse-html.js'
 import { extractAttributes } from '@utils/extract-attributes.js'
 import { IIcon } from '@src/types.js'
-import { isURLString } from '@utils/is-url-string.js'
+import { isAbsoluteOrRelativeURLString } from '@utils/is-absolute-or-relative-url-string.js'
 
 export function parseIE11Tiles(html: string): IIcon[] {
   const document = parseHTML(html)
@@ -48,7 +48,7 @@ function extractIE11TileIcons(
   return pipe(
     elements
   , elements => extractAttributes(elements, 'content')
-  , contents => filter(contents, isURLString)
+  , contents => filter(contents, isAbsoluteOrRelativeURLString)
   , urls => map(urls, url => createIcon(reference, url, size))
   , toArray
   )
