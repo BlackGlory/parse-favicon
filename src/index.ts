@@ -9,9 +9,12 @@ import { parseMaskIcons } from '@src/parse-mask-icons.js'
 import { parseWindows8Tiles } from '@src/parse-windows8-tiles.js'
 import { parseImage, IImage } from '@utils/parse-image.js'
 import { Observable } from 'rxjs'
-import { flatten, each } from 'iterable-operator'
 import { IIcon, TextFetcher, BufferFetcher } from './types.js'
-import { Awaitable } from '@blackglory/prelude'
+import { Awaitable, go } from '@blackglory/prelude'
+import { each } from 'extra-promise'
+import { memoizeAsync } from 'extra-memoize'
+import { Cache } from '@extra-memoize/memory-cache'
+
 export { IIcon, TextFetcher, BufferFetcher } from './types.js'
 
 export function parseFavicon(
@@ -37,7 +40,7 @@ export function parseFavicon(
       .catch(err => observer.error(err))
   })
 
-  async function parse(publish: (icon: IIcon) => void) {
+  async function parse(publish: (icon: IIcon) => void): Promise<void> {
     const html = await fetchText(pageURL)
 
     const icons = [
@@ -50,85 +53,81 @@ export function parseFavicon(
     ]
 
     if (fetchBuffer) {
-      const imagePromisePool = new Map<string, Promise<IImage | null>>()
+      const fetchImage = memoizeAsync(
+        { cache: new Cache<IImage | null>() }
+      , async (url: string): Promise<IImage | null> => {
+          const arrayBuffer = await getResultAsync(() => fetchBuffer(url))
+          if (!arrayBuffer) return null
+          const buffer = Buffer.from(arrayBuffer)
 
-      icons.forEach(async icon => publish(
-        await tryUpdateIcon(fetchBuffer, imagePromisePool, icon)
-      ))
-
-      const results = await Promise.all([
-        parseIEConfig(html, fetchText)
-      , parseManifest(html, fetchText)
-      ])
-      each(flatten<IIcon>(results), async icon => {
-        publish(await tryUpdateIcon(fetchBuffer, imagePromisePool, icon))
-      })
-
-      getDefaultIconUrls().forEach(async url => {
-        if (!imagePromisePool.has(url)) {
-          imagePromisePool.set(url, fetchImage(fetchBuffer, url))
+          try {
+            return await parseImage(buffer)
+          } catch {
+            return null
+          }
         }
-        const image = await imagePromisePool.get(url)
-        if (image) {
-          publish({
-            url
-          , reference: url
-          , type: image.type
-          , size: image.size
+      )
+
+      await Promise.all([
+        each(icons, async icon => {
+          const image = await fetchImage(icon.url)
+          const newIcon = await createIconBasedOnIconAndImage(icon, image)
+          publish(newIcon)
+        })
+      , go(async () => {
+          const icons = await parseIEConfig(html, fetchText)
+          await each(icons, async icon => {
+            const image = await fetchImage(icon.url)
+            const newIcon = await createIconBasedOnIconAndImage(icon, image)
+            publish(newIcon)
           })
-        }
-      })
+        })
+      , go(async () => {
+          const icons = await parseManifest(html, fetchText)
+          await each(icons, async icon => {
+            const image = await fetchImage(icon.url)
+            const newIcon = await createIconBasedOnIconAndImage(icon, image)
+            publish(newIcon)
+          })
+        })
+      , each(getDefaultIconUrls(), async url => {
+          const image = await fetchImage(url)
 
-      await Promise.all(imagePromisePool.values())
+          if (image) {
+            publish({
+              url
+            , reference: url
+            , type: image.type
+            , size: image.size
+            })
+          }
+        })
+      ])
     } else {
       icons.forEach(publish)
 
-      const results = await Promise.all([
-        parseIEConfig(html, fetchText)
-      , parseManifest(html, fetchText)
+      await Promise.all([
+        go(async () => {
+          const icons = await parseIEConfig(html, fetchText)
+          icons.forEach(publish)
+        })
+      , go(async () => {
+          const icons = await parseManifest(html, fetchText)
+          icons.forEach(publish)
+        })
       ])
-      each(flatten<IIcon>(results), publish)
     }
   }
+}
 
-  async function tryUpdateIcon(
-    fetchBuffer: BufferFetcher
-  , imagePromisePool: Map<string, Promise<IImage | null>>
-  , icon: IIcon
-  ): Promise<IIcon> {
-    if (!imagePromisePool.has(icon.url)) {
-      imagePromisePool.set(
-        icon.url
-      , fetchImage(fetchBuffer, new URL(icon.url, pageURL).href)
-      )
-    }
-    const image = await imagePromisePool.get(icon.url)
-    if (image) {
-      return updateIcon(icon, image)
-    } else {
-      return icon
-    }
-  }
-
-  async function fetchImage(
-    fetchBuffer: BufferFetcher
-  , url: string
-  ): Promise<IImage | null> {
-    const arrayBuffer = await getResultAsync(() => fetchBuffer(url))
-    if (!arrayBuffer) return null
-    const buffer = Buffer.from(arrayBuffer)
-
-    try {
-      return await parseImage(buffer)
-    } catch {
-      return null
-    }
-  }
-
-  function updateIcon(icon: IIcon, image: IImage): IIcon {
-    return {
-      ...icon
-    , type: image.type
+async function createIconBasedOnIconAndImage(
+  icon: IIcon
+, image: IImage | null
+): Promise<IIcon> {
+  return {
+    ...icon
+  , ...image && {
+      type: image.type
     , size: image.size
     }
   }
